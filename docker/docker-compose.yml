@@ -1,0 +1,17 @@
+services:
+  postgres:
+    container_name: cgim-postgres
+    image: postgres
+    networks:
+      - cgim
+    ports:
+      - ${DB_PORT}:5432
+    environment:
+      POSTGRES_USER: ${DB_PASS}
+      POSTGRES_PASSWORD: ${DB_USER}
+      POSTGRES_DB: ${DB_NAME}
+    command: [ "postgres", "-c", "log_statement=all", "-c", "log_destination=stderr", "-c", "wal_level=logical" ]
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 5s
+    restart: unless-stopped
