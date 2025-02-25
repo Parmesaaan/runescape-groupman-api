@@ -1,9 +1,7 @@
-import {GroupOrUserValidator} from "../../../utils";
 import {Expose,Transform} from "class-transformer";
 import {IsDefined, IsEnum, IsOptional, IsString} from "class-validator";
 import {TaskType} from "../../../models/task.entity";
 
-@GroupOrUserValidator()
 export class CreateTaskDTO {
     @Expose()
     @IsString()

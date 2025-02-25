@@ -11,6 +11,10 @@ export class TaskService {
         task.title = request.title
         task.taskType = request.taskType
 
+        if(!!request.group === !!request.user) {
+            return opFailure(HttpStatusCode.BadRequest, "Exactly one of `group` or `user` must be defined.")
+        }
+
         if (task.group) {
             const group = await GroupRepository.findOne({
                 where: { name: request.group },

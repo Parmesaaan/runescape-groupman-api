@@ -4,9 +4,7 @@ import {
     IsOptional,
     IsString,
 } from "class-validator";
-import {GroupOrUserValidator} from "../../../utils";
 
-@GroupOrUserValidator()
 export class CreateNoteDTO {
   @Expose()
   @IsString()

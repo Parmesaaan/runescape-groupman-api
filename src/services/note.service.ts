@@ -4,7 +4,7 @@ import { Note } from "../models";
 import { GroupRepository, NoteRepository, UserRepository } from "../config";
 import { opFailure, opSuccess } from "../utils";
 import { HttpStatusCode } from "axios";
-import {NoteIdDTO} from "../controllers";
+import { NoteIdDTO } from "../controllers";
 
 export class NoteService {
   public static async createNote(
@@ -13,6 +13,10 @@ export class NoteService {
     const note = new Note();
     note.title = request.title;
     note.contents = request.content;
+
+    if(!!request.group === !!request.user) {
+      return opFailure(HttpStatusCode.BadRequest, "Exactly one of `group` or `user` must be defined.")
+    }
 
     if (note.group) {
       const group = await GroupRepository.findOne({
