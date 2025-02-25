@@ -27,7 +27,7 @@ export const userRouter = (): Router => {
   );
 
   router.put(
-    API_ROUTES.USER.CHANGE_PASSWORD,
+    API_ROUTES.USER.UPDATE_USER,
     authenticate,
     validateParams(UserIdDTO),
     validateBody(UpdateUserDto),

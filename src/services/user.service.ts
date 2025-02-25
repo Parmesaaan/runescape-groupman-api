@@ -1,6 +1,6 @@
 import { OperationResult } from "../types";
 import { JWT_SECRET, UserRepository } from "../config";
-import { UpdateUserDto, LoginUserDto, RegisterUserDto } from "../controllers";
+import {UpdateUserDto, LoginUserDto, RegisterUserDto, UserIdDTO} from "../controllers";
 import { opFailure, opSuccess } from "../utils";
 import { HttpStatusCode } from "axios";
 import bcrypt from "bcrypt";
@@ -55,28 +55,30 @@ export class UserService {
     });
   }
 
-  static async changePassword(
+  static async updateUser(
+    userIdDto: UserIdDTO,
     request: UpdateUserDto,
   ): Promise<OperationResult> {
     const user = await UserRepository.findOne({
-      where: { username: request.username },
-    });
+      where: { id: userIdDto.userId },
+    })
+
     if (!user) {
       return opFailure(
         HttpStatusCode.NotFound,
-        `Cannot find user with username ${request.username}`,
-      );
+        `Cannot find user with id ${userIdDto.userId}`,
+      )
     }
 
-    const passwordMatch = await bcrypt.compare(request.password, user.password);
+    const passwordMatch = await bcrypt.compare(request.password, user.password)
     if (!passwordMatch) {
-      return opFailure(HttpStatusCode.Unauthorized, `Incorrect password`);
+      return opFailure(HttpStatusCode.Unauthorized, `Incorrect password`)
     }
 
-    user.password = await bcrypt.hash(request.newPassword, 10);
-    const updatedUser = await UserRepository.save(user);
-    if (!updatedUser) return opFailure();
+    user.password = await bcrypt.hash(request.newPassword, 10)
+    const updatedUser = await UserRepository.save(user)
+    if (!updatedUser) return opFailure()
 
-    return opSuccess(updatedUser);
+    return opSuccess(updatedUser)
   }
 }

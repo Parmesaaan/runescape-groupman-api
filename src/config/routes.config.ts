@@ -1,9 +1,9 @@
 export const API_ROUTES = {
     ROOT: '/',
     USER: {
-        LOGIN: '/users/loginUser',
-        REGISTER: '/users/registerUser',
-        CHANGE_PASSWORD: '/users/change-password',
+        LOGIN: '/users/login',
+        REGISTER: '/users',
+        UPDATE_USER: '/users/:userId',
     },
     GROUP: {
         CREATE: '/groups',

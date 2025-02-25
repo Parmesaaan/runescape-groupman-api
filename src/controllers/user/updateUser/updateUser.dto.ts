@@ -5,11 +5,6 @@ export class UpdateUserDto {
   @Expose()
   @IsString()
   @IsDefined()
-  username!: string;
-
-  @Expose()
-  @IsString()
-  @IsDefined()
   password!: string;
 
   @Expose()
