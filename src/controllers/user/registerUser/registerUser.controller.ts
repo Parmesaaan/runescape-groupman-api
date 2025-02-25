@@ -15,9 +15,7 @@ export const registerUserController: RequestHandler = async (
   const result: OperationResult = await UserService.createUser(request)
 
   if (isOpFailure(result)) {
-    return res
-      .status(result.error!.status)
-      .send({ message: result.error!.message })
+    return res.status(result.error!.status).send({ message: result.error!.message })
   }
 
   const user = result.success!.data as User

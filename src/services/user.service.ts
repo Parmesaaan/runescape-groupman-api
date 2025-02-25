@@ -1,6 +1,6 @@
 import { OperationResult } from "../types"
 import { JWT_SECRET, UserRepository } from "../config"
-import {UpdateUserDto, LoginUserDto, RegisterUserDto, UserDto} from "../controllers"
+import {UpdateUserDto, LoginUserDto, RegisterUserDto, UserIdDto} from "../controllers"
 import { opFailure, opSuccess } from "../utils"
 import { HttpStatusCode } from "axios"
 import bcrypt from "bcrypt"
@@ -56,7 +56,7 @@ export class UserService {
   }
 
   static async updateUser(
-    userIdDto: UserDto,
+    userIdDto: UserIdDto,
     request: UpdateUserDto,
   ): Promise<OperationResult> {
     const user = await UserRepository.findOne({

@@ -3,16 +3,16 @@ import { OperationResult } from "../../../types"
 import { GroupService } from "../../../services"
 import { isOpFailure } from "../../../utils"
 import { HttpStatusCode } from "axios"
-import { JoinGroupDto } from "./joinGroup.dto"
 import {Group} from "../../../models"
 import {GroupIdDto, GroupResponseDto} from "../common"
+import {UserIdDto} from "../../user";
 
 export const joinGroupController: RequestHandler = async (
   req: Request,
   res: Response,
 ) => {
   const groupIdDto: GroupIdDto = req.params as unknown as GroupIdDto
-  const request: JoinGroupDto = req.body as unknown as JoinGroupDto
+  const request: UserIdDto = req.body as unknown as UserIdDto
   const result: OperationResult = await GroupService.joinGroup(groupIdDto, request)
 
   if (isOpFailure(result)) {

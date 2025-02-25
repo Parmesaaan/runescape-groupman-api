@@ -14,19 +14,19 @@ export class NoteService {
     note.title = request.title
     note.contents = request.content
 
-    if(!!request.group === !!request.user) {
+    if(!!request.groupId === !!request.groupId) {
       return opFailure(HttpStatusCode.BadRequest, "Exactly one of `group` or `user` must be defined.")
     }
 
     if (note.group) {
       const group = await GroupRepository.findOne({
-        where: { name: request.group },
-        relations: ["members"],
+        where: { id: request.groupId },
+        relations: ["users"],
       })
       if (!group) {
         return opFailure(
           HttpStatusCode.NotFound,
-          `Cannot find group with name ${request.group}`,
+          `Cannot find group with id ${request.groupId}`,
         )
       }
 
@@ -35,12 +35,12 @@ export class NoteService {
 
     if (note.user) {
       const user = await UserRepository.findOne({
-        where: { username: request.user },
+        where: { id: request.userId },
       })
       if (!user) {
         return opFailure(
           HttpStatusCode.NotFound,
-          `Cannot find user with username ${request.user}`,
+          `Cannot find user with username ${request.userId}`,
         )
       }
 

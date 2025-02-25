@@ -1,4 +1,4 @@
-import {CreateGroupDto, GroupIdDto, JoinGroupDto, LeaveGroupDto} from "../controllers"
+import {CreateGroupDto, GroupIdDto, UserIdDto} from "../controllers"
 import { OperationResult } from "../types"
 import { GroupRepository, UserRepository } from "../config"
 import { opFailure, opSuccess } from "../utils"
@@ -36,27 +36,27 @@ export class GroupService {
 
   public static async joinGroup(
       groupIdDto: GroupIdDto,
-      request: JoinGroupDto,
+      request: UserIdDto,
   ): Promise<OperationResult> {
     const group = await GroupRepository.findOne({
       where: { id: groupIdDto.groupId },
-      relations: ["members"],
+      relations: ["users"],
     })
 
     if (!group) {
       return opFailure(
           HttpStatusCode.NotFound,
-          `Cannot find group with name ${request.group}`,
+          `Cannot find group with id ${groupIdDto.groupId}`,
       )
     }
 
     const user = await UserRepository.findOne({
-      where: { username: request.user },
+      where: { id: request.userId },
     })
     if (!user) {
       return opFailure(
           HttpStatusCode.NotFound,
-          `Cannot find user with username ${request.user}`,
+          `Cannot find user with id ${request.userId}`,
       )
     }
 
@@ -77,27 +77,27 @@ export class GroupService {
 
   public static async leaveGroup(
       groupIdDto: GroupIdDto,
-      request: LeaveGroupDto,
+      request: UserIdDto,
   ): Promise<OperationResult> {
     const group = await GroupRepository.findOne({
       where: { id: groupIdDto.groupId },
-      relations: ["members"],
+      relations: ["users"],
     })
 
     if (!group) {
       return opFailure(
           HttpStatusCode.NotFound,
-          `Cannot find group with name ${request.group}`,
+          `Cannot find group with id ${groupIdDto.groupId}`,
       )
     }
 
     const user = await UserRepository.findOne({
-      where: { username: request.user },
+      where: { id: request.userId },
     })
     if (!user) {
       return opFailure(
           HttpStatusCode.NotFound,
-          `Cannot find user with username ${request.user}`,
+          `Cannot find user with id ${request.userId}`,
       )
     }
 
@@ -108,7 +108,7 @@ export class GroupService {
       )
     }
 
-    group.users = group.users.filter((member) => member.id !== user.id)
+    group.users = group.users.filter((u) => u.id !== user.id)
 
     const savedGroup = await GroupRepository.save(group)
     if (!savedGroup) return opFailure()

@@ -1,8 +1,8 @@
 import { Expose } from "class-transformer"
 import {
-    IsDefined,
-    IsOptional,
-    IsString,
+  IsDefined,
+  IsOptional,
+  IsString, IsUUID,
 } from "class-validator"
 
 export class CreateNoteDto {
@@ -17,12 +17,12 @@ export class CreateNoteDto {
   content!: string
 
   @Expose()
-  @IsString()
+  @IsUUID()
   @IsOptional()
-  group?: string
+  groupId?: string
 
   @Expose()
-  @IsString()
+  @IsUUID()
   @IsOptional()
-  user?: string
+  userId?: string
 }

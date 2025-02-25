@@ -2,7 +2,7 @@ import {Expose} from "class-transformer"
 import {IsDefined, IsUUID} from "class-validator"
 import {User} from "../../../models"
 
-export class UserDto {
+export class UserIdDto {
     @Expose()
     @IsUUID()
     @IsDefined()

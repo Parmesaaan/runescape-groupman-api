@@ -31,16 +31,16 @@ export class Group extends BaseEntity {
 
   @ManyToMany(() => User, (user) => user.groups)
   @JoinTable({
-    name: "group_members",
+    name: "group_user",
     joinColumn: {
       name: "group_id",
       referencedColumnName: "id",
-      foreignKeyConstraintName: "FK_group_members_group_id",
+      foreignKeyConstraintName: "FK_group_users_group_id",
     },
     inverseJoinColumn: {
       name: "user_id",
       referencedColumnName: "id",
-      foreignKeyConstraintName: "FK_group_members_user_id",
+      foreignKeyConstraintName: "FK_group_users_user_id",
     },
   })
   users!: Array<User>

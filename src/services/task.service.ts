@@ -18,7 +18,7 @@ export class TaskService {
         if (task.group) {
             const group = await GroupRepository.findOne({
                 where: { name: request.group },
-                relations: ["members"],
+                relations: ["users"],
             })
             if (!group) {
                 return opFailure(

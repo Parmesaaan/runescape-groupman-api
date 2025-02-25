@@ -6,9 +6,7 @@ import {
   createGroupController,
   joinGroupController,
   leaveGroupController,
-  JoinGroupDto,
-  LeaveGroupDto,
-  GroupIdDto,
+  GroupIdDto, UserIdDto,
 } from "../controllers"
 import { authenticate } from "../middleware"
 
@@ -26,7 +24,7 @@ export const groupRouter = (): Router => {
       API_ROUTES.GROUP.JOIN,
       authenticate,
       validateParams(GroupIdDto),
-      validateBody(JoinGroupDto),
+      validateBody(UserIdDto),
       joinGroupController,
   )
 
@@ -34,7 +32,7 @@ export const groupRouter = (): Router => {
       API_ROUTES.GROUP.LEAVE,
       authenticate,
       validateParams(GroupIdDto),
-      validateBody(LeaveGroupDto),
+      validateBody(UserIdDto),
       leaveGroupController,
   )
 

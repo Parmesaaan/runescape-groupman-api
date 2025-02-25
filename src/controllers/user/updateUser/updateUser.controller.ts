@@ -5,10 +5,10 @@ import { isOpFailure } from "../../../utils"
 import { HttpStatusCode } from "axios"
 import { UpdateUserDto } from "./updateUser.dto"
 import {User} from "../../../models"
-import {UserDto, UserResponseDto} from "../common"
+import {UserIdDto, UserResponseDto} from "../common"
 
 export const updateUserController: RequestHandler = async (req: Request, res: Response) => {
-  const userIdDto: UserDto = req.params as unknown as UserDto
+  const userIdDto: UserIdDto = req.params as unknown as UserIdDto
   const request: UpdateUserDto = req.body as unknown as UpdateUserDto
   const result: OperationResult = await UserService.updateUser(userIdDto, request)
 

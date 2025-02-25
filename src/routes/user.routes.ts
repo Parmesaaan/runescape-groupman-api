@@ -5,7 +5,7 @@ import {
   UpdateUserDto,
   LoginUserDto,
   RegisterUserDto,
-  updateUserController, UserDto,
+  updateUserController, UserIdDto,
   loginUserController,
   registerUserController,
 } from "../controllers"
@@ -29,7 +29,7 @@ export const userRouter = (): Router => {
   router.put(
     API_ROUTES.USER.UPDATE_USER,
     authenticate,
-    validateParams(UserDto),
+    validateParams(UserIdDto),
     validateBody(UpdateUserDto),
     updateUserController,
   )
