@@ -1,7 +1,7 @@
 export const API_ROUTES = {
     ROOT: '/',
     USER: {
-        LOGIN: '/login',
-        REGISTER: '/register'
+        LOGIN: '/user/login',
+        REGISTER: '/user/register'
     }
 }

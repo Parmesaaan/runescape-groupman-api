@@ -3,7 +3,7 @@ import cookieParser from 'cookie-parser'
 import cors from 'cors'
 import express from 'express'
 import {setContentTypePolicy} from "./middleware";
-import {configureRoutes} from "./routes";
+import {configureRoutes} from "./utils";
 
 const initApp = () => {
   const app = express()
