@@ -7,15 +7,15 @@ export const API_ROUTES = {
     },
     GROUP: {
         CREATE: '/groups',
-        JOIN: '/groups/join',
-        LEAVE: '/groups/leave',
+        JOIN: '/groups/:groupId/join',
+        LEAVE: '/groups/:groupId/leave',
     },
     NOTE: {
         CREATE: '/notes',
-        UPDATE: '/notes/:noteId'
+        UPDATE: '/notes/:noteId',
     },
     TASK: {
         CREATE: '/task',
-        UPDATE: '/task/:taskId'
+        UPDATE: '/task/:taskId',
     }
 }

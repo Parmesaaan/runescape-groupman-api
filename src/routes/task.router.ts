@@ -1,8 +1,8 @@
-import {Router} from "express";
-import {API_ROUTES} from "../config";
-import {authenticate} from "../middleware";
-import {validateBody, validateParams} from "../utils";
-import {CreateTaskDto, createTaskController, TaskIdDto, updateTaskController, UpdateTaskDto} from "../controllers";
+import {Router} from "express"
+import {API_ROUTES} from "../config"
+import {authenticate} from "../middleware"
+import {validateBody, validateParams} from "../utils"
+import {CreateTaskDto, createTaskController, TaskIdDto, updateTaskController, UpdateTaskDto} from "../controllers"
 
 export const taskRouter = (): Router => {
     const router = Router()

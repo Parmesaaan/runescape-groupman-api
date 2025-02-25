@@ -1,28 +1,28 @@
-import { Expose } from "class-transformer";
+import { Expose } from "class-transformer"
 import {
     IsDefined,
     IsOptional,
     IsString,
-} from "class-validator";
+} from "class-validator"
 
 export class CreateNoteDto {
   @Expose()
   @IsString()
   @IsDefined()
-  title!: string;
+  title!: string
 
   @Expose()
   @IsString()
   @IsDefined()
-  content!: string;
+  content!: string
 
   @Expose()
   @IsString()
   @IsOptional()
-  group?: string;
+  group?: string
 
   @Expose()
   @IsString()
   @IsOptional()
-  user?: string;
+  user?: string
 }

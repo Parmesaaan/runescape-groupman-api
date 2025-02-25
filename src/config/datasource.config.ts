@@ -1,7 +1,7 @@
-import { DataSource } from "typeorm";
-import { dbConfig } from "./environment.config";
-import { Group, Note, User } from "../models";
-import {Task} from "../models/task.entity";
+import { DataSource } from "typeorm"
+import { dbConfig } from "./environment.config"
+import { Group, Note, User } from "../models"
+import {Task} from "../models/task.entity"
 
 export const AppDataSource = new DataSource({
   host: dbConfig.host,
@@ -19,9 +19,9 @@ export const AppDataSource = new DataSource({
     query_timeout: 5000,
     connectionLimit: 10,
   },
-});
+})
 
-export const UserRepository = AppDataSource.getRepository(User);
-export const GroupRepository = AppDataSource.getRepository(Group);
-export const NoteRepository = AppDataSource.getRepository(Note);
+export const UserRepository = AppDataSource.getRepository(User)
+export const GroupRepository = AppDataSource.getRepository(Group)
+export const NoteRepository = AppDataSource.getRepository(Note)
 export const TaskRepository = AppDataSource.getRepository(Task)

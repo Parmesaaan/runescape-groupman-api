@@ -1,11 +1,11 @@
-import { Request, RequestHandler, Response } from "express";
-import { CreateNoteDto } from "./createNote.dto";
-import { OperationResult } from "../../../types";
-import { isOpFailure } from "../../../utils";
-import { HttpStatusCode } from "axios";
-import { NoteService } from "../../../services";
-import {Note} from "../../../models";
-import {NoteResponseDto} from "../common";
+import { Request, RequestHandler, Response } from "express"
+import { CreateNoteDto } from "./createNote.dto"
+import { OperationResult } from "../../../types"
+import { isOpFailure } from "../../../utils"
+import { HttpStatusCode } from "axios"
+import { NoteService } from "../../../services"
+import {Note} from "../../../models"
+import {NoteResponseDto} from "../common"
 
 export const createNoteController: RequestHandler = async (
   req: Request,

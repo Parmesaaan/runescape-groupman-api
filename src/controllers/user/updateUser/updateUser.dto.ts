@@ -1,14 +1,14 @@
-import { Expose } from "class-transformer";
-import { IsDefined, IsString, IsStrongPassword } from "class-validator";
+import { Expose } from "class-transformer"
+import { IsDefined, IsString, IsStrongPassword } from "class-validator"
 
 export class UpdateUserDto {
   @Expose()
   @IsString()
   @IsDefined()
-  password!: string;
+  password!: string
 
   @Expose()
   @IsStrongPassword()
   @IsDefined()
-  newPassword!: string;
+  newPassword!: string
 }

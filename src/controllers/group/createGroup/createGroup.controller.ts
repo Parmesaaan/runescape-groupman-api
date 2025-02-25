@@ -1,11 +1,11 @@
-import { Request, RequestHandler, Response } from "express";
-import { CreateGroupDto } from "./createGroup.dto";
-import { OperationResult } from "../../../types";
-import { isOpFailure } from "../../../utils";
-import { HttpStatusCode } from "axios";
-import { GroupService } from "../../../services";
-import {Group} from "../../../models";
-import {GroupResponseDto} from "../common";
+import { Request, RequestHandler, Response } from "express"
+import { CreateGroupDto } from "./createGroup.dto"
+import { OperationResult } from "../../../types"
+import { isOpFailure } from "../../../utils"
+import { HttpStatusCode } from "axios"
+import { GroupService } from "../../../services"
+import {Group} from "../../../models"
+import {GroupResponseDto} from "../common"
 
 export const createGroupController: RequestHandler = async (
   req: Request,

@@ -1,11 +1,11 @@
-import {Request, RequestHandler, Response} from "express";
-import {OperationResult} from "../../../types";
-import {TaskService} from "../../../services";
-import {isOpFailure} from "../../../utils";
-import {HttpStatusCode} from "axios";
-import {UpdateTaskDto} from "./updateTask.dto";
-import {TaskIdDto, TaskResponseDto} from "../common";
-import {Task} from "../../../models/task.entity";
+import {Request, RequestHandler, Response} from "express"
+import {OperationResult} from "../../../types"
+import {TaskService} from "../../../services"
+import {isOpFailure} from "../../../utils"
+import {HttpStatusCode} from "axios"
+import {UpdateTaskDto} from "./updateTask.dto"
+import {TaskIdDto, TaskResponseDto} from "../common"
+import {Task} from "../../../models/task.entity"
 
 export const updateTaskController: RequestHandler = async(req: Request, res: Response) => {
     const taskIdDto: TaskIdDto = req.params as unknown as TaskIdDto

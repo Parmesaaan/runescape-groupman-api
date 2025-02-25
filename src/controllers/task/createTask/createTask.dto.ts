@@ -1,17 +1,17 @@
-import {Expose,Transform} from "class-transformer";
-import {IsDefined, IsEnum, IsOptional, IsString} from "class-validator";
-import {TaskType} from "../../../models/task.entity";
+import {Expose,Transform} from "class-transformer"
+import {IsDefined, IsEnum, IsOptional, IsString} from "class-validator"
+import {TaskType} from "../../../models/task.entity"
 
 export class CreateTaskDto {
     @Expose()
     @IsString()
     @IsDefined()
-    title!: string;
+    title!: string
 
     @Expose()
     @IsString()
     @IsOptional()
-    description?: string;
+    description?: string
 
     @Expose()
     @IsEnum(TaskType)
@@ -22,10 +22,10 @@ export class CreateTaskDto {
     @Expose()
     @IsString()
     @IsOptional()
-    group?: string;
+    group?: string
 
     @Expose()
     @IsString()
     @IsOptional()
-    user?: string;
+    user?: string
 }

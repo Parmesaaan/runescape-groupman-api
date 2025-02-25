@@ -6,9 +6,9 @@ import {
     ManyToOne,
     PrimaryGeneratedColumn,
     UpdateDateColumn
-} from "typeorm";
-import {Group} from "./group.entity";
-import {User} from "./user.entity";
+} from "typeorm"
+import {Group} from "./group.entity"
+import {User} from "./user.entity"
 
 export enum TaskType {
     DAILY = 'DAILY',
@@ -19,7 +19,7 @@ export enum TaskType {
 @Entity('task')
 export class Task {
     @PrimaryGeneratedColumn("uuid", { primaryKeyConstraintName: "PK_task_id" })
-    id!: string;
+    id!: string
 
     @Column({ type: "enum", enum: TaskType, name: "task_type"})
     taskType!: TaskType

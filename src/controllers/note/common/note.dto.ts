@@ -1,6 +1,6 @@
-import {Expose} from "class-transformer";
-import {IsDefined, IsUUID} from "class-validator";
-import {Note} from "../../../models";
+import {Expose} from "class-transformer"
+import {IsDefined, IsUUID} from "class-validator"
+import {Note} from "../../../models"
 
 export class NoteIdDto {
     @Expose()

@@ -6,26 +6,26 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
-} from "typeorm";
-import { User } from "./user.entity";
-import { Group } from "./group.entity";
+} from "typeorm"
+import { User } from "./user.entity"
+import { Group } from "./group.entity"
 
 @Entity("note")
 export class Note {
   @PrimaryGeneratedColumn("uuid", { primaryKeyConstraintName: "PK_note_id" })
-  id!: string;
+  id!: string
 
   @Column()
-  title!: string;
+  title!: string
 
   @Column()
-  contents!: string;
+  contents!: string
 
   @CreateDateColumn({ name: "created_at" })
-  createdAt!: Date;
+  createdAt!: Date
 
   @UpdateDateColumn({ name: "updated_at" })
-  updatedAt!: Date;
+  updatedAt!: Date
 
   @Index('IDX_note_user_id')
   @ManyToOne(() => User, (user) => user.notes, { nullable: true })
@@ -34,7 +34,7 @@ export class Note {
     referencedColumnName: "id",
     foreignKeyConstraintName: "FK_note_user",
   })
-  user?: User;
+  user?: User
 
   @Index('IDX_note_group_id')
   @ManyToOne(() => Group, (group) => group.notes, { nullable: true })
@@ -43,5 +43,5 @@ export class Note {
     referencedColumnName: "id",
     foreignKeyConstraintName: "FK_note_group",
   })
-  group?: Group;
+  group?: Group
 }

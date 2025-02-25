@@ -8,35 +8,35 @@ import {
   PrimaryGeneratedColumn,
   Unique,
   UpdateDateColumn,
-} from "typeorm";
-import { Group } from "./group.entity";
-import { Note } from "./note.entity";
-import {Task} from "./task.entity";
+} from "typeorm"
+import { Group } from "./group.entity"
+import { Note } from "./note.entity"
+import {Task} from "./task.entity"
 
 @Entity("user")
 export class User extends BaseEntity {
   @PrimaryGeneratedColumn("uuid", { primaryKeyConstraintName: "PK_user_id" })
-  id!: string;
+  id!: string
 
   @Column()
   @Unique("UQ_user_username", ["username"])
-  username!: string;
+  username!: string
 
   @Column({ name: "password_hash" })
-  password!: string;
+  password!: string
 
   @CreateDateColumn({ name: "created_at" })
-  createdAt!: Date;
+  createdAt!: Date
 
   @UpdateDateColumn({ name: "updated_at" })
-  updatedAt!: Date;
+  updatedAt!: Date
 
   @ManyToMany(() => Group, (group) => group.users)
-  groups!: Array<Group>;
+  groups!: Array<Group>
 
   @OneToMany(() => Note, (note) => note.user)
-  notes!: Array<Note>;
+  notes!: Array<Note>
 
   @OneToMany(() => Task, (task) => task.user)
-  tasks!: Task[];
+  tasks!: Task[]
 }

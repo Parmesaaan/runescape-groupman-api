@@ -1,11 +1,11 @@
-import { Router } from "express";
-import { API_ROUTES } from "../config";
-import { authenticate } from "../middleware";
-import {validateBody, validateParams} from "../utils";
-import {CreateNoteDto, createNoteController, updateNoteController, UpdateNoteDto, NoteIdDto} from "../controllers";
+import { Router } from "express"
+import { API_ROUTES } from "../config"
+import { authenticate } from "../middleware"
+import {validateBody, validateParams} from "../utils"
+import {CreateNoteDto, createNoteController, updateNoteController, UpdateNoteDto, NoteIdDto} from "../controllers"
 
 export const noteRouter = (): Router => {
-  const router = Router();
+  const router = Router()
 
   router.post(
       API_ROUTES.NOTE.CREATE,
@@ -22,5 +22,5 @@ export const noteRouter = (): Router => {
       updateNoteController
   )
 
-  return router;
-};
+  return router
+}

@@ -1,9 +1,6 @@
-import {Expose} from "class-transformer";
-import {IsDefined, IsUUID} from "class-validator";
-import {Group} from "../../../models";
-import {UserResponseDto} from "../../user";
-import {NoteResponseDto} from "../../note";
-import {TaskResponseDto} from "../../task";
+import {Expose} from "class-transformer"
+import {IsDefined, IsUUID} from "class-validator"
+import {Group} from "../../../models"
 
 export class GroupIdDto {
     @Expose()
@@ -17,9 +14,9 @@ export class GroupResponseDto {
     name!: string
     createdAt!: Date
     updatedAt!: Date
-    // users?: Array<UserResponseDto>
-    // notes?: Array<NoteResponseDto>
-    // tasks?: Array<TaskResponseDto>
+    users?: Array<string>
+    notes?: Array<string>
+    tasks?: Array<string>
 
     constructor(group: Group) {
         this.id = group.id
@@ -27,25 +24,8 @@ export class GroupResponseDto {
         this.createdAt = group.createdAt
         this.updatedAt = group.updatedAt
 
-        // if(group.users && group.users.length) {
-        //     this.users = new Array<UserResponseDto>()
-        //     for(const user of group.users) {
-        //         this.users.push(new UserResponseDto(user))
-        //     }
-        // }
-        //
-        // if(group.notes && group.notes.length) {
-        //     this.notes = new Array<NoteResponseDto>()
-        //     for(const note of group.notes) {
-        //         this.notes.push(new NoteResponseDto(note))
-        //     }
-        // }
-        //
-        // if(group.tasks && group.tasks.length) {
-        //     this.tasks = new Array<TaskResponseDto>()
-        //     for(const task of group.tasks) {
-        //         this.tasks.push(new TaskResponseDto(task))
-        //     }
-        // }
+        this.users = group.users?.map(user => user.id) ?? []
+        this.notes = group.notes?.map(note => note.id) ?? []
+        this.tasks = group.tasks?.map(task => task.id) ?? []
     }
 }

@@ -1,11 +1,11 @@
-import { OperationResult } from "../types";
-import { JWT_SECRET, UserRepository } from "../config";
-import {UpdateUserDto, LoginUserDto, RegisterUserDto, UserDto} from "../controllers";
-import { opFailure, opSuccess } from "../utils";
-import { HttpStatusCode } from "axios";
-import bcrypt from "bcrypt";
-import { User } from "../models";
-import jwt from "jsonwebtoken";
+import { OperationResult } from "../types"
+import { JWT_SECRET, UserRepository } from "../config"
+import {UpdateUserDto, LoginUserDto, RegisterUserDto, UserDto} from "../controllers"
+import { opFailure, opSuccess } from "../utils"
+import { HttpStatusCode } from "axios"
+import bcrypt from "bcrypt"
+import { User } from "../models"
+import jwt from "jsonwebtoken"
 
 export class UserService {
   public static async createUser(
@@ -17,42 +17,42 @@ export class UserService {
       return opFailure(
         HttpStatusCode.Conflict,
         `User with username ${request.username} already exists`,
-      );
+      )
     }
 
-    const newUser = new User();
-    newUser.username = request.username;
-    newUser.password = await bcrypt.hash(request.password, 10);
+    const newUser = new User()
+    newUser.username = request.username
+    newUser.password = await bcrypt.hash(request.password, 10)
 
-    const savedUser = await UserRepository.save(newUser);
-    if (!savedUser) return opFailure();
+    const savedUser = await UserRepository.save(newUser)
+    if (!savedUser) return opFailure()
 
-    return opSuccess(savedUser);
+    return opSuccess(savedUser)
   }
 
   public static async loginUser(request: LoginUserDto): Promise<OperationResult> {
     const user = await UserRepository.findOne({
       where: { username: request.username },
-    });
+    })
     if (!user) {
       return opFailure(
         HttpStatusCode.NotFound,
         `Cannot find user with username ${request.username}`,
-      );
+      )
     }
 
-    const passwordMatch = await bcrypt.compare(request.password, user.password);
+    const passwordMatch = await bcrypt.compare(request.password, user.password)
     if (!passwordMatch) {
-      return opFailure(HttpStatusCode.Unauthorized, `Incorrect password`);
+      return opFailure(HttpStatusCode.Unauthorized, `Incorrect password`)
     }
 
     const token = jwt.sign({ userId: user.id }, JWT_SECRET, {
       expiresIn: "1h",
-    });
+    })
     return opSuccess({ user: user, token: token } as {
-      user: User;
-      token: string;
-    });
+      user: User
+      token: string
+    })
   }
 
   static async updateUser(

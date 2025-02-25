@@ -1,18 +1,18 @@
-import { Expose } from "class-transformer";
-import { IsDefined, IsString } from "class-validator";
-import {UserResponseDto} from "../common";
-import {User} from "../../../models";
+import { Expose } from "class-transformer"
+import { IsDefined, IsString } from "class-validator"
+import {UserResponseDto} from "../common"
+import {User} from "../../../models"
 
 export class LoginUserDto {
   @Expose()
   @IsString()
   @IsDefined()
-  username!: string;
+  username!: string
 
   @Expose()
   @IsString()
   @IsDefined()
-  password!: string;
+  password!: string
 }
 
 export class LoginUserResponseDto extends UserResponseDto {

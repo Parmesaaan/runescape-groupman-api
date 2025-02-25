@@ -1,18 +1,19 @@
-import { Request, RequestHandler, Response } from "express";
-import { OperationResult } from "../../../types";
-import { GroupService } from "../../../services";
-import { isOpFailure } from "../../../utils";
-import { HttpStatusCode } from "axios";
-import { JoinGroupDto } from "./joinGroup.dto";
-import {Group} from "../../../models";
-import {GroupResponseDto} from "../common";
+import { Request, RequestHandler, Response } from "express"
+import { OperationResult } from "../../../types"
+import { GroupService } from "../../../services"
+import { isOpFailure } from "../../../utils"
+import { HttpStatusCode } from "axios"
+import { JoinGroupDto } from "./joinGroup.dto"
+import {Group} from "../../../models"
+import {GroupIdDto, GroupResponseDto} from "../common"
 
 export const joinGroupController: RequestHandler = async (
   req: Request,
   res: Response,
 ) => {
+  const groupIdDto: GroupIdDto = req.params as unknown as GroupIdDto
   const request: JoinGroupDto = req.body as unknown as JoinGroupDto
-  const result: OperationResult = await GroupService.joinGroup(request)
+  const result: OperationResult = await GroupService.joinGroup(groupIdDto, request)
 
   if (isOpFailure(result)) {
     return res
@@ -23,4 +24,4 @@ export const joinGroupController: RequestHandler = async (
   const group = result.success!.data as Group
   const response: GroupResponseDto = new GroupResponseDto(group)
   return res.status(HttpStatusCode.Ok).json(response)
-};
+}

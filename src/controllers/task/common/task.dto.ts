@@ -1,6 +1,6 @@
-import {Expose} from "class-transformer";
-import {IsDefined, IsUUID} from "class-validator";
-import {Task, TaskType} from "../../../models/task.entity";
+import {Expose} from "class-transformer"
+import {IsDefined, IsUUID} from "class-validator"
+import {Task, TaskType} from "../../../models/task.entity"
 
 export class TaskIdDto {
     @Expose()

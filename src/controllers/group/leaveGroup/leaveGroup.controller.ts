@@ -1,18 +1,19 @@
-import { Request, RequestHandler, Response } from "express";
-import { OperationResult } from "../../../types";
-import { GroupService } from "../../../services";
-import { isOpFailure } from "../../../utils";
-import { HttpStatusCode } from "axios";
-import { LeaveGroupDto } from "./leaveGroup.dto";
-import {Group} from "../../../models";
-import {GroupResponseDto} from "../common";
+import { Request, RequestHandler, Response } from "express"
+import { OperationResult } from "../../../types"
+import { GroupService } from "../../../services"
+import { isOpFailure } from "../../../utils"
+import { HttpStatusCode } from "axios"
+import { LeaveGroupDto } from "./leaveGroup.dto"
+import {Group} from "../../../models"
+import {GroupIdDto, GroupResponseDto} from "../common"
 
 export const leaveGroupController: RequestHandler = async (
   req: Request,
   res: Response,
 ) => {
+  const groupIdDto: GroupIdDto = req.params as unknown as GroupIdDto
   const request: LeaveGroupDto = req.body as unknown as LeaveGroupDto
-  const result: OperationResult = await GroupService.leaveGroup(request)
+  const result: OperationResult = await GroupService.leaveGroup(groupIdDto, request)
 
   if (isOpFailure(result)) {
     return res

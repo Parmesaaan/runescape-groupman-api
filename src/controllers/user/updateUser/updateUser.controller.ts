@@ -1,11 +1,11 @@
-import { Request, RequestHandler, Response } from "express";
-import { OperationResult } from "../../../types";
-import { UserService } from "../../../services";
-import { isOpFailure } from "../../../utils";
-import { HttpStatusCode } from "axios";
-import { UpdateUserDto } from "./updateUser.dto";
-import {User} from "../../../models";
-import {UserDto, UserResponseDto} from "../common";
+import { Request, RequestHandler, Response } from "express"
+import { OperationResult } from "../../../types"
+import { UserService } from "../../../services"
+import { isOpFailure } from "../../../utils"
+import { HttpStatusCode } from "axios"
+import { UpdateUserDto } from "./updateUser.dto"
+import {User} from "../../../models"
+import {UserDto, UserResponseDto} from "../common"
 
 export const updateUserController: RequestHandler = async (req: Request, res: Response) => {
   const userIdDto: UserDto = req.params as unknown as UserDto
