@@ -1,4 +1,14 @@
-import {BaseEntity, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, Unique, UpdateDateColumn} from "typeorm";
+import {
+    BaseEntity,
+    Column,
+    CreateDateColumn,
+    Entity,
+    ManyToMany,
+    PrimaryGeneratedColumn,
+    Unique,
+    UpdateDateColumn
+} from "typeorm";
+import {Group} from "./group.entity";
 
 @Entity('user')
 export class User extends BaseEntity {
@@ -17,4 +27,7 @@ export class User extends BaseEntity {
 
     @UpdateDateColumn({name: 'updated_at'})
     updatedAt!: Date
+
+    @ManyToMany(() => Group, group => group.members)
+    groups!: Array<Group>
 }

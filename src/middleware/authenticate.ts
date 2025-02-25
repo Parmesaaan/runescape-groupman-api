@@ -2,7 +2,7 @@ import {JWT_SECRET} from "../config";
 import jwt from "jsonwebtoken";
 import { NextFunction, Request, Response } from 'express'
 
-const authenticate = (req: Request, res: Response, next: NextFunction) => {
+export const authenticate = (req: Request, res: Response, next: NextFunction) => {
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1];
 

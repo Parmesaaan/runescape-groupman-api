@@ -3,6 +3,11 @@ export const API_ROUTES = {
     USER: {
         LOGIN: '/users/login',
         REGISTER: '/users/register',
-        CHANGE_PASSWORD: '/users/change-password'
+        CHANGE_PASSWORD: '/users/change-password',
+    },
+    GROUP: {
+        CREATE: '/groups/create',
+        JOIN: '/groups/join',
+        LEAVE: '/groups/leave',
     }
 }
