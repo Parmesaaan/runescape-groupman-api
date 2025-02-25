@@ -1,7 +1,7 @@
 import {
   Column,
   CreateDateColumn,
-  Entity,
+  Entity, Index,
   JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
@@ -27,6 +27,7 @@ export class Note {
   @UpdateDateColumn({ name: "updated_at" })
   updatedAt!: Date;
 
+  @Index('IDX_note_user_id')
   @ManyToOne(() => User, (user) => user.notes, { nullable: true })
   @JoinColumn({
     name: "user_id",
@@ -35,6 +36,7 @@ export class Note {
   })
   user?: User;
 
+  @Index('IDX_note_group_id')
   @ManyToOne(() => Group, (group) => group.notes, { nullable: true })
   @JoinColumn({
     name: "group_id",

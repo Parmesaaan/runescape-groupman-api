@@ -12,6 +12,7 @@ import {
 } from "typeorm";
 import { User } from "./user.entity";
 import { Note } from "./note.entity";
+import {Task} from "./task.entity";
 
 @Entity("group")
 export class Group extends BaseEntity {
@@ -42,8 +43,11 @@ export class Group extends BaseEntity {
       foreignKeyConstraintName: "FK_group_members_user_id",
     },
   })
-  members!: Array<User>;
+  users!: Array<User>;
 
   @OneToMany(() => Note, (note) => note.group) // User can have many notes
   notes!: Array<Note>;
+
+  @OneToMany(() => Task, (task) => task.group)
+  tasks!: Task[];
 }

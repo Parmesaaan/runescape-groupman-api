@@ -11,6 +11,7 @@ import {
 } from "typeorm";
 import { Group } from "./group.entity";
 import { Note } from "./note.entity";
+import {Task} from "./task.entity";
 
 @Entity("user")
 export class User extends BaseEntity {
@@ -30,9 +31,12 @@ export class User extends BaseEntity {
   @UpdateDateColumn({ name: "updated_at" })
   updatedAt!: Date;
 
-  @ManyToMany(() => Group, (group) => group.members)
+  @ManyToMany(() => Group, (group) => group.users)
   groups!: Array<Group>;
 
   @OneToMany(() => Note, (note) => note.user) // User can have many notes
   notes!: Array<Note>;
+
+  @OneToMany(() => Task, (task) => task.user)
+  tasks!: Task[];
 }

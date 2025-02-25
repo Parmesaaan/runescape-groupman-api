@@ -1,6 +1,6 @@
 import { OperationResult } from "../types";
 import { JWT_SECRET, UserRepository } from "../config";
-import { ChangePasswordDTO, LoginDTO, RegisterDTO } from "../controllers";
+import { UpdateUserDto, LoginUserDto, RegisterUserDto } from "../controllers";
 import { opFailure, opSuccess } from "../utils";
 import { HttpStatusCode } from "axios";
 import bcrypt from "bcrypt";
@@ -9,7 +9,7 @@ import jwt from "jsonwebtoken";
 
 export class UserService {
   public static async createUser(
-    request: RegisterDTO,
+    request: RegisterUserDto,
   ): Promise<OperationResult> {
     if (
       await UserRepository.exists({ where: { username: request.username } })
@@ -30,7 +30,7 @@ export class UserService {
     return opSuccess(savedUser);
   }
 
-  public static async loginUser(request: LoginDTO): Promise<OperationResult> {
+  public static async loginUser(request: LoginUserDto): Promise<OperationResult> {
     const user = await UserRepository.findOne({
       where: { username: request.username },
     });
@@ -56,7 +56,7 @@ export class UserService {
   }
 
   static async changePassword(
-    request: ChangePasswordDTO,
+    request: UpdateUserDto,
   ): Promise<OperationResult> {
     const user = await UserRepository.findOne({
       where: { username: request.username },

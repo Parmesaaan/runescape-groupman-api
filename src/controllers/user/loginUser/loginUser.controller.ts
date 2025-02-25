@@ -1,16 +1,16 @@
 import { Request, RequestHandler, Response } from "express";
-import { LoginDTO } from "./login.dto";
+import { LoginUserDto } from "./loginUser.dto";
 import { UserService } from "../../../services";
 import { OperationResult } from "../../../types";
 import { isOpFailure } from "../../../utils";
 import { HttpStatusCode } from "axios";
 import { User } from "../../../models";
 
-export const userLoginController: RequestHandler = async (
+export const loginUserController: RequestHandler = async (
   req: Request,
   res: Response,
 ) => {
-  const request: LoginDTO = req.body as unknown as LoginDTO;
+  const request: LoginUserDto = req.body as unknown as LoginUserDto;
   const result: OperationResult = await UserService.loginUser(request);
 
   if (isOpFailure(result)) {

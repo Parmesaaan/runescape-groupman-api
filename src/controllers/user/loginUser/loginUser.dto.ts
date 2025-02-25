@@ -1,7 +1,7 @@
 import { Expose } from "class-transformer";
 import { IsDefined, IsString } from "class-validator";
 
-export class LoginDTO {
+export class LoginUserDto {
   @Expose()
   @IsString()
   @IsDefined()

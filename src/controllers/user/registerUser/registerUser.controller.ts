@@ -1,15 +1,15 @@
 import { Request, RequestHandler, Response } from "express";
-import { RegisterDTO } from "./register.dto";
+import { RegisterUserDto } from "./registerUser.dto";
 import { OperationResult } from "../../../types";
 import { UserService } from "../../../services";
 import { isOpFailure } from "../../../utils";
 import { HttpStatusCode } from "axios";
 
-export const userRegisterController: RequestHandler = async (
+export const registerUserController: RequestHandler = async (
   req: Request,
   res: Response,
 ) => {
-  const request: RegisterDTO = req.body as unknown as RegisterDTO;
+  const request: RegisterUserDto = req.body as unknown as RegisterUserDto;
   const result: OperationResult = await UserService.createUser(request);
 
   if (isOpFailure(result)) {

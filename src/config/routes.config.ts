@@ -1,8 +1,8 @@
 export const API_ROUTES = {
     ROOT: '/',
     USER: {
-        LOGIN: '/users/login',
-        REGISTER: '/users/register',
+        LOGIN: '/users/loginUser',
+        REGISTER: '/users/registerUser',
         CHANGE_PASSWORD: '/users/change-password',
     },
     GROUP: {
@@ -12,5 +12,10 @@ export const API_ROUTES = {
     },
     NOTE: {
         CREATE: '/notes',
+        UPDATE: '/notes/:noteId'
+    },
+    TASK: {
+        CREATE: '/task',
+        UPDATE: '/task/:taskId'
     }
 }

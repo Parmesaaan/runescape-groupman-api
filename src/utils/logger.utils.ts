@@ -18,7 +18,7 @@ const consoleFormat = format.combine(
   format.simple(),
 );
 
-export const logger = createLogger({
+export const loggerUtils = createLogger({
   level: LOGGING_LEVEL,
   transports: new transports.Console({ format: consoleFormat }),
 });

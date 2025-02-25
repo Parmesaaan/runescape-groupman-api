@@ -1,13 +1,13 @@
 import { Router } from "express";
 import { API_ROUTES } from "../config";
-import { validateBody } from "../utils";
+import {validateBody, validateParams} from "../utils";
 import {
-  ChangePasswordDTO,
-  LoginDTO,
-  RegisterDTO,
-  userChangePasswordController,
-  userLoginController,
-  userRegisterController,
+  UpdateUserDto,
+  LoginUserDto,
+  RegisterUserDto,
+  updateUserController, UserIdDTO,
+  loginUserController,
+  registerUserController,
 } from "../controllers";
 import {authenticate} from "../middleware";
 
@@ -16,21 +16,22 @@ export const userRouter = (): Router => {
 
   router.post(
     API_ROUTES.USER.REGISTER,
-    validateBody(RegisterDTO),
-    userRegisterController,
+    validateBody(RegisterUserDto),
+    registerUserController,
   );
 
   router.post(
     API_ROUTES.USER.LOGIN,
-    validateBody(LoginDTO),
-    userLoginController,
+    validateBody(LoginUserDto),
+    loginUserController,
   );
 
-  router.post(
+  router.put(
     API_ROUTES.USER.CHANGE_PASSWORD,
     authenticate,
-    validateBody(ChangePasswordDTO),
-    userChangePasswordController,
+    validateParams(UserIdDTO),
+    validateBody(UpdateUserDto),
+    updateUserController,
   );
 
   return router;

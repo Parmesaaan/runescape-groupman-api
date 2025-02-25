@@ -26,7 +26,7 @@ export class GroupService {
 
     const newGroup = new Group();
     newGroup.name = request.name;
-    newGroup.members = users;
+    newGroup.users = users;
 
     const savedGroup = await GroupRepository.save(newGroup);
     if (!savedGroup) return opFailure();
@@ -58,14 +58,14 @@ export class GroupService {
       );
     }
 
-    if (group.members.map((user) => user.id).includes(user.id)) {
+    if (group.users.map((user) => user.id).includes(user.id)) {
       return opFailure(
         HttpStatusCode.AlreadyReported,
         `User ${user.username} is already in group ${group.name}`,
       );
     }
 
-    group.members = [...group.members, user];
+    group.users = [...group.users, user];
 
     const savedGroup = await GroupRepository.save(group);
     if (!savedGroup) return opFailure();
@@ -97,14 +97,14 @@ export class GroupService {
       );
     }
 
-    if (!group.members.map((user) => user.id).includes(user.id)) {
+    if (!group.users.map((user) => user.id).includes(user.id)) {
       return opFailure(
         HttpStatusCode.BadRequest,
         `User ${user.username} is not in group ${group.name}`,
       );
     }
 
-    group.members = group.members.filter((member) => member.id !== user.id);
+    group.users = group.users.filter((member) => member.id !== user.id);
 
     const savedGroup = await GroupRepository.save(group);
     if (!savedGroup) return opFailure();

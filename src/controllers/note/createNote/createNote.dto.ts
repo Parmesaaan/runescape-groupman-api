@@ -3,32 +3,10 @@ import {
     IsDefined,
     IsOptional,
     IsString,
-    registerDecorator,
-    ValidationArguments,
-    ValidationOptions,
 } from "class-validator";
+import {GroupOrUserValidator} from "../../../utils";
 
-function CreateNoteDTOValidator(validationOptions?: ValidationOptions) {
-  return function (target: Function) {
-    registerDecorator({
-      name: "createNoteDTOValidator",
-      target: target,
-      propertyName: "",
-      options: validationOptions,
-      validator: {
-        validate(value: any, args: ValidationArguments) {
-          const { group, user } = value;
-          return (group && !user) || (!group && user);
-        },
-        defaultMessage(args: ValidationArguments) {
-          return "Exactly one of `group` or `user` must be defined.";
-        },
-      },
-    });
-  };
-}
-
-@CreateNoteDTOValidator()
+@GroupOrUserValidator()
 export class CreateNoteDTO {
   @Expose()
   @IsString()

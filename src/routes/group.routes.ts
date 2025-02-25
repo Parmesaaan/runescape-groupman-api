@@ -3,9 +3,9 @@ import { API_ROUTES } from "../config";
 import { validateBody } from "../utils";
 import {
   CreateGroupDTO,
-  groupCreateController,
-  groupJoinController,
-  groupLeaveController,
+  createGroupController,
+  joinGroupController,
+  leaveGroupController,
   JoinGroupDTO,
   LeaveGroupDTO,
 } from "../controllers";
@@ -18,21 +18,21 @@ export const groupRouter = (): Router => {
     API_ROUTES.GROUP.CREATE,
     authenticate,
     validateBody(CreateGroupDTO),
-    groupCreateController,
+    createGroupController,
   );
 
   router.post(
     API_ROUTES.GROUP.JOIN,
     authenticate,
     validateBody(JoinGroupDTO),
-    groupJoinController,
+    joinGroupController,
   );
 
   router.post(
     API_ROUTES.GROUP.LEAVE,
     authenticate,
     validateBody(LeaveGroupDTO),
-    groupLeaveController,
+    leaveGroupController,
   );
 
   return router;

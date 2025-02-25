@@ -3,13 +3,13 @@ import { OperationResult } from "../../../types";
 import { UserService } from "../../../services";
 import { isOpFailure } from "../../../utils";
 import { HttpStatusCode } from "axios";
-import { ChangePasswordDTO } from "./changePassword.dto";
+import { UpdateUserDto } from "./updateUser.dto";
 
-export const userChangePasswordController: RequestHandler = async (
+export const updateUserController: RequestHandler = async (
   req: Request,
   res: Response,
 ) => {
-  const request: ChangePasswordDTO = req.body as unknown as ChangePasswordDTO;
+  const request: UpdateUserDto = req.body as unknown as UpdateUserDto;
   const result: OperationResult = await UserService.changePassword(request);
 
   if (isOpFailure(result)) {

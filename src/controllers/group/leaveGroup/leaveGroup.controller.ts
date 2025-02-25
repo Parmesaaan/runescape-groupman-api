@@ -5,7 +5,7 @@ import { isOpFailure } from "../../../utils";
 import { HttpStatusCode } from "axios";
 import { LeaveGroupDTO } from "./leaveGroup.dto";
 
-export const groupLeaveController: RequestHandler = async (
+export const leaveGroupController: RequestHandler = async (
   req: Request,
   res: Response,
 ) => {

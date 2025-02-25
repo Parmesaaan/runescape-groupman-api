@@ -5,7 +5,7 @@ import { isOpFailure } from "../../../utils";
 import { HttpStatusCode } from "axios";
 import { GroupService } from "../../../services";
 
-export const groupCreateController: RequestHandler = async (
+export const createGroupController: RequestHandler = async (
   req: Request,
   res: Response,
 ) => {

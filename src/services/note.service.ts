@@ -1,9 +1,10 @@
-import { CreateNoteDTO } from "../controllers";
+import {CreateNoteDTO, UpdateNoteDTO} from "../controllers";
 import { OperationResult } from "../types";
 import { Note } from "../models";
 import { GroupRepository, NoteRepository, UserRepository } from "../config";
 import { opFailure, opSuccess } from "../utils";
 import { HttpStatusCode } from "axios";
+import {NoteIdDTO} from "../controllers";
 
 export class NoteService {
   public static async createNote(
@@ -46,5 +47,21 @@ export class NoteService {
     if (!savedNote) return opFailure();
 
     return opSuccess(note);
+  }
+
+  public static async updateNote(nodeIdDto: NoteIdDTO, request: UpdateNoteDTO): Promise<OperationResult> {
+    const note = await NoteRepository.findOne({ where: {id: nodeIdDto.noteId}})
+
+    if (!note) {
+      return opFailure(HttpStatusCode.NotFound, `Cannot find task`)
+    }
+
+    note.title = request.title ?? note.title
+    note.contents = request.content ?? note.contents
+
+    const savedNote = await NoteRepository.save(note)
+    if (!savedNote) return opFailure()
+
+    return opSuccess(savedNote)
   }
 }

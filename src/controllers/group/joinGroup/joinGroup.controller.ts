@@ -5,7 +5,7 @@ import { isOpFailure } from "../../../utils";
 import { HttpStatusCode } from "axios";
 import { JoinGroupDTO } from "./joinGroup.dto";
 
-export const groupJoinController: RequestHandler = async (
+export const joinGroupController: RequestHandler = async (
   req: Request,
   res: Response,
 ) => {
