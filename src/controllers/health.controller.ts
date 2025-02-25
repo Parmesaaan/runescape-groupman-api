@@ -1,6 +1,6 @@
 import { HttpStatusCode } from 'axios'
-import { RequestHandler } from 'express'
+import { RequestHandler, Request, Response } from 'express'
 
-export const healthController: RequestHandler = (req, res) => {
+export const healthController: RequestHandler = (req: Request, res: Response) => {
     return res.sendStatus(HttpStatusCode.Ok)
 }

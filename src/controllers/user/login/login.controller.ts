@@ -1,11 +1,11 @@
-import {RequestHandler} from "express";
+import {RequestHandler, Request, Response} from "express";
 import {LoginDTO} from "./login.dto";
 import {UserService} from "../../../services/user.service";
 import {OperationResult} from "../../../types";
 import {isOpFailure} from "../../../utils";
 import {HttpStatusCode} from "axios";
 
-export const userLoginController: RequestHandler = async(req, res) => {
+export const userLoginController: RequestHandler = async(req: Request, res, Response) => {
     const request: LoginDTO = (req.body as unknown) as LoginDTO
     const result: OperationResult = await UserService.loginUser(request)
 
