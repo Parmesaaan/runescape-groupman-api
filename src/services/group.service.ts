@@ -18,7 +18,7 @@ export class GroupService {
     }
 
     const users = await UserRepository.findBy({
-      username: In(request.members),
+      username: In(request.users),
     });
     if (!users || !users.length) {
       return opFailure(HttpStatusCode.NotFound, `No users provided exist`);

@@ -5,12 +5,12 @@ export class CreateGroupDto {
   @Expose()
   @IsString()
   @IsDefined()
-  name!: string;
+  name!: string
 
   @Expose()
   @IsArray()
   @IsDefined()
   @ArrayNotEmpty()
   @IsString({ each: true })
-  members!: Array<string>;
+  users!: Array<string>
 }

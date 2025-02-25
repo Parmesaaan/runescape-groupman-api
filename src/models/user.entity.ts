@@ -34,7 +34,7 @@ export class User extends BaseEntity {
   @ManyToMany(() => Group, (group) => group.users)
   groups!: Array<Group>;
 
-  @OneToMany(() => Note, (note) => note.user) // User can have many notes
+  @OneToMany(() => Note, (note) => note.user)
   notes!: Array<Note>;
 
   @OneToMany(() => Task, (task) => task.user)
