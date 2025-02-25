@@ -38,5 +38,5 @@ export class User extends BaseEntity {
   notes!: Array<Note>
 
   @OneToMany(() => Task, (task) => task.user)
-  tasks!: Task[]
+  tasks!: Array<Task>
 }

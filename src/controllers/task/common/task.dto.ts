@@ -15,6 +15,8 @@ export class TaskResponseDto {
     description?:string
     taskType!: TaskType
     lastCompleted?: Date
+    userId?: string
+    groupId?: string
     createdAt!: Date
     updatedAt!: Date
 
@@ -26,5 +28,8 @@ export class TaskResponseDto {
         this.lastCompleted = task.lastCompleted
         this.createdAt = task.createdAt
         this.updatedAt = task.updatedAt
+
+        this.userId = task.user?.id
+        this.groupId = task.group?.id
     }
 }

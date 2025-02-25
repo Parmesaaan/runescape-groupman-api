@@ -13,6 +13,8 @@ export class NoteResponseDto {
     id!: string
     title!: string
     contents!: string
+    userId?: string
+    groupId?: string
     createdAt!: Date
     updatedAt!: Date
 
@@ -22,5 +24,8 @@ export class NoteResponseDto {
         this.contents = note.contents
         this.createdAt = note.createdAt
         this.updatedAt = note.createdAt
+
+        this.userId = note.user?.id
+        this.groupId = note.group?.id
     }
 }

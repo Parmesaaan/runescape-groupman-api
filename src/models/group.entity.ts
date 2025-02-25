@@ -49,5 +49,5 @@ export class Group extends BaseEntity {
   notes!: Array<Note>
 
   @OneToMany(() => Task, (task) => task.group)
-  tasks!: Task[]
+  tasks!: Array<Task>
 }

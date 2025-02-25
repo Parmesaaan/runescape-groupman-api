@@ -14,9 +14,9 @@ export class GroupResponseDto {
     name!: string
     createdAt!: Date
     updatedAt!: Date
-    users?: Array<string>
-    notes?: Array<string>
-    tasks?: Array<string>
+    users!: Array<string>
+    notes!: Array<string>
+    tasks!: Array<string>
 
     constructor(group: Group) {
         this.id = group.id
