@@ -9,6 +9,7 @@ import {
   userLoginController,
   userRegisterController,
 } from "../controllers";
+import {authenticate} from "../middleware";
 
 export const userRouter = (): Router => {
   const router = Router();
@@ -27,6 +28,7 @@ export const userRouter = (): Router => {
 
   router.post(
     API_ROUTES.USER.CHANGE_PASSWORD,
+    authenticate,
     validateBody(ChangePasswordDTO),
     userChangePasswordController,
   );
