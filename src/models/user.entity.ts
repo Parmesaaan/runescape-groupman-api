@@ -1,10 +1,12 @@
-import {BaseEntity, Column, CreateDateColumn, PrimaryGeneratedColumn, UpdateDateColumn} from "typeorm";
+import {BaseEntity, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, Unique, UpdateDateColumn} from "typeorm";
 
+@Entity('user')
 export class User extends BaseEntity {
-    @PrimaryGeneratedColumn('uuid')
+    @PrimaryGeneratedColumn('uuid', { primaryKeyConstraintName: 'PK_user_id' })
     id!: string
 
-    @Column({unique: true})
+    @Column()
+    @Unique('UQ_user_username', ['username'])
     username!: string
 
     @Column({name: 'password_hash'})
