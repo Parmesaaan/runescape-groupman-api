@@ -1,4 +1,4 @@
-export * from './system'
+export * from './__system'
 export * from './user'
 export * from './group'
 export * from './note'

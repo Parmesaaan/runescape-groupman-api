@@ -1,33 +1,27 @@
-import {CreateNoteDto, UpdateNoteDto} from "../controllers"
-import { OperationResult } from "../types"
-import { Note } from "../models"
-import { GroupRepository, NoteRepository, UserRepository } from "../config"
-import { opFailure, opSuccess } from "../utils"
-import { HttpStatusCode } from "axios"
-import { NoteIdDto } from "../controllers"
+import { CreateNoteDto, NoteIdDto, UpdateNoteDto } from '../controllers'
+import { OperationResult } from '../types'
+import { Note } from '../models'
+import { GroupRepository, NoteRepository, UserRepository } from '../config'
+import { opFailure, opSuccess } from '../utils'
+import { HttpStatusCode } from 'axios'
 
 export class NoteService {
-  public static async createNote(
-      request: CreateNoteDto,
-  ): Promise<OperationResult> {
+  public static async createNote(request: CreateNoteDto): Promise<OperationResult> {
     const note = new Note()
     note.title = request.title
     note.contents = request.content
 
-    if(!!request.groupId === !!request.userId) {
-      return opFailure(HttpStatusCode.BadRequest, "Exactly one of `groupId` or `userId` must be defined.")
+    if (!!request.groupId === !!request.userId) {
+      return opFailure(HttpStatusCode.BadRequest, 'Exactly one of `groupId` or `userId` must be defined.')
     }
 
     if (request.groupId) {
       const group = await GroupRepository.findOne({
         where: { id: request.groupId },
-        relations: ["users"],
+        relations: ['users'],
       })
       if (!group) {
-        return opFailure(
-            HttpStatusCode.NotFound,
-            `Cannot find group with id ${request.groupId}`,
-        )
+        return opFailure(HttpStatusCode.NotFound, `Cannot find group with id ${request.groupId}`)
       }
 
       note.group = group
@@ -38,10 +32,7 @@ export class NoteService {
         where: { id: request.userId },
       })
       if (!user) {
-        return opFailure(
-            HttpStatusCode.NotFound,
-            `Cannot find user with username ${request.userId}`,
-        )
+        return opFailure(HttpStatusCode.NotFound, `Cannot find user with username ${request.userId}`)
       }
 
       note.user = user
@@ -54,7 +45,7 @@ export class NoteService {
   }
 
   public static async updateNote(nodeIdDto: NoteIdDto, request: UpdateNoteDto): Promise<OperationResult> {
-    const note = await NoteRepository.findOne({ where: {id: nodeIdDto.noteId}})
+    const note = await NoteRepository.findOne({ where: { id: nodeIdDto.noteId } })
 
     if (!note) {
       return opFailure(HttpStatusCode.NotFound, `Cannot find task`)

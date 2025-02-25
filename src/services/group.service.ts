@@ -1,20 +1,15 @@
-import {CreateGroupDto, GroupIdDto, UserIdDto} from "../controllers"
-import { OperationResult } from "../types"
-import { GroupRepository, UserRepository } from "../config"
-import { opFailure, opSuccess } from "../utils"
-import { HttpStatusCode } from "axios"
-import { Group } from "../models"
-import { In } from "typeorm"
+import { CreateGroupDto, GroupIdDto, UserIdDto } from '../controllers'
+import { OperationResult } from '../types'
+import { GroupRepository, UserRepository } from '../config'
+import { opFailure, opSuccess } from '../utils'
+import { HttpStatusCode } from 'axios'
+import { Group } from '../models'
+import { In } from 'typeorm'
 
 export class GroupService {
-  public static async createGroup(
-      request: CreateGroupDto,
-  ): Promise<OperationResult> {
+  public static async createGroup(request: CreateGroupDto): Promise<OperationResult> {
     if (await GroupRepository.exists({ where: { name: request.name } })) {
-      return opFailure(
-          HttpStatusCode.Conflict,
-          `Group with name ${request.name} already exists`,
-      )
+      return opFailure(HttpStatusCode.Conflict, `Group with name ${request.name} already exists`)
     }
 
     const users = await UserRepository.findBy({
@@ -34,37 +29,25 @@ export class GroupService {
     return opSuccess(savedGroup)
   }
 
-  public static async joinGroup(
-      groupIdDto: GroupIdDto,
-      request: UserIdDto,
-  ): Promise<OperationResult> {
+  public static async joinGroup(groupIdDto: GroupIdDto, request: UserIdDto): Promise<OperationResult> {
     const group = await GroupRepository.findOne({
       where: { id: groupIdDto.groupId },
-      relations: ["users"],
+      relations: ['users'],
     })
 
     if (!group) {
-      return opFailure(
-          HttpStatusCode.NotFound,
-          `Cannot find group with id ${groupIdDto.groupId}`,
-      )
+      return opFailure(HttpStatusCode.NotFound, `Cannot find group with id ${groupIdDto.groupId}`)
     }
 
     const user = await UserRepository.findOne({
       where: { id: request.userId },
     })
     if (!user) {
-      return opFailure(
-          HttpStatusCode.NotFound,
-          `Cannot find user with id ${request.userId}`,
-      )
+      return opFailure(HttpStatusCode.NotFound, `Cannot find user with id ${request.userId}`)
     }
 
     if (group.users.map((user) => user.id).includes(user.id)) {
-      return opFailure(
-          HttpStatusCode.AlreadyReported,
-          `User ${user.username} is already in group ${group.name}`,
-      )
+      return opFailure(HttpStatusCode.AlreadyReported, `User ${user.username} is already in group ${group.name}`)
     }
 
     group.users = [...group.users, user]
@@ -75,37 +58,25 @@ export class GroupService {
     return opSuccess(savedGroup)
   }
 
-  public static async leaveGroup(
-      groupIdDto: GroupIdDto,
-      request: UserIdDto,
-  ): Promise<OperationResult> {
+  public static async leaveGroup(groupIdDto: GroupIdDto, request: UserIdDto): Promise<OperationResult> {
     const group = await GroupRepository.findOne({
       where: { id: groupIdDto.groupId },
-      relations: ["users"],
+      relations: ['users'],
     })
 
     if (!group) {
-      return opFailure(
-          HttpStatusCode.NotFound,
-          `Cannot find group with id ${groupIdDto.groupId}`,
-      )
+      return opFailure(HttpStatusCode.NotFound, `Cannot find group with id ${groupIdDto.groupId}`)
     }
 
     const user = await UserRepository.findOne({
       where: { id: request.userId },
     })
     if (!user) {
-      return opFailure(
-          HttpStatusCode.NotFound,
-          `Cannot find user with id ${request.userId}`,
-      )
+      return opFailure(HttpStatusCode.NotFound, `Cannot find user with id ${request.userId}`)
     }
 
     if (!group.users.map((user) => user.id).includes(user.id)) {
-      return opFailure(
-          HttpStatusCode.BadRequest,
-          `User ${user.username} is not in group ${group.name}`,
-      )
+      return opFailure(HttpStatusCode.BadRequest, `User ${user.username} is not in group ${group.name}`)
     }
 
     group.users = group.users.filter((u) => u.id !== user.id)

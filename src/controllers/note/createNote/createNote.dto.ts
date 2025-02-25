@@ -1,9 +1,5 @@
-import { Expose } from "class-transformer"
-import {
-  IsDefined,
-  IsOptional,
-  IsString, IsUUID,
-} from "class-validator"
+import { Expose } from 'class-transformer'
+import { IsDefined, IsOptional, IsString, IsUUID } from 'class-validator'
 
 export class CreateNoteDto {
   @Expose()

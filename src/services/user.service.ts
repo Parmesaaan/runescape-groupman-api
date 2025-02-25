@@ -1,23 +1,16 @@
-import { OperationResult } from "../types"
-import { JWT_SECRET, UserRepository } from "../config"
-import {UpdateUserDto, LoginUserDto, RegisterUserDto, UserIdDto} from "../controllers"
-import { opFailure, opSuccess } from "../utils"
-import { HttpStatusCode } from "axios"
-import bcrypt from "bcrypt"
-import { User } from "../models"
-import jwt from "jsonwebtoken"
+import { OperationResult } from '../types'
+import { JWT_SECRET, UserRepository } from '../config'
+import { LoginUserDto, RegisterUserDto, UpdateUserDto, UserIdDto } from '../controllers'
+import { opFailure, opSuccess } from '../utils'
+import { HttpStatusCode } from 'axios'
+import bcrypt from 'bcrypt'
+import { User } from '../models'
+import jwt from 'jsonwebtoken'
 
 export class UserService {
-  public static async createUser(
-    request: RegisterUserDto,
-  ): Promise<OperationResult> {
-    if (
-      await UserRepository.exists({ where: { username: request.username } })
-    ) {
-      return opFailure(
-        HttpStatusCode.Conflict,
-        `User with username ${request.username} already exists`,
-      )
+  public static async createUser(request: RegisterUserDto): Promise<OperationResult> {
+    if (await UserRepository.exists({ where: { username: request.username } })) {
+      return opFailure(HttpStatusCode.Conflict, `User with username ${request.username} already exists`)
     }
 
     const newUser = new User()
@@ -33,13 +26,10 @@ export class UserService {
   public static async loginUser(request: LoginUserDto): Promise<OperationResult> {
     const user = await UserRepository.findOne({
       where: { username: request.username },
-      relations: [ "groups", "tasks", "notes" ]
+      relations: ['groups', 'tasks', 'notes'],
     })
     if (!user) {
-      return opFailure(
-        HttpStatusCode.NotFound,
-        `Cannot find user with username ${request.username}`,
-      )
+      return opFailure(HttpStatusCode.NotFound, `Cannot find user with username ${request.username}`)
     }
 
     const passwordMatch = await bcrypt.compare(request.password, user.password)
@@ -48,7 +38,7 @@ export class UserService {
     }
 
     const token = jwt.sign({ userId: user.id }, JWT_SECRET, {
-      expiresIn: "1h",
+      expiresIn: '1h',
     })
     return opSuccess({ user: user, token: token } as {
       user: User
@@ -56,19 +46,13 @@ export class UserService {
     })
   }
 
-  static async updateUser(
-    userIdDto: UserIdDto,
-    request: UpdateUserDto,
-  ): Promise<OperationResult> {
+  static async updateUser(userIdDto: UserIdDto, request: UpdateUserDto): Promise<OperationResult> {
     const user = await UserRepository.findOne({
       where: { id: userIdDto.userId },
     })
 
     if (!user) {
-      return opFailure(
-        HttpStatusCode.NotFound,
-        `Cannot find user with id ${userIdDto.userId}`,
-      )
+      return opFailure(HttpStatusCode.NotFound, `Cannot find user with id ${userIdDto.userId}`)
     }
 
     const passwordMatch = await bcrypt.compare(request.password, user.password)

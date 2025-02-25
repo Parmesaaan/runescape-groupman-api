@@ -1,6 +1,6 @@
-import { OperationResult } from "../types"
+import { OperationResult } from '../types'
 
-export const opSuccess = (data: unknown, message = "ok"): OperationResult => {
+export const opSuccess = (data: unknown, message = 'ok'): OperationResult => {
   return {
     success: {
       message,
@@ -9,10 +9,7 @@ export const opSuccess = (data: unknown, message = "ok"): OperationResult => {
   }
 }
 
-export const opFailure = (
-  status = 500,
-  message = "something went wrong",
-): OperationResult => {
+export const opFailure = (status = 500, message = 'something went wrong'): OperationResult => {
   return {
     error: {
       message,
@@ -22,9 +19,9 @@ export const opFailure = (
 }
 
 export const isOpSuccess = (result: OperationResult): boolean => {
-  return "success" in result
+  return 'success' in result
 }
 
 export const isOpFailure = (result: OperationResult): boolean => {
-  return "error" in result
+  return 'error' in result
 }

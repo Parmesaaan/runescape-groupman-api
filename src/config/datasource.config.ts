@@ -1,7 +1,7 @@
-import { DataSource } from "typeorm"
-import { dbConfig } from "./environment.config"
-import { Group, Note, User } from "../models"
-import {Task} from "../models/task.entity"
+import { DataSource } from 'typeorm'
+import { dbConfig } from './environment.config'
+import { Group, Note, User } from '../models'
+import { Task } from '../models/task.entity'
 
 export const AppDataSource = new DataSource({
   host: dbConfig.host,
@@ -10,9 +10,9 @@ export const AppDataSource = new DataSource({
   password: dbConfig.password,
   database: dbConfig.database,
   logging: dbConfig.logging,
-  type: "postgres",
+  type: 'postgres',
   synchronize: false,
-  entities: [__dirname + "/../models/*.entity.{js,ts}"],
+  entities: [__dirname + '/../models/*.entity.{js,ts}'],
   subscribers: [],
   migrations: [],
   extra: {

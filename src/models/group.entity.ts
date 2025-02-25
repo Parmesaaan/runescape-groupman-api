@@ -9,38 +9,38 @@ import {
   PrimaryGeneratedColumn,
   Unique,
   UpdateDateColumn,
-} from "typeorm"
-import { User } from "./user.entity"
-import { Note } from "./note.entity"
-import {Task} from "./task.entity"
+} from 'typeorm'
+import { User } from './user.entity'
+import { Note } from './note.entity'
+import { Task } from './task.entity'
 
-@Entity("group")
+@Entity('group')
 export class Group extends BaseEntity {
-  @PrimaryGeneratedColumn("uuid", { primaryKeyConstraintName: "PK_group_id" })
+  @PrimaryGeneratedColumn('uuid', { primaryKeyConstraintName: 'PK_group_id' })
   id!: string
 
   @Column()
-  @Unique("UQ_group_name", ["name"])
+  @Unique('UQ_group_name', ['name'])
   name!: string
 
-  @CreateDateColumn({ name: "created_at" })
+  @CreateDateColumn({ name: 'created_at' })
   createdAt!: Date
 
-  @UpdateDateColumn({ name: "updated_at" })
+  @UpdateDateColumn({ name: 'updated_at' })
   updatedAt!: Date
 
   @ManyToMany(() => User, (user) => user.groups)
   @JoinTable({
-    name: "group_user",
+    name: 'group_user',
     joinColumn: {
-      name: "group_id",
-      referencedColumnName: "id",
-      foreignKeyConstraintName: "FK_group_users_group_id",
+      name: 'group_id',
+      referencedColumnName: 'id',
+      foreignKeyConstraintName: 'FK_group_users_group_id',
     },
     inverseJoinColumn: {
-      name: "user_id",
-      referencedColumnName: "id",
-      foreignKeyConstraintName: "FK_group_users_user_id",
+      name: 'user_id',
+      referencedColumnName: 'id',
+      foreignKeyConstraintName: 'FK_group_users_user_id',
     },
   })
   users!: Array<User>

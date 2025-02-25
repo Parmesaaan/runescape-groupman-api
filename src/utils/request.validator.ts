@@ -1,9 +1,9 @@
-import { ClassConstructor, plainToInstance } from "class-transformer"
-import { validate, ValidationError } from "class-validator"
-import { NextFunction, Request, RequestHandler, Response } from "express"
-import { HttpStatusCode } from "axios"
+import { ClassConstructor, plainToInstance } from 'class-transformer'
+import { validate, ValidationError } from 'class-validator'
+import { NextFunction, Request, RequestHandler, Response } from 'express'
+import { HttpStatusCode } from 'axios'
 
-type AppErrorJSONObject = { code: number, message: string, error?: unknown }
+type AppErrorJSONObject = { code: number; message: string; error?: unknown }
 
 type ErrorResult = {
   property: string
@@ -13,8 +13,9 @@ type ErrorResult = {
 
 class AppValidationError extends Error {
   errors: Array<ErrorResult>
+
   constructor(errors: Array<ValidationError>) {
-    super("Validation Error")
+    super('Validation Error')
 
     this.errors = errors.map((e) => this.getValidationErrorObject(e))
   }
@@ -22,12 +23,8 @@ class AppValidationError extends Error {
   public getValidationErrorObject(error: ValidationError): ErrorResult {
     return {
       property: error.property,
-      constraints: error.constraints
-        ? Object.values(error.constraints)
-        : undefined,
-      children: error.children?.length
-        ? error.children.map((error) => this.getValidationErrorObject(error))
-        : undefined,
+      constraints: error.constraints ? Object.values(error.constraints) : undefined,
+      children: error.children?.length ? error.children.map((error) => this.getValidationErrorObject(error)) : undefined,
     }
   }
 
@@ -41,13 +38,9 @@ class AppValidationError extends Error {
 }
 
 const requestAttributeValidator =
-  (attribute: "body" | "params" | "query" | "mergedData") =>
+  (attribute: 'body' | 'params' | 'query' | 'mergedData') =>
   (dto: ClassConstructor<object>): RequestHandler =>
-  async (
-    req: Request,
-    response: Response,
-    next: NextFunction,
-  ): Promise<void> => {
+  async (req: Request, response: Response, next: NextFunction): Promise<void> => {
     const instance = plainToInstance(dto, req[attribute], {
       excludeExtraneousValues: true,
       enableImplicitConversion: true,
@@ -68,7 +61,7 @@ const requestAttributeValidator =
     }
   }
 
-export const validateBody = requestAttributeValidator("body")
-export const validateQuery = requestAttributeValidator("query")
-export const validateParams = requestAttributeValidator("params")
-export const validateMergedData = requestAttributeValidator("mergedData")
+export const validateBody = requestAttributeValidator('body')
+export const validateQuery = requestAttributeValidator('query')
+export const validateParams = requestAttributeValidator('params')
+export const validateMergedData = requestAttributeValidator('mergedData')
