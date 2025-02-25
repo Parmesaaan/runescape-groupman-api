@@ -29,6 +29,7 @@ const initApp = () => {
   app.use(cookieParser())
   app.use(bodyParser.json())
   app.use(bodyParser.urlencoded({extended: true}))
+  // TODO: Request response logging?
   configureRoutes(app)
   // TODO: Exception handling?
 

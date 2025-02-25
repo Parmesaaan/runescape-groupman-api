@@ -9,7 +9,9 @@ import {logger} from "./utils";
 const startTime = new Date().getMilliseconds()
 
 async function initDataSource(): Promise<void> {
+    logger.debug('Initializing data sources')
     if(!AppDataSource.isInitialized) await AppDataSource.initialize()
+    logger.debug('Data sources initialized')
 }
 
 try {
@@ -20,6 +22,7 @@ try {
 
             server.listen(SERVER_PORT, () => {
                 const serverStartDuration = new Date().getMilliseconds() - startTime
+                logger.info(`Server start successfully on port ${SERVER_PORT} in ${serverStartDuration}ms`)
             })
         })
         .catch(e => {

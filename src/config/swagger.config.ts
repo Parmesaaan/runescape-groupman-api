@@ -6,7 +6,7 @@ export const swaggerConfig = {
         openapi: '3.0.0',
         info: {
             title: 'CGIM Backend',
-            version: VERSION,
+            version: VERSION || '0',
             description: 'CGIM Backend',
         },
         servers: [
