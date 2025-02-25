@@ -15,7 +15,7 @@ export const API_ROUTES = {
         UPDATE: '/notes/:noteId',
     },
     TASK: {
-        CREATE: '/task',
-        UPDATE: '/task/:taskId',
+        CREATE: '/tasks',
+        UPDATE: '/tasks/:taskId',
     }
 }

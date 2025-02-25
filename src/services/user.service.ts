@@ -33,6 +33,7 @@ export class UserService {
   public static async loginUser(request: LoginUserDto): Promise<OperationResult> {
     const user = await UserRepository.findOne({
       where: { username: request.username },
+      relations: [ "groups", "tasks", "notes" ]
     })
     if (!user) {
       return opFailure(

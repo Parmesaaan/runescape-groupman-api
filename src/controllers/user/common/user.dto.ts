@@ -14,9 +14,9 @@ export class UserResponseDto {
     username!: string
     createdAt!: Date
     updatedAt!: Date
-    groups!: Array<string>
-    notes!: Array<string>
-    tasks!: Array<string>
+    groups?: Array<string>
+    notes?: Array<string>
+    tasks?: Array<string>
 
     constructor(user: User) {
         this.id = user.id
@@ -24,8 +24,8 @@ export class UserResponseDto {
         this.createdAt = user.createdAt
         this.updatedAt = user.createdAt
 
-        this.groups = user.groups?.map(group => group.id) ?? []
-        this.notes = user.notes?.map(note => note.id) ?? []
-        this.tasks = user.tasks?.map(task => task.id) ?? []
+        this.groups = user.groups?.map(group => group.id)
+        this.notes = user.notes?.map(note => note.id)
+        this.tasks = user.tasks?.map(task => task.id)
     }
 }

@@ -1,5 +1,5 @@
 import {Expose,Transform} from "class-transformer"
-import {IsDefined, IsEnum, IsOptional, IsString} from "class-validator"
+import {IsDefined, IsEnum, IsOptional, IsString, IsUUID} from "class-validator"
 import {TaskType} from "../../../models/task.entity"
 
 export class CreateTaskDto {
@@ -20,12 +20,12 @@ export class CreateTaskDto {
     taskType!: TaskType
 
     @Expose()
-    @IsString()
+    @IsUUID()
     @IsOptional()
-    group?: string
+    groupId?: string
 
     @Expose()
-    @IsString()
+    @IsUUID()
     @IsOptional()
-    user?: string
+    userId?: string
 }

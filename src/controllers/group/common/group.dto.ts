@@ -14,18 +14,18 @@ export class GroupResponseDto {
     name!: string
     createdAt!: Date
     updatedAt!: Date
-    users!: Array<string>
-    notes!: Array<string>
-    tasks!: Array<string>
+    users?: Array<string>
+    notes?: Array<string>
+    tasks?: Array<string>
 
     constructor(group: Group) {
         this.id = group.id
-        this.name = group.id
+        this.name = group.name
         this.createdAt = group.createdAt
         this.updatedAt = group.updatedAt
 
-        this.users = group.users?.map(user => user.id) ?? []
-        this.notes = group.notes?.map(note => note.id) ?? []
-        this.tasks = group.tasks?.map(task => task.id) ?? []
+        this.users = group.users?.map(user => user.id)
+        this.notes = group.notes?.map(note => note.id)
+        this.tasks = group.tasks?.map(task => task.id)
     }
 }

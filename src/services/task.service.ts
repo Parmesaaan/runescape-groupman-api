@@ -9,35 +9,36 @@ export class TaskService {
     public static async createTask(request: CreateTaskDto): Promise<OperationResult> {
         const task = new Task()
         task.title = request.title
+        task.description = request.description
         task.taskType = request.taskType
 
-        if(!!request.group === !!request.user) {
-            return opFailure(HttpStatusCode.BadRequest, "Exactly one of `group` or `user` must be defined.")
+        if(!!request.groupId === !!request.userId) {
+            return opFailure(HttpStatusCode.BadRequest, "Exactly one of `groupId` or `userId` must be defined.")
         }
 
-        if (task.group) {
+        if (request.groupId) {
             const group = await GroupRepository.findOne({
-                where: { name: request.group },
+                where: { id: request.groupId },
                 relations: ["users"],
             })
             if (!group) {
                 return opFailure(
                     HttpStatusCode.NotFound,
-                    `Cannot find task with name ${request.group}`,
+                    `Cannot find task with id ${request.groupId}`,
                 )
             }
 
             task.group = group
         }
 
-        if (task.user) {
+        if (request.userId) {
             const user = await UserRepository.findOne({
-                where: { username: request.user },
+                where: { id: request.userId },
             })
             if (!user) {
                 return opFailure(
                     HttpStatusCode.NotFound,
-                    `Cannot find user with username ${request.user}`,
+                    `Cannot find user with id ${request.userId}`,
                 )
             }
 

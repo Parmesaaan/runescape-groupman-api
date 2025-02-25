@@ -8,39 +8,39 @@ import { NoteIdDto } from "../controllers"
 
 export class NoteService {
   public static async createNote(
-    request: CreateNoteDto,
+      request: CreateNoteDto,
   ): Promise<OperationResult> {
     const note = new Note()
     note.title = request.title
     note.contents = request.content
 
-    if(!!request.groupId === !!request.groupId) {
-      return opFailure(HttpStatusCode.BadRequest, "Exactly one of `group` or `user` must be defined.")
+    if(!!request.groupId === !!request.userId) {
+      return opFailure(HttpStatusCode.BadRequest, "Exactly one of `groupId` or `userId` must be defined.")
     }
 
-    if (note.group) {
+    if (request.groupId) {
       const group = await GroupRepository.findOne({
         where: { id: request.groupId },
         relations: ["users"],
       })
       if (!group) {
         return opFailure(
-          HttpStatusCode.NotFound,
-          `Cannot find group with id ${request.groupId}`,
+            HttpStatusCode.NotFound,
+            `Cannot find group with id ${request.groupId}`,
         )
       }
 
       note.group = group
     }
 
-    if (note.user) {
+    if (request.userId) {
       const user = await UserRepository.findOne({
         where: { id: request.userId },
       })
       if (!user) {
         return opFailure(
-          HttpStatusCode.NotFound,
-          `Cannot find user with username ${request.userId}`,
+            HttpStatusCode.NotFound,
+            `Cannot find user with username ${request.userId}`,
         )
       }
 
