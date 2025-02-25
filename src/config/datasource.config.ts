@@ -3,16 +3,20 @@ import {dbConfig} from "./environment.config";
 import {User} from "../models";
 
 export const AppDataSource = new DataSource({
-    ...dbConfig,
+    host: dbConfig.host,
+    port: dbConfig.port,
+    username: dbConfig.user,
+    password: dbConfig.password,
+    database: dbConfig.database,
+    logging: dbConfig.logging,
     type: 'postgres',
     synchronize: false,
-    logging: dbConfig.logging,
     entities: [__dirname + '/../models/*.entity.{js,ts}'],
     subscribers: [],
     migrations: [],
     extra: {
-        query_timeout: 10000,
-        connectionLimit: 50,
+        query_timeout: 5000,
+        connectionLimit: 10,
     },
 })
 

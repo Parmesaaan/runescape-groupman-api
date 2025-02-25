@@ -1,6 +1,6 @@
 import 'dotenv/config'
 import 'reflect-metadata'
-import {AppDataSource} from "../ormconfig"
+import {AppDataSource} from "./config"
 import {initApp} from "./app"
 import http from 'http'
 import {SERVER_PORT} from "./config";
