@@ -6,8 +6,11 @@ export const API_ROUTES = {
         CHANGE_PASSWORD: '/users/change-password',
     },
     GROUP: {
-        CREATE: '/groups/create',
+        CREATE: '/groups',
         JOIN: '/groups/join',
         LEAVE: '/groups/leave',
+    },
+    NOTE: {
+        CREATE: '/notes',
     }
 }

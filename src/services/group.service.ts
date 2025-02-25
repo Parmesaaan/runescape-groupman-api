@@ -33,9 +33,9 @@ export class GroupService {
             return opFailure(HttpStatusCode.NotFound, `Cannot find group with name ${request.group}`)
         }
 
-        const user = await UserRepository.findOne({where: {username: request.username}})
+        const user = await UserRepository.findOne({where: {username: request.user}})
         if (!user){
-            return opFailure(HttpStatusCode.NotFound, `Cannot find user with username ${request.username}`)
+            return opFailure(HttpStatusCode.NotFound, `Cannot find user with username ${request.user}`)
         }
 
         if(group.members.map(user => user.id).includes(user.id)) {
@@ -56,9 +56,9 @@ export class GroupService {
             return opFailure(HttpStatusCode.NotFound, `Cannot find group with name ${request.group}`)
         }
 
-        const user = await UserRepository.findOne({where: {username: request.username}})
+        const user = await UserRepository.findOne({where: {username: request.user}})
         if (!user){
-            return opFailure(HttpStatusCode.NotFound, `Cannot find user with username ${request.username}`)
+            return opFailure(HttpStatusCode.NotFound, `Cannot find user with username ${request.user}`)
         }
 
         if(!group.members.map(user => user.id).includes(user.id)) {

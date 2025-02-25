@@ -13,5 +13,5 @@ export const groupJoinController: RequestHandler = async(req: Request, res: Resp
         return res.status(result.error!.status).send({message: result.error!.message})
     }
 
-    return res.status(HttpStatusCode.Created).send({message: `User ${request.username} has joined group ${request.group}`})
+    return res.status(HttpStatusCode.Created).send({message: `User ${request.user} has joined group ${request.group}`})
 }

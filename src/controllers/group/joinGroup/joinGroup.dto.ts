@@ -5,7 +5,7 @@ export class JoinGroupDTO {
     @Expose()
     @IsString()
     @IsDefined()
-    username!: string
+    user!: string
 
     @Expose()
     @IsString()

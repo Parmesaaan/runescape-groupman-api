@@ -5,7 +5,7 @@ export class LeaveGroupDTO {
     @Expose()
     @IsString()
     @IsDefined()
-    username!: string
+    user!: string
 
     @Expose()
     @IsString()

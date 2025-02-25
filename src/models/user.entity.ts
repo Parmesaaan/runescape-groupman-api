@@ -4,11 +4,13 @@ import {
     CreateDateColumn,
     Entity,
     ManyToMany,
+    OneToMany,
     PrimaryGeneratedColumn,
     Unique,
     UpdateDateColumn
 } from "typeorm";
 import {Group} from "./group.entity";
+import {Note} from "./note.entity";
 
 @Entity('user')
 export class User extends BaseEntity {
@@ -30,4 +32,7 @@ export class User extends BaseEntity {
 
     @ManyToMany(() => Group, group => group.members)
     groups!: Array<Group>
+
+    @OneToMany(() => Note, note => note.user) // User can have many notes
+    notes!: Array<Note>
 }

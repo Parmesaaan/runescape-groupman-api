@@ -1,6 +1,6 @@
 import {DataSource} from "typeorm";
 import {dbConfig} from "./environment.config";
-import {Group, User} from "../models";
+import {Group, Note, User} from "../models";
 
 export const AppDataSource = new DataSource({
     host: dbConfig.host,
@@ -22,3 +22,4 @@ export const AppDataSource = new DataSource({
 
 export const UserRepository = AppDataSource.getRepository(User)
 export const GroupRepository = AppDataSource.getRepository(Group)
+export const NoteRepository = AppDataSource.getRepository(Note)
