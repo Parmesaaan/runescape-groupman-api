@@ -1,7 +1,7 @@
 import {Expose} from "class-transformer";
 import {IsOptional, IsString} from "class-validator";
 
-export class UpdateNoteDTO {
+export class UpdateNoteDto {
     @Expose()
     @IsString()
     @IsOptional()

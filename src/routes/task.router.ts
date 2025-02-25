@@ -2,7 +2,7 @@ import {Router} from "express";
 import {API_ROUTES} from "../config";
 import {authenticate} from "../middleware";
 import {validateBody, validateParams} from "../utils";
-import {CreateTaskDTO, createTaskController, TaskIdDTO, updateTaskController, UpdateTaskDTO} from "../controllers";
+import {CreateTaskDto, createTaskController, TaskIdDto, updateTaskController, UpdateTaskDto} from "../controllers";
 
 export const taskRouter = (): Router => {
     const router = Router()
@@ -10,15 +10,15 @@ export const taskRouter = (): Router => {
     router.post(
         API_ROUTES.TASK.CREATE,
         authenticate,
-        validateBody(CreateTaskDTO),
+        validateBody(CreateTaskDto),
         createTaskController
     )
 
     router.post(
         API_ROUTES.TASK.UPDATE,
         authenticate,
-        validateParams(TaskIdDTO),
-        validateBody(UpdateTaskDTO),
+        validateParams(TaskIdDto),
+        validateBody(UpdateTaskDto),
         updateTaskController
     )
 

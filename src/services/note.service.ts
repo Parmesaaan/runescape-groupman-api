@@ -1,14 +1,14 @@
-import {CreateNoteDTO, UpdateNoteDTO} from "../controllers";
+import {CreateNoteDto, UpdateNoteDto} from "../controllers";
 import { OperationResult } from "../types";
 import { Note } from "../models";
 import { GroupRepository, NoteRepository, UserRepository } from "../config";
 import { opFailure, opSuccess } from "../utils";
 import { HttpStatusCode } from "axios";
-import { NoteIdDTO } from "../controllers";
+import { NoteIdDto } from "../controllers";
 
 export class NoteService {
   public static async createNote(
-    request: CreateNoteDTO,
+    request: CreateNoteDto,
   ): Promise<OperationResult> {
     const note = new Note();
     note.title = request.title;
@@ -53,7 +53,7 @@ export class NoteService {
     return opSuccess(note);
   }
 
-  public static async updateNote(nodeIdDto: NoteIdDTO, request: UpdateNoteDTO): Promise<OperationResult> {
+  public static async updateNote(nodeIdDto: NoteIdDto, request: UpdateNoteDto): Promise<OperationResult> {
     const note = await NoteRepository.findOne({ where: {id: nodeIdDto.noteId}})
 
     if (!note) {

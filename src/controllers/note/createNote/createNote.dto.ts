@@ -5,7 +5,7 @@ import {
     IsString,
 } from "class-validator";
 
-export class CreateNoteDTO {
+export class CreateNoteDto {
   @Expose()
   @IsString()
   @IsDefined()

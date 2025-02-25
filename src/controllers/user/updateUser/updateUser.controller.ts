@@ -5,23 +5,20 @@ import { isOpFailure } from "../../../utils";
 import { HttpStatusCode } from "axios";
 import { UpdateUserDto } from "./updateUser.dto";
 import {User} from "../../../models";
-import {UserIdDTO} from "../common";
+import {UserDto, UserResponseDto} from "../common";
 
-export const updateUserController: RequestHandler = async (
-  req: Request,
-  res: Response,
-) => {
-  const userIdDto: UserIdDTO = req.params as unknown as UserIdDTO
+export const updateUserController: RequestHandler = async (req: Request, res: Response) => {
+  const userIdDto: UserDto = req.params as unknown as UserDto
   const request: UpdateUserDto = req.body as unknown as UpdateUserDto
   const result: OperationResult = await UserService.updateUser(userIdDto, request)
 
   if (isOpFailure(result)) {
     return res
-      .status(result.error!.status)
-      .send({ message: result.error!.message })
+        .status(result.error!.status)
+        .send({ message: result.error!.message })
   }
 
-  return res
-    .status(HttpStatusCode.Ok)
-    .send({ message: `Changed password for user ${(result.success!.data as User).username}` })
+  const user = result.success!.data as User
+  const response: UserResponseDto = new UserResponseDto(user)
+  return res.status(HttpStatusCode.Ok).json(response)
 }

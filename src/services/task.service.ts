@@ -1,4 +1,4 @@
-import {CreateTaskDTO, TaskIdDTO, UpdateTaskDTO} from "../controllers";
+import {CreateTaskDto, TaskIdDto, UpdateTaskDto} from "../controllers";
 import {OperationResult} from "../types";
 import {Task} from "../models/task.entity";
 import {GroupRepository, TaskRepository, UserRepository} from "../config";
@@ -6,7 +6,7 @@ import {opFailure, opSuccess} from "../utils";
 import {HttpStatusCode} from "axios";
 
 export class TaskService {
-    public static async createTask(request: CreateTaskDTO): Promise<OperationResult> {
+    public static async createTask(request: CreateTaskDto): Promise<OperationResult> {
         const task = new Task()
         task.title = request.title
         task.taskType = request.taskType
@@ -50,8 +50,8 @@ export class TaskService {
         return opSuccess(savedTask)
     }
 
-    public static async updateTask(taskIdDTO: TaskIdDTO, request: UpdateTaskDTO): Promise<OperationResult> {
-        const task = await TaskRepository.findOne({ where: {id: taskIdDTO.taskId} });
+    public static async updateTask(taskIdDto: TaskIdDto, request: UpdateTaskDto): Promise<OperationResult> {
+        const task = await TaskRepository.findOne({ where: {id: taskIdDto.taskId} });
 
         if (!task) {
             return opFailure(HttpStatusCode.NotFound, `Cannot find task`)

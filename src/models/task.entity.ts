@@ -46,7 +46,7 @@ export class Task {
         referencedColumnName: 'id',
         foreignKeyConstraintName: 'FK_task_user'
     })
-    user?: User;
+    user?: User
 
     @Index('IDX_task_group_id')
     @ManyToOne(() => Group, (group) => group.tasks, { nullable: true })

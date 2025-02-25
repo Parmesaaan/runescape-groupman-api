@@ -1,4 +1,4 @@
-import { CreateGroupDTO, JoinGroupDTO, LeaveGroupDTO } from "../controllers";
+import { CreateGroupDto, JoinGroupDto, LeaveGroupDto } from "../controllers";
 import { OperationResult } from "../types";
 import { GroupRepository, UserRepository } from "../config";
 import { opFailure, opSuccess } from "../utils";
@@ -8,7 +8,7 @@ import { In } from "typeorm";
 
 export class GroupService {
   public static async createGroup(
-    request: CreateGroupDTO,
+    request: CreateGroupDto,
   ): Promise<OperationResult> {
     if (await GroupRepository.exists({ where: { name: request.name } })) {
       return opFailure(
@@ -35,7 +35,7 @@ export class GroupService {
   }
 
   public static async joinGroup(
-    request: JoinGroupDTO,
+    request: JoinGroupDto,
   ): Promise<OperationResult> {
     const group = await GroupRepository.findOne({
       where: { name: request.group },
@@ -74,7 +74,7 @@ export class GroupService {
   }
 
   public static async leaveGroup(
-    request: LeaveGroupDTO,
+    request: LeaveGroupDto,
   ): Promise<OperationResult> {
     const group = await GroupRepository.findOne({
       where: { name: request.group },

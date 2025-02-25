@@ -1,1 +1,1 @@
-export * from './noteId.dto'
+export * from './note.dto'

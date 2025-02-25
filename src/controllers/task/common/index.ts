@@ -1,1 +1,1 @@
-export * from './taskId.dto'
+export * from './task.dto'

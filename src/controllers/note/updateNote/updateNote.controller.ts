@@ -1,17 +1,18 @@
 import {Request, RequestHandler, Response} from "express";
-import {NoteIdDTO} from "../common";
+import {NoteIdDto, NoteResponseDto} from "../common";
 import {OperationResult} from "../../../types";
 import {NoteService} from "../../../services";
 import {isOpFailure} from "../../../utils";
 import {HttpStatusCode} from "axios";
-import {UpdateNoteDTO} from "./updateNote.dto";
+import {UpdateNoteDto} from "./updateNote.dto";
+import {Note} from "../../../models";
 
 export const updateNoteController: RequestHandler = async(
     req: Request,
     res: Response,
 ) => {
-    const noteIdDto: NoteIdDTO = req.params as unknown as NoteIdDTO
-    const request: UpdateNoteDTO = req.body as unknown as UpdateNoteDTO
+    const noteIdDto: NoteIdDto = req.params as unknown as NoteIdDto
+    const request: UpdateNoteDto = req.body as unknown as UpdateNoteDto
     const result: OperationResult = await NoteService.updateNote(noteIdDto, request)
 
     if (isOpFailure(result)) {
@@ -20,7 +21,7 @@ export const updateNoteController: RequestHandler = async(
             .send({ message: result.error!.message });
     }
 
-    return res.status(HttpStatusCode.Created).send({
-        message: `Note updated`,
-    });
+    const note = result.success!.data as Note
+    const response = new NoteResponseDto(note)
+    return res.status(HttpStatusCode.Created).json(response)
 }

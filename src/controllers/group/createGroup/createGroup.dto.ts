@@ -1,7 +1,7 @@
 import { Expose } from "class-transformer";
 import { ArrayNotEmpty, IsArray, IsDefined, IsString } from "class-validator";
 
-export class CreateGroupDTO {
+export class CreateGroupDto {
   @Expose()
   @IsString()
   @IsDefined()

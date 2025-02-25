@@ -2,12 +2,12 @@ import { Router } from "express";
 import { API_ROUTES } from "../config";
 import { validateBody } from "../utils";
 import {
-  CreateGroupDTO,
+  CreateGroupDto,
   createGroupController,
   joinGroupController,
   leaveGroupController,
-  JoinGroupDTO,
-  LeaveGroupDTO,
+  JoinGroupDto,
+  LeaveGroupDto,
 } from "../controllers";
 import { authenticate } from "../middleware";
 
@@ -17,21 +17,21 @@ export const groupRouter = (): Router => {
   router.post(
     API_ROUTES.GROUP.CREATE,
     authenticate,
-    validateBody(CreateGroupDTO),
+    validateBody(CreateGroupDto),
     createGroupController,
   );
 
   router.post(
     API_ROUTES.GROUP.JOIN,
     authenticate,
-    validateBody(JoinGroupDTO),
+    validateBody(JoinGroupDto),
     joinGroupController,
   );
 
   router.post(
     API_ROUTES.GROUP.LEAVE,
     authenticate,
-    validateBody(LeaveGroupDTO),
+    validateBody(LeaveGroupDto),
     leaveGroupController,
   );
 

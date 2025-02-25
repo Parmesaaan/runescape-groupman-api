@@ -2,7 +2,7 @@ import {Expose,Transform} from "class-transformer";
 import {IsDefined, IsEnum, IsOptional, IsString} from "class-validator";
 import {TaskType} from "../../../models/task.entity";
 
-export class CreateTaskDTO {
+export class CreateTaskDto {
     @Expose()
     @IsString()
     @IsDefined()
