@@ -1,14 +1,14 @@
-import {Expose} from "class-transformer";
-import {IsDefined, IsString} from "class-validator";
+import { Expose } from "class-transformer";
+import { IsDefined, IsString } from "class-validator";
 
 export class LeaveGroupDTO {
-    @Expose()
-    @IsString()
-    @IsDefined()
-    user!: string
+  @Expose()
+  @IsString()
+  @IsDefined()
+  user!: string;
 
-    @Expose()
-    @IsString()
-    @IsDefined()
-    group!: string
+  @Expose()
+  @IsString()
+  @IsDefined()
+  group!: string;
 }
