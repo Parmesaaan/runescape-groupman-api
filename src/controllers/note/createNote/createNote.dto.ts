@@ -1,8 +1,6 @@
-import {NoteType} from "../../../models";
 import {Expose} from "class-transformer";
 import {
     IsDefined,
-    IsEnum,
     IsString,
     registerDecorator,
     ValidationArguments,
@@ -31,11 +29,6 @@ function CreateNoteDTOValidator(validationOptions?: ValidationOptions) {
 
 @CreateNoteDTOValidator()
 export class CreateNoteDTO {
-    @Expose()
-    @IsEnum(NoteType)
-    @IsDefined()
-    noteType!: NoteType
-
     @Expose()
     @IsString()
     @IsDefined()
