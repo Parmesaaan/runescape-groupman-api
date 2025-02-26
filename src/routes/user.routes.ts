@@ -2,12 +2,12 @@ import { Router } from 'express'
 import { API_ROUTES } from '../config'
 import { validateBody, validateParams } from '../utils'
 import {
-  getUsersController,
-  GetUsersDto,
   loginUserController,
   LoginUserDto,
   registerUserController,
   RegisterUserDto,
+  searchUsersController,
+  SearchUsersDto,
   updateUserController,
   UpdateUserDto,
   UserIdDto,
@@ -29,7 +29,12 @@ export const userRouter = (): Router => {
     updateUserController,
   )
 
-  router.post(API_ROUTES.USER.SEARCH, authenticate, validateBody(GetUsersDto), getUsersController)
+  router.post(
+    API_ROUTES.USER.SEARCH,
+    authenticate,
+    validateBody(SearchUsersDto),
+    searchUsersController,
+  )
 
   return router
 }

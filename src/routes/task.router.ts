@@ -5,8 +5,8 @@ import { validateBody, validateParams } from '../utils'
 import {
   createTaskController,
   CreateTaskDto,
-  getTasksController,
-  GetTasksDto,
+  searchTasksController,
+  SearchTasksDto,
   TaskIdDto,
   updateTaskController,
   UpdateTaskDto,
@@ -30,7 +30,12 @@ export const taskRouter = (): Router => {
     updateTaskController,
   )
 
-  router.post(API_ROUTES.TASK.SEARCH, authenticate, validateBody(GetTasksDto), getTasksController)
+  router.post(
+    API_ROUTES.TASK.SEARCH,
+    authenticate,
+    validateBody(SearchTasksDto),
+    searchTasksController,
+  )
 
   return router
 }

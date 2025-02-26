@@ -1,9 +1,9 @@
 import { OperationResult } from '../types'
 import { JWT_SECRET, UserRepository } from '../config'
 import {
-  GetUsersDto,
   LoginUserDto,
   RegisterUserDto,
+  SearchUsersDto,
   UpdateUserDto,
   UserIdDto,
 } from '../controllers'
@@ -71,7 +71,7 @@ export class UserService {
     return opSuccess(updatedUser)
   }
 
-  public static async getUsers(request: GetUsersDto): Promise<OperationResult> {
+  public static async getUsers(request: SearchUsersDto): Promise<OperationResult> {
     const users = await UserRepository.find({
       where: { id: In(request.userIds) },
       relations: ['groups', 'tasks', 'notes'],

@@ -1,4 +1,4 @@
-import { CreateNoteDto, GetNotesDto, NoteIdDto, UpdateNoteDto } from '../controllers'
+import { CreateNoteDto, NoteIdDto, SearchNotesDto, UpdateNoteDto } from '../controllers'
 import { OperationResult } from '../types'
 import { Note } from '../models'
 import { GroupRepository, NoteRepository, UserRepository } from '../config'
@@ -64,7 +64,7 @@ export class NoteService {
     return opSuccess(savedNote)
   }
 
-  public static async getNotes(request: GetNotesDto): Promise<OperationResult> {
+  public static async getNotes(request: SearchNotesDto): Promise<OperationResult> {
     const notes = await NoteRepository.find({
       where: { id: In(request.noteIds) },
       relations: ['user', 'group'],

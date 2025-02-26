@@ -5,9 +5,9 @@ import { validateBody, validateParams } from '../utils'
 import {
   createNoteController,
   CreateNoteDto,
-  getNotesController,
-  GetNotesDto,
   NoteIdDto,
+  searchNotesController,
+  SearchNotesDto,
   updateNoteController,
   UpdateNoteDto,
 } from '../controllers'
@@ -30,7 +30,12 @@ export const noteRouter = (): Router => {
     updateNoteController,
   )
 
-  router.post(API_ROUTES.NOTE.SEARCH, authenticate, validateBody(GetNotesDto), getNotesController)
+  router.post(
+    API_ROUTES.NOTE.SEARCH,
+    authenticate,
+    validateBody(SearchNotesDto),
+    searchNotesController,
+  )
 
   return router
 }

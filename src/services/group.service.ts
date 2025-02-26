@@ -1,4 +1,4 @@
-import { CreateGroupDto, GetGroupsDto, GroupIdDto, UserIdDto } from '../controllers'
+import { CreateGroupDto, GroupIdDto, SearchGroupsDto, UserIdDto } from '../controllers'
 import { OperationResult } from '../types'
 import { GroupRepository, UserRepository } from '../config'
 import { opFailure, opSuccess } from '../utils'
@@ -87,7 +87,7 @@ export class GroupService {
     return opSuccess(savedGroup)
   }
 
-  public static async getGroups(request: GetGroupsDto): Promise<OperationResult> {
+  public static async getGroups(request: SearchGroupsDto): Promise<OperationResult> {
     const groups = await GroupRepository.find({
       where: { id: In(request.groupIds) },
       relations: ['users', 'tasks', 'notes'],

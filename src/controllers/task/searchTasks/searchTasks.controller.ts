@@ -1,5 +1,5 @@
 import { Request, RequestHandler, Response } from 'express'
-import { GetTasksDto } from './getTasks.dto'
+import { SearchTasksDto } from './searchTasks.dto'
 import { OperationResult } from '../../../types'
 import { TaskService } from '../../../services'
 import { isOpFailure } from '../../../utils'
@@ -7,8 +7,8 @@ import { Task } from '../../../models/task.entity'
 import { TaskResponseDto } from '../__common'
 import { HttpStatusCode } from 'axios'
 
-export const getTasksController: RequestHandler = async (req: Request, res: Response) => {
-  const request: GetTasksDto = req.body as unknown as GetTasksDto
+export const searchTasksController: RequestHandler = async (req: Request, res: Response) => {
+  const request: SearchTasksDto = req.body as unknown as SearchTasksDto
   const result: OperationResult = await TaskService.getTasks(request)
 
   if (isOpFailure(result)) {

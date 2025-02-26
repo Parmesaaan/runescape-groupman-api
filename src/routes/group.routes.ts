@@ -4,11 +4,11 @@ import { validateBody, validateParams } from '../utils'
 import {
   createGroupController,
   CreateGroupDto,
-  getGroupsController,
-  GetGroupsDto,
   GroupIdDto,
   joinGroupController,
   leaveGroupController,
+  searchGroupsController,
+  SearchGroupsDto,
   UserIdDto,
 } from '../controllers'
 import { authenticate } from '../middleware'
@@ -39,7 +39,12 @@ export const groupRouter = (): Router => {
     leaveGroupController,
   )
 
-  router.post(API_ROUTES.GROUP.SEARCH, authenticate, validateBody(GetGroupsDto), getGroupsController)
+  router.post(
+    API_ROUTES.GROUP.SEARCH,
+    authenticate,
+    validateBody(SearchGroupsDto),
+    searchGroupsController,
+  )
 
   return router
 }

@@ -1,4 +1,4 @@
 export * from './createTask'
 export * from './updateTask'
-export * from './getTasks'
+export * from './searchTasks'
 export * from './__common'

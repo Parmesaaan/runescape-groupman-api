@@ -1,4 +1,4 @@
-import { CreateTaskDto, GetTasksDto, TaskIdDto, UpdateTaskDto } from '../controllers'
+import { CreateTaskDto, SearchTasksDto, TaskIdDto, UpdateTaskDto } from '../controllers'
 import { OperationResult } from '../types'
 import { Task } from '../models/task.entity'
 import { GroupRepository, TaskRepository, UserRepository } from '../config'
@@ -63,7 +63,7 @@ export class TaskService {
     return opSuccess(savedTask)
   }
 
-  public static async getTasks(request: GetTasksDto): Promise<OperationResult> {
+  public static async getTasks(request: SearchTasksDto): Promise<OperationResult> {
     const tasks = await TaskRepository.find({
       where: { id: In(request.taskIds) },
       relations: ['user', 'group'],

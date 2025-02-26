@@ -1,5 +1,5 @@
 import { Request, RequestHandler, Response } from 'express'
-import { GetNotesDto } from './getNotes.dto'
+import { SearchNotesDto } from './searchNotes.dto'
 import { OperationResult } from '../../../types'
 import { NoteService } from '../../../services'
 import { isOpFailure } from '../../../utils'
@@ -7,8 +7,8 @@ import { Note } from '../../../models'
 import { NoteResponseDto } from '../__common'
 import { HttpStatusCode } from 'axios'
 
-export const getNotesController: RequestHandler = async (req: Request, res: Response) => {
-  const request: GetNotesDto = req.body as unknown as GetNotesDto
+export const searchNotesController: RequestHandler = async (req: Request, res: Response) => {
+  const request: SearchNotesDto = req.body as unknown as SearchNotesDto
   const result: OperationResult = await NoteService.getNotes(request)
 
   if (isOpFailure(result)) {
