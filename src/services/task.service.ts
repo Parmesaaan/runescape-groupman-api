@@ -1,9 +1,10 @@
-import { CreateTaskDto, TaskIdDto, UpdateTaskDto } from '../controllers'
+import { CreateTaskDto, GetTasksDto, TaskIdDto, UpdateTaskDto } from '../controllers'
 import { OperationResult } from '../types'
 import { Task } from '../models/task.entity'
 import { GroupRepository, TaskRepository, UserRepository } from '../config'
 import { opFailure, opSuccess } from '../utils'
 import { HttpStatusCode } from 'axios'
+import { In } from 'typeorm'
 
 export class TaskService {
   public static async createTask(request: CreateTaskDto): Promise<OperationResult> {
@@ -13,13 +14,15 @@ export class TaskService {
     task.taskType = request.taskType
 
     if (!!request.groupId === !!request.userId) {
-      return opFailure(HttpStatusCode.BadRequest, 'Exactly one of `groupId` or `userId` must be defined.')
+      return opFailure(
+        HttpStatusCode.BadRequest,
+        'Exactly one of `groupId` or `userId` must be defined.',
+      )
     }
 
     if (request.groupId) {
       const group = await GroupRepository.findOne({
         where: { id: request.groupId },
-        relations: ['users'],
       })
       if (!group) {
         return opFailure(HttpStatusCode.NotFound, `Cannot find task with id ${request.groupId}`)
@@ -41,27 +44,32 @@ export class TaskService {
 
     const savedTask = await TaskRepository.save(task)
     if (!savedTask) return opFailure()
-
     return opSuccess(savedTask)
   }
 
-  public static async updateTask(taskIdDto: TaskIdDto, request: UpdateTaskDto): Promise<OperationResult> {
+  public static async updateTask(
+    taskIdDto: TaskIdDto,
+    request: UpdateTaskDto,
+  ): Promise<OperationResult> {
     const task = await TaskRepository.findOne({ where: { id: taskIdDto.taskId } })
-
-    if (!task) {
-      return opFailure(HttpStatusCode.NotFound, `Cannot find task`)
-    }
+    if (!task) return opFailure(HttpStatusCode.NotFound, `Cannot find task`)
 
     task.title = request.title ?? task.title
     task.description = request.description ?? task.description
-
-    if (request.completed === true) {
-      task.lastCompleted = new Date()
-    }
+    if (request.completed === true) task.lastCompleted = new Date()
 
     const savedTask = await TaskRepository.save(task)
     if (!savedTask) return opFailure()
-
     return opSuccess(savedTask)
+  }
+
+  public static async getTasks(request: GetTasksDto): Promise<OperationResult> {
+    const tasks = await TaskRepository.find({
+      where: { id: In(request.taskIds) },
+      relations: ['user', 'group'],
+    })
+    if (!tasks || !tasks.length)
+      return opFailure(HttpStatusCode.NotFound, `Cannot find any tasks with provided ids`)
+    return opSuccess(tasks)
   }
 }

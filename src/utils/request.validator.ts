@@ -24,7 +24,9 @@ class AppValidationError extends Error {
     return {
       property: error.property,
       constraints: error.constraints ? Object.values(error.constraints) : undefined,
-      children: error.children?.length ? error.children.map((error) => this.getValidationErrorObject(error)) : undefined,
+      children: error.children?.length
+        ? error.children.map((error) => this.getValidationErrorObject(error))
+        : undefined,
     }
   }
 

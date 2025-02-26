@@ -4,6 +4,8 @@ import { validateBody, validateParams } from '../utils'
 import {
   createGroupController,
   CreateGroupDto,
+  getGroupsController,
+  GetGroupsDto,
   GroupIdDto,
   joinGroupController,
   leaveGroupController,
@@ -14,11 +16,30 @@ import { authenticate } from '../middleware'
 export const groupRouter = (): Router => {
   const router = Router()
 
-  router.post(API_ROUTES.GROUP.CREATE, authenticate, validateBody(CreateGroupDto), createGroupController)
+  router.post(
+    API_ROUTES.GROUP.CREATE,
+    authenticate,
+    validateBody(CreateGroupDto),
+    createGroupController,
+  )
 
-  router.post(API_ROUTES.GROUP.JOIN, authenticate, validateParams(GroupIdDto), validateBody(UserIdDto), joinGroupController)
+  router.post(
+    API_ROUTES.GROUP.JOIN,
+    authenticate,
+    validateParams(GroupIdDto),
+    validateBody(UserIdDto),
+    joinGroupController,
+  )
 
-  router.post(API_ROUTES.GROUP.LEAVE, authenticate, validateParams(GroupIdDto), validateBody(UserIdDto), leaveGroupController)
+  router.post(
+    API_ROUTES.GROUP.LEAVE,
+    authenticate,
+    validateParams(GroupIdDto),
+    validateBody(UserIdDto),
+    leaveGroupController,
+  )
+
+  router.post(API_ROUTES.GROUP.SEARCH, authenticate, validateBody(GetGroupsDto), getGroupsController)
 
   return router
 }

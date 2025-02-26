@@ -1,4 +1,4 @@
-import { CreateGroupDto, GroupIdDto, UserIdDto } from '../controllers'
+import { CreateGroupDto, GetGroupsDto, GroupIdDto, UserIdDto } from '../controllers'
 import { OperationResult } from '../types'
 import { GroupRepository, UserRepository } from '../config'
 import { opFailure, opSuccess } from '../utils'
@@ -12,12 +12,9 @@ export class GroupService {
       return opFailure(HttpStatusCode.Conflict, `Group with name ${request.name} already exists`)
     }
 
-    const users = await UserRepository.findBy({
-      username: In(request.users),
-    })
-    if (!users || !users.length) {
+    const users = await UserRepository.findBy({ username: In(request.users) })
+    if (!users || !users.length)
       return opFailure(HttpStatusCode.NotFound, `No users provided exist`)
-    }
 
     const newGroup = new Group()
     newGroup.name = request.name
@@ -25,65 +22,78 @@ export class GroupService {
 
     const savedGroup = await GroupRepository.save(newGroup)
     if (!savedGroup) return opFailure()
-
     return opSuccess(savedGroup)
   }
 
-  public static async joinGroup(groupIdDto: GroupIdDto, request: UserIdDto): Promise<OperationResult> {
+  public static async joinGroup(
+    groupIdDto: GroupIdDto,
+    request: UserIdDto,
+  ): Promise<OperationResult> {
     const group = await GroupRepository.findOne({
       where: { id: groupIdDto.groupId },
       relations: ['users'],
     })
-
-    if (!group) {
+    if (!group)
       return opFailure(HttpStatusCode.NotFound, `Cannot find group with id ${groupIdDto.groupId}`)
-    }
 
     const user = await UserRepository.findOne({
       where: { id: request.userId },
     })
-    if (!user) {
+    if (!user)
       return opFailure(HttpStatusCode.NotFound, `Cannot find user with id ${request.userId}`)
-    }
 
     if (group.users.map((user) => user.id).includes(user.id)) {
-      return opFailure(HttpStatusCode.AlreadyReported, `User ${user.username} is already in group ${group.name}`)
+      return opFailure(
+        HttpStatusCode.AlreadyReported,
+        `User ${user.username} is already in group ${group.name}`,
+      )
     }
 
     group.users = [...group.users, user]
 
     const savedGroup = await GroupRepository.save(group)
     if (!savedGroup) return opFailure()
-
     return opSuccess(savedGroup)
   }
 
-  public static async leaveGroup(groupIdDto: GroupIdDto, request: UserIdDto): Promise<OperationResult> {
+  public static async leaveGroup(
+    groupIdDto: GroupIdDto,
+    request: UserIdDto,
+  ): Promise<OperationResult> {
     const group = await GroupRepository.findOne({
       where: { id: groupIdDto.groupId },
       relations: ['users'],
     })
-
-    if (!group) {
+    if (!group)
       return opFailure(HttpStatusCode.NotFound, `Cannot find group with id ${groupIdDto.groupId}`)
-    }
 
     const user = await UserRepository.findOne({
       where: { id: request.userId },
     })
-    if (!user) {
+    if (!user)
       return opFailure(HttpStatusCode.NotFound, `Cannot find user with id ${request.userId}`)
-    }
 
     if (!group.users.map((user) => user.id).includes(user.id)) {
-      return opFailure(HttpStatusCode.BadRequest, `User ${user.username} is not in group ${group.name}`)
+      return opFailure(
+        HttpStatusCode.BadRequest,
+        `User ${user.username} is not in group ${group.name}`,
+      )
     }
 
     group.users = group.users.filter((u) => u.id !== user.id)
 
     const savedGroup = await GroupRepository.save(group)
     if (!savedGroup) return opFailure()
-
     return opSuccess(savedGroup)
+  }
+
+  public static async getGroups(request: GetGroupsDto): Promise<OperationResult> {
+    const groups = await GroupRepository.find({
+      where: { id: In(request.groupIds) },
+      relations: ['users', 'tasks', 'notes'],
+    })
+    if (!groups || !groups.length)
+      return opFailure(HttpStatusCode.NotFound, `Cannot find any groups with provided ids`)
+    return opSuccess(groups)
   }
 }

@@ -21,7 +21,9 @@ try {
 
       server.listen(SERVER_PORT, () => {
         const serverStartDuration = new Date().getMilliseconds() - startTime
-        loggerUtils.info(`Server start successfully on port ${SERVER_PORT} in ${serverStartDuration}ms`)
+        loggerUtils.info(
+          `Server start successfully on port ${SERVER_PORT} in ${serverStartDuration}ms`,
+        )
       })
     })
     .catch((e) => {

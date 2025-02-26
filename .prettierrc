@@ -3,5 +3,5 @@
   "semi": false,
   "trailingComma": "all",
   "parser": "typescript",
-  "printWidth": 128
+  "printWidth": 100
 }
