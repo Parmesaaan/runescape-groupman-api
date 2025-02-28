@@ -8,15 +8,12 @@ import { GroupIdDto, GroupResponseDto } from '../__common'
 import { UserIdDto } from '../../user'
 
 export const leaveGroupController: RequestHandler = async (req: Request, res: Response) => {
-  const groupIdDto: GroupIdDto = req.params as unknown as GroupIdDto
-  const request: UserIdDto = req.body as unknown as UserIdDto
-  const result: OperationResult = await GroupService.leaveGroup(groupIdDto, request)
+  const groupId: string = (req.params as unknown as GroupIdDto).groupId
+  const result: OperationResult = await GroupService.leaveGroup(req.user!.id, groupId)
 
   if (isOpFailure(result)) {
     return res.status(result.error!.status).send({ message: result.error!.message })
   }
 
-  const group = result.success!.data as Group
-  const response: GroupResponseDto = new GroupResponseDto(group)
-  return res.status(HttpStatusCode.Ok).json(response)
+  return res.status(HttpStatusCode.Ok).send()
 }

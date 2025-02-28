@@ -4,8 +4,8 @@ import { validateBody, validateParams } from '../utils'
 import {
   loginUserController,
   LoginUserDto,
-  registerUserController,
-  RegisterUserDto,
+  createUserController,
+  CreateUserDto,
   searchUsersController,
   SearchUsersDto,
   updateUserController,
@@ -17,7 +17,7 @@ import { authenticate } from '../middleware'
 export const userRouter = (): Router => {
   const router = Router()
 
-  router.post(API_ROUTES.USER.REGISTER, validateBody(RegisterUserDto), registerUserController)
+  router.post(API_ROUTES.USER.REGISTER, validateBody(CreateUserDto), createUserController)
 
   router.post(API_ROUTES.USER.LOGIN, validateBody(LoginUserDto), loginUserController)
 

@@ -1,0 +1,50 @@
+import {
+    BaseEntity, Column,
+    CreateDateColumn,
+    Entity,
+    Index, JoinColumn,
+    ManyToOne,
+    PrimaryGeneratedColumn,
+    UpdateDateColumn
+} from "typeorm";
+import {Group} from "./group.entity"
+import {User} from "./user.entity"
+
+export enum JoinRequestStatus {
+    PENDING = 'PENDING',
+    ACCEPTED = 'ACCEPTED',
+    DENIED = 'DENIED',
+}
+
+@Entity('group_join_request')
+export class JoinRequest extends BaseEntity {
+    @PrimaryGeneratedColumn('uuid', { primaryKeyConstraintName: 'PK_join_request_id' })
+    id!: string
+
+    @Index('IDX_join_request_user_id')
+    @ManyToOne(() => User, (user) => user.joinRequests, { nullable: false })
+    @JoinColumn({
+        name: 'user_id',
+        referencedColumnName: 'id',
+        foreignKeyConstraintName: 'FK_join_request_user',
+    })
+    user!: User
+
+    @Index('IDX_join_request_group_id')
+    @ManyToOne(() => Group, (group) => group.joinRequests, { nullable: false })
+    @JoinColumn({
+        name: 'group_id',
+        referencedColumnName: 'id',
+        foreignKeyConstraintName: 'FK_join_request_group',
+    })
+    group!: Group
+
+    @Column({ type: 'enum', enum: JoinRequestStatus, nullable: false })
+    status!: JoinRequestStatus
+
+    @CreateDateColumn({ name: 'created_at' })
+    createdAt!: Date
+
+    @UpdateDateColumn({ name: 'updated_at' })
+    updatedAt!: Date
+}

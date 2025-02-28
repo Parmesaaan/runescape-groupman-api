@@ -14,7 +14,7 @@ const errorStackTracerFormat = format((info) => {
 
 const consoleFormat = format.combine(errorStackTracerFormat(), format.colorize(), format.simple())
 
-export const loggerUtils = createLogger({
+export const logger = createLogger({
   level: LOGGING_LEVEL,
   transports: new transports.Console({ format: consoleFormat }),
 })

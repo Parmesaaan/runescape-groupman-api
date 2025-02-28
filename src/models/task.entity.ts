@@ -31,6 +31,14 @@ export class Task {
   @Column({ nullable: true })
   description?: string
 
+  @Index()
+  @ManyToOne(() => User, (user) => user.tasks, { nullable: false })
+  @JoinColumn({
+    name: 'user_id',
+    referencedColumnName: 'id',
+  })
+  user!: User
+
   @Column({ name: 'last_completed', nullable: true })
   lastCompleted?: Date
 
@@ -39,22 +47,4 @@ export class Task {
 
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt!: Date
-
-  @Index('IDX_task_user_id')
-  @ManyToOne(() => User, (user) => user.tasks, { nullable: true })
-  @JoinColumn({
-    name: 'user_id',
-    referencedColumnName: 'id',
-    foreignKeyConstraintName: 'FK_task_user',
-  })
-  user?: User
-
-  @Index('IDX_task_group_id')
-  @ManyToOne(() => Group, (group) => group.tasks, { nullable: true })
-  @JoinColumn({
-    name: 'group_id',
-    referencedColumnName: 'id',
-    foreignKeyConstraintName: 'FK_task_group',
-  })
-  group?: Group
 }

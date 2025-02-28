@@ -1,20 +1,30 @@
-import { JWT_SECRET } from '../config'
-import jwt from 'jsonwebtoken'
-import { NextFunction, Request, Response } from 'express'
+import {NextFunction, Request, Response} from 'express';
+import {isOpFailure, verifyAccessToken} from "../utils";
+import {PermissionLevel, User} from "../models";
 
-export const authenticate = (req: Request, res: Response, next: NextFunction) => {
-  const authHeader = req.headers['authorization']
-  const token = authHeader && authHeader.split(' ')[1]
-
-  if (!token) {
-    return res.status(401).json({ message: 'Authentication token required' })
+declare module 'express-serve-static-core' {
+  interface Request {
+    user?: User
   }
+}
 
-  jwt.verify(token, JWT_SECRET, (err, user) => {
-    if (err) {
+export const authenticate = (requiredPermissionLevel: PermissionLevel) => {
+  return (req: Request, res: Response, next: NextFunction) => {
+    const token = req.headers['authorization']?.split(' ')[1]
+    if (!token) return res.status(401).json({ message: 'Authentication token required.' })
+
+    const verifyOperation = verifyAccessToken(token)
+    const user: User = verifyOperation.success?.data as User
+
+    if (isOpFailure(verifyOperation) || !user.id || !user.permissionLevel) {
       return res.status(403).json({ message: 'Invalid or expired token' })
     }
-    ;(req as any).user = user
+
+    if ((user.permissionLevel < requiredPermissionLevel) && (requiredPermissionLevel != PermissionLevel.NONE)) {
+      return res.status(403).json({ message: 'You do not have permission to access this resource.' })
+    }
+
+    req.user = user
     next()
-  })
+  }
 }

@@ -1,3 +1,6 @@
 export * from './user.entity'
 export * from './group.entity'
-export * from './note.entity'
+export * from './userNote.entity'
+export * from './groupNote.entity'
+export * from './task.entity'
+export * from './joinRequest.entity'
