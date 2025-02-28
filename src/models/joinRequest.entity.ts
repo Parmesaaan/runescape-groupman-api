@@ -22,7 +22,7 @@ export class JoinRequest extends BaseEntity {
     id!: string
 
     @Index('IDX_join_request_user_id')
-    @ManyToOne(() => User, (user) => user.joinRequests, { nullable: false })
+    @ManyToOne(() => User, (user) => user.joinRequests, { nullable: false, onDelete: 'CASCADE' })
     @JoinColumn({
         name: 'user_id',
         referencedColumnName: 'id',
@@ -31,7 +31,7 @@ export class JoinRequest extends BaseEntity {
     user!: User
 
     @Index('IDX_join_request_group_id')
-    @ManyToOne(() => Group, (group) => group.joinRequests, { nullable: false })
+    @ManyToOne(() => Group, (group) => group.joinRequests, { nullable: false, onDelete: 'CASCADE' })
     @JoinColumn({
         name: 'group_id',
         referencedColumnName: 'id',

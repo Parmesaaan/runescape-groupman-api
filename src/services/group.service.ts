@@ -1,4 +1,4 @@
-import {CreateGroupDto} from '../controllers'
+import {CreateGroupDto, UpdateGroupDto} from '../controllers'
 import {OperationResult} from '../types'
 import {GroupRepository, JoinRequestRepository, UserRepository} from '../config'
 import {isOpFailure, opFailure, opSuccess} from '../utils'
@@ -28,6 +28,25 @@ export class GroupService {
     group.owner = user
     group.users = [user]
     group.notes = [note]
+
+    const savedGroup = await GroupRepository.save(group)
+    return opSuccess(savedGroup)
+  }
+
+  public static async updateGroup(userId: string, groupId: string, request: UpdateGroupDto): Promise<OperationResult> {
+    const user = await UserRepository.findOne({ where: { id: userId } })
+    if (!user) return opFailure(HttpStatusCode.NotFound, `Cannot find user with id ${userId}`)
+
+    const group = await GroupRepository.findOne({ where: { id: groupId } })
+    if (!group) return opFailure(HttpStatusCode.NotFound, `Cannot find group with id ${groupId}`)
+
+    if (request.name) group.name = request.name
+    if (request.owner) {
+      let newOwner = await UserRepository.findOne({ where: { id: request.owner } })
+      if (!newOwner) newOwner = await UserRepository.findOne({ where: { username: request.owner } })
+      if (!newOwner) return opFailure(HttpStatusCode.NotFound, `Cannot find user with id ${userId}`)
+      group.owner = newOwner
+    }
 
     const savedGroup = await GroupRepository.save(group)
     return opSuccess(savedGroup)

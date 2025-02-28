@@ -22,7 +22,7 @@ export class UserNote {
   @Column()
   contents!: string
 
-  @ManyToOne(() => User, (user) => user.notes, { nullable: false })
+  @ManyToOne(() => User, (user) => user.notes, { nullable: false, onDelete: 'CASCADE' })
   @JoinColumn({
     name: 'user_id',
     referencedColumnName: 'id',

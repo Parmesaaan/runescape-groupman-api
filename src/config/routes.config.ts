@@ -26,6 +26,10 @@ export const API_ROUTES = {
       route: '/user',
       permissionLevel: PermissionLevel.USER
     },
+    UPDATE: {
+      route: '/user',
+      permissionLevel: PermissionLevel.USER
+    },
     GET_NOTES: { // TODO: Implement
       route: '/user/notes',
       permissionLevel: PermissionLevel.USER
@@ -69,13 +73,13 @@ export const API_ROUTES = {
       route: '/groups/:groupId',
       permissionLevel: PermissionLevel.ADMIN
     },
-    UPDATE: { // TODO: Implement
+    UPDATE: {
       route: '/groups/:groupId',
-      permissionLevel: PermissionLevel.ADMIN
+      permissionLevel: PermissionLevel.USER
     },
     DELETE: { // TODO: Implement
       route: '/groups/:groupId',
-      permissionLevel: PermissionLevel.ADMIN
+      permissionLevel: PermissionLevel.USER
     },
     JOIN: {
       route: '/groups/:groupId/join-requests',

@@ -1,9 +1,16 @@
 import { Expose } from 'class-transformer'
-import {IsDefined, IsUUID} from 'class-validator'
+import {IsDefined, IsString} from 'class-validator'
 
 export class UserIdDto {
   @Expose()
-  @IsUUID()
+  @IsString()
   @IsDefined()
   userId!: string
+}
+
+export class UserReferenceDto extends UserIdDto {
+  @Expose()
+  @IsString()
+  @IsDefined()
+  username!: string
 }

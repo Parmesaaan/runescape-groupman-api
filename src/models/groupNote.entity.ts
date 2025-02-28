@@ -25,7 +25,7 @@ export class GroupNote {
   @Column()
   author!: User
 
-  @ManyToOne(() => Group, (group) => group.notes, { nullable: false })
+  @ManyToOne(() => Group, (group) => group.notes, { nullable: false, onDelete: 'CASCADE' })
   @JoinColumn({
     name: 'group_id',
     referencedColumnName: 'id',

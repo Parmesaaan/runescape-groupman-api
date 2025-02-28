@@ -32,7 +32,7 @@ export class Task {
   description?: string
 
   @Index()
-  @ManyToOne(() => User, (user) => user.tasks, { nullable: false })
+  @ManyToOne(() => User, (user) => user.tasks, { nullable: false, onDelete: 'CASCADE' })
   @JoinColumn({
     name: 'user_id',
     referencedColumnName: 'id',

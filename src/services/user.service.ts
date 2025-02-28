@@ -40,25 +40,11 @@ export class UserService {
     return opSuccess(updatedUser)
   }
 
-  public static async getUser(userId: string): Promise<OperationResult> {
-    const user = await UserRepository.findOne({ where: { id: userId } })
-    if (!user) return opFailure(HttpStatusCode.NotFound, `Cannot find user with id ${userId}`)
-    return opSuccess(user)
-  }
-
-  public static async getUserByUsername(username: string): Promise<OperationResult> {
-    const user = await UserRepository.findOne({ where: { username: username } })
-    if (!user) return opFailure(HttpStatusCode.NotFound, `Cannot find user with username ${username}`)
-    return opSuccess(user)
-  }
-
   static async updateUser(userId: string, request: UpdateUserDto): Promise<OperationResult> {
     const user = await UserRepository.findOne({ where: { id: userId } })
     if (!user) return opFailure(HttpStatusCode.NotFound, `Cannot find user with id ${userId}`)
 
     if (request.username) user.username = request.username
-    if (request.password) user.password = await bcrypt.hash(request.password, 10)
-    if (request.permissionLevel) user.permissionLevel = request.permissionLevel
 
     const updatedUser = await UserRepository.save(user)
     return opSuccess(updatedUser)

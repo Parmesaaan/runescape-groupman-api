@@ -3,13 +3,11 @@ import { OperationResult } from '../../../types'
 import { GroupService } from '../../../services'
 import { isOpFailure } from '../../../utils'
 import { HttpStatusCode } from 'axios'
-import { Group } from '../../../models'
-import { GroupIdDto, GroupResponseDto } from '../__common'
-import { UserIdDto } from '../../user'
+import { GroupIdDto } from '../__common'
 
 export const leaveGroupController: RequestHandler = async (req: Request, res: Response) => {
-  const groupId: string = (req.params as unknown as GroupIdDto).groupId
-  const result: OperationResult = await GroupService.leaveGroup(req.user!.id, groupId)
+  const groupId = (req.params as unknown as GroupIdDto).groupId
+  const result = await GroupService.leaveGroup(req.user!.id, groupId)
 
   if (isOpFailure(result)) {
     return res.status(result.error!.status).send({ message: result.error!.message })
