@@ -1,6 +1,5 @@
 export * from './__common'
 export * from './changePassword'
-export * from './createUser'
 export * from './login'
 export * from './refreshToken'
 export * from './updateUser'

@@ -89,15 +89,15 @@ export const API_ROUTES = {
       route: '/groups/:groupId/notes',
       permissionLevel: PermissionLevel.USER
     },
-    CREATE_NOTE: { // TODO: Implement
+    CREATE_NOTE: {
       route: '/groups/:groupId/notes',
       permissionLevel: PermissionLevel.USER
     },
-    UPDATE_NOTE: { // TODO: Implement
+    UPDATE_NOTE: {
       route: '/groups/:groupId/notes/:noteId',
       permissionLevel: PermissionLevel.USER
     },
-    DELETE_NOTE: { // TODO: Implement
+    DELETE_NOTE: {
       route: '/groups/:groupId/notes/:noteId',
       permissionLevel: PermissionLevel.USER
     },

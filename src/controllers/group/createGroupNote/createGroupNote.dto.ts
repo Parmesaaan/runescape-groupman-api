@@ -1,10 +1,14 @@
 import {Expose} from "class-transformer";
 import {IsDefined, IsString} from "class-validator";
 
-export class UserNoteIdDto {
+export class CreateGroupNoteDto {
   @Expose()
   @IsString()
   @IsDefined()
-  userNoteId!: string
-}
+  title!: string
 
+  @Expose()
+  @IsString()
+  @IsDefined()
+  contents!: string
+}

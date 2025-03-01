@@ -5,17 +5,11 @@ export class GroupNoteIdDto {
   @Expose()
   @IsString()
   @IsDefined()
+  groupId!: string
+
+  @Expose()
+  @IsString()
+  @IsDefined()
   groupNoteId!: string
 }
 
-export class GroupNoteDto {
-  @Expose()
-  @IsString()
-  @IsDefined()
-  title!: string
-
-  @Expose()
-  @IsString()
-  @IsDefined()
-  contents!: string
-}

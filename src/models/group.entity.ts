@@ -22,11 +22,11 @@ export class Group extends BaseEntity {
   @Column({ nullable: false })
   name!: string
 
-  @OneToMany(() => Membership, (membership) => membership.group)
-  memberships?: Array<Membership>
-
   @OneToMany(() => GroupNote, (groupNote) => groupNote.group)
   notes?: Array<GroupNote>
+
+  @OneToMany(() => Membership, (membership) => membership.group)
+  memberships?: Array<Membership>
 
   @OneToMany(() => JoinRequest, (joinRequest) => joinRequest.group)
   joinRequests?: Array<JoinRequest>

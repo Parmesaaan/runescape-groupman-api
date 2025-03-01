@@ -12,6 +12,7 @@ import { Task } from './task.entity'
 import {JoinRequest} from "./joinRequest.entity"
 import {UserNote} from "./userNote.entity";
 import {Membership} from "./membership.entity";
+import {GroupNote} from "./groupNote.entity";
 
 export enum PermissionLevel {
   NONE,
@@ -35,14 +36,17 @@ export class User extends BaseEntity {
   @Column({ type: 'enum', enum: PermissionLevel, name: 'permission_level', nullable: false  })
   permissionLevel!: PermissionLevel
 
-  @OneToMany(() => Membership, (membership) => membership.user)
-  memberships?: Array<Membership>
+  @OneToMany(() => Task, (task) => task.user)
+  tasks?: Array<Task>
 
   @OneToMany(() => UserNote, (userNote) => userNote.user)
   notes?: Array<UserNote>
 
-  @OneToMany(() => Task, (task) => task.user)
-  tasks?: Array<Task>
+  @OneToMany(() => GroupNote, (groupNote) => groupNote.author)
+  groupNotes?: Array<GroupNote>
+
+  @OneToMany(() => Membership, (membership) => membership.user)
+  memberships?: Array<Membership>
 
   @OneToMany(() => JoinRequest, (joinRequest) => joinRequest.user)
   joinRequests?: Array<JoinRequest>
