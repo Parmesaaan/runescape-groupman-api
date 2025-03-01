@@ -34,31 +34,31 @@ export const API_ROUTES = {
       route: '/user/notes',
       permissionLevel: PermissionLevel.USER
     },
-    CREATE_NOTE: { // TODO: Implement
+    CREATE_NOTE: {
       route: '/users/notes',
       permissionLevel: PermissionLevel.USER
     },
-    UPDATE_NOTE: { // TODO: Implement
-      route: '/users/notes/:noteId',
+    UPDATE_NOTE: {
+      route: '/users/notes/:userNoteId',
       permissionLevel: PermissionLevel.USER
     },
-    DELETE_NOTE: { // TODO: Implement
-      route: '/users/notes/:noteId',
+    DELETE_NOTE: {
+      route: '/users/notes/:userNoteId',
       permissionLevel: PermissionLevel.USER
     },
     GET_TASKS: { // TODO: Implement
       route: '/users/tasks',
       permissionLevel: PermissionLevel.USER
     },
-    CREATE_TASK: { // TODO: Implement
+    CREATE_TASK: {
       route: '/users/tasks',
       permissionLevel: PermissionLevel.USER
     },
-    UPDATE_TASK: { // TODO: Implement
+    UPDATE_TASK: {
       route: '/users/tasks/:taskId',
       permissionLevel: PermissionLevel.USER
     },
-    DELETE_TASK: { // TODO: Implement
+    DELETE_TASK: {
       route: '/users/tasks/:taskId',
       permissionLevel: PermissionLevel.USER
     },

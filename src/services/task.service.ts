@@ -1,75 +1,51 @@
-import { CreateTaskDto, SearchTasksDto, TaskIdDto, UpdateTaskDto } from '../controllers'
-import { OperationResult } from '../types'
-import { Task } from '../models/task.entity'
-import { GroupRepository, TaskRepository, UserRepository } from '../config'
-import { opFailure, opSuccess } from '../utils'
-import { HttpStatusCode } from 'axios'
-import { In } from 'typeorm'
+import {OperationResult} from "../types";
+import {TaskDto} from "../controllers/user/__common/task.dto";
+import {TaskRepository, UserRepository} from "../config";
+import {opFailure, opSuccess} from "../utils";
+import {HttpStatusCode} from "axios";
+import {Task} from "../models";
 
 export class TaskService {
-  public static async createTask(request: CreateTaskDto): Promise<OperationResult> {
+  public static async createTask(userId: string, request: TaskDto): Promise<OperationResult> {
+    const user = await UserRepository.findOne({ where: { id: userId } })
+    if (!user) return opFailure(HttpStatusCode.NotFound, `Cannot find user with id ${userId}`)
+
     const task = new Task()
     task.title = request.title
     task.description = request.description
     task.taskType = request.taskType
-
-    if (!!request.groupId === !!request.userId) {
-      return opFailure(
-        HttpStatusCode.BadRequest,
-        'Exactly one of `groupId` or `userId` must be defined.',
-      )
-    }
-
-    if (request.groupId) {
-      const group = await GroupRepository.findOne({
-        where: { id: request.groupId },
-      })
-      if (!group) {
-        return opFailure(HttpStatusCode.NotFound, `Cannot find task with id ${request.groupId}`)
-      }
-
-      task.group = group
-    }
-
-    if (request.userId) {
-      const user = await UserRepository.findOne({
-        where: { id: request.userId },
-      })
-      if (!user) {
-        return opFailure(HttpStatusCode.NotFound, `Cannot find user with id ${request.userId}`)
-      }
-
-      task.user = user
-    }
+    task.user = user
 
     const savedTask = await TaskRepository.save(task)
-    if (!savedTask) return opFailure()
     return opSuccess(savedTask)
   }
 
-  public static async updateTask(
-    taskIdDto: TaskIdDto,
-    request: UpdateTaskDto,
-  ): Promise<OperationResult> {
-    const task = await TaskRepository.findOne({ where: { id: taskIdDto.taskId } })
-    if (!task) return opFailure(HttpStatusCode.NotFound, `Cannot find task`)
+  public static async updateTask(userId: string, taskId: string, request: TaskDto): Promise<OperationResult> {
+    const user = await UserRepository.findOne({ where: { id: userId } })
+    if (!user) return opFailure(HttpStatusCode.NotFound, `Cannot find user with id ${userId}`)
+
+    const task = await TaskRepository.findOne({ where: { id: taskId }, relations: ['user'] })
+    if (!task) return opFailure(HttpStatusCode.NotFound, `Cannot find task with id ${taskId}`)
+
+    if (task.user.id != user.id) return opFailure(HttpStatusCode.Forbidden, `You can only change your own tasks`)
 
     task.title = request.title ?? task.title
     task.description = request.description ?? task.description
-    if (request.completed === true) task.lastCompleted = new Date()
+    task.taskType = request.taskType ?? task.taskType
 
     const savedTask = await TaskRepository.save(task)
-    if (!savedTask) return opFailure()
     return opSuccess(savedTask)
   }
 
-  public static async getTasks(request: SearchTasksDto): Promise<OperationResult> {
-    const tasks = await TaskRepository.find({
-      where: { id: In(request.taskIds) },
-      relations: ['user', 'group'],
+  public static async deleteTask(userId: string, taskId: string): Promise<OperationResult> {
+    const task = await TaskRepository.findOne({
+      where: { id: taskId, user: { id: userId } },
+      relations: ['user'],
     })
-    if (!tasks || !tasks.length)
-      return opFailure(HttpStatusCode.NotFound, `Cannot find any tasks with provided ids`)
-    return opSuccess(tasks)
+
+    if (!task) return opFailure(HttpStatusCode.NotFound, `Cannot find task with id ${taskId} for user ${userId}`)
+
+    await TaskRepository.delete(taskId)
+    return opSuccess(true)
   }
 }
