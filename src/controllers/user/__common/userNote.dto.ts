@@ -1,5 +1,5 @@
-import {Expose} from "class-transformer";
-import {IsDefined, IsString} from "class-validator";
+import { Expose } from 'class-transformer'
+import { IsDefined, IsString } from 'class-validator'
 
 export class UserNoteIdDto {
   @Expose()
@@ -7,4 +7,3 @@ export class UserNoteIdDto {
   @IsDefined()
   userNoteId!: string
 }
-

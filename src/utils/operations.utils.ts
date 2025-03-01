@@ -1,4 +1,4 @@
-import {OperationResult} from '../types'
+import { OperationResult } from '../types'
 
 export const opSuccess = (data: unknown, message = 'ok'): OperationResult => {
   return {

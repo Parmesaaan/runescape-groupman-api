@@ -1,9 +1,9 @@
-import {User} from "../models";
-import jwt, {SignOptions} from "jsonwebtoken";
-import {jwtConfig} from "../config";
-import {OperationResult} from "../types";
-import {opFailure, opSuccess} from "./operations.utils";
-import {logger} from "./logger.utils";
+import { User } from '../models'
+import jwt, { SignOptions } from 'jsonwebtoken'
+import { jwtConfig } from '../config'
+import { OperationResult } from '../types'
+import { opFailure, opSuccess } from './operations.utils'
+import { logger } from './logger.utils'
 
 export type TokenPair = {
   token: string
@@ -15,8 +15,8 @@ export const generateAccessToken = (user: User): string => {
   const expiry: string = jwtConfig.jwtExpiry
 
   // @ts-ignore
-  const options: SignOptions = {expiresIn: expiry}
-  return jwt.sign({id: user.id, permissionLevel: user.permissionLevel}, secret, options)
+  const options: SignOptions = { expiresIn: expiry }
+  return jwt.sign({ id: user.id, permissionLevel: user.permissionLevel }, secret, options)
 }
 
 export const generateRefreshToken = (user: User): string => {
@@ -24,15 +24,17 @@ export const generateRefreshToken = (user: User): string => {
   const expiry: string = jwtConfig.jwtRefreshExpiry
 
   // @ts-ignore
-  const options: SignOptions = {expiresIn: expiry}
-  return jwt.sign({id: user.id, permissionLevel: user.permissionLevel}, secret, options)
+  const options: SignOptions = { expiresIn: expiry }
+  return jwt.sign({ id: user.id, permissionLevel: user.permissionLevel }, secret, options)
 }
 
-export const generateTokenPair = (user: User): {
-  token: string,
-  refresh: string,
+export const generateTokenPair = (
+  user: User,
+): {
+  token: string
+  refresh: string
 } => {
-  return {token: generateAccessToken(user), refresh: generateRefreshToken(user)}
+  return { token: generateAccessToken(user), refresh: generateRefreshToken(user) }
 }
 
 export const verifyAccessToken = (token: string): OperationResult => {

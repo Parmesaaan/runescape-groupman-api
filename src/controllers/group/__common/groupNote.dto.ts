@@ -1,5 +1,5 @@
-import {Expose} from "class-transformer";
-import {IsDefined, IsString} from "class-validator";
+import { Expose } from 'class-transformer'
+import { IsDefined, IsString } from 'class-validator'
 
 export class GroupNoteIdDto {
   @Expose()
@@ -12,4 +12,3 @@ export class GroupNoteIdDto {
   @IsDefined()
   groupNoteId!: string
 }
-

@@ -1,17 +1,24 @@
-import {CreateGroupDto, JoinGroupDto, JoinRequestDto, UpdateGroupDto} from '../controllers'
-import {OperationResult} from '../types'
-import {GroupRepository, JoinRequestRepository, MembershipRepository, UserRepository} from '../config'
-import {opFailure, opSuccess} from '../utils'
-import {HttpStatusCode} from 'axios'
-import {Group, GroupNote, JoinRequest, JoinRequestStatus} from '../models'
-import {Membership, Role} from "../models/membership.entity";
+import { CreateGroupDto, JoinGroupDto, JoinRequestDto, UpdateGroupDto } from '../controllers'
+import { OperationResult } from '../types'
+import {
+  GroupRepository,
+  JoinRequestRepository,
+  MembershipRepository,
+  UserRepository,
+} from '../config'
+import { opFailure, opSuccess } from '../utils'
+import { HttpStatusCode } from 'axios'
+import { Group, GroupNote, JoinRequest, JoinRequestStatus, Membership, Role } from '../models'
 
 export class GroupService {
-  public static async createGroup(userId: string, request: CreateGroupDto): Promise<OperationResult> {
-    const user = await UserRepository.findOne({where: {id: userId}, relations: ['memberships']})
+  public static async createGroup(
+    userId: string,
+    request: CreateGroupDto,
+  ): Promise<OperationResult> {
+    const user = await UserRepository.findOne({ where: { id: userId }, relations: ['memberships'] })
     if (!user) return opFailure(HttpStatusCode.NotFound, `Cannot find user with id ${userId}`)
 
-    if (await GroupRepository.exists({where: {name: request.name}})) {
+    if (await GroupRepository.exists({ where: { name: request.name } })) {
       return opFailure(HttpStatusCode.Conflict, `Group with name ${request.name} already exists`)
     }
 
@@ -35,17 +42,22 @@ export class GroupService {
     return opSuccess(savedGroup)
   }
 
-  public static async updateGroup(userId: string, groupId: string, request: UpdateGroupDto): Promise<OperationResult> {
-    const user = await UserRepository.findOne({where: {id: userId}})
+  public static async updateGroup(
+    userId: string,
+    groupId: string,
+    request: UpdateGroupDto,
+  ): Promise<OperationResult> {
+    const user = await UserRepository.findOne({ where: { id: userId } })
     if (!user) return opFailure(HttpStatusCode.NotFound, `Cannot find user with id ${userId}`)
 
     const group = await GroupRepository.findOne({
-      where: {id: groupId},
-      relations: ['memberships', 'memberships.user']
+      where: { id: groupId },
+      relations: ['memberships', 'memberships.user'],
     })
-    if (!group || !group.memberships) return opFailure(HttpStatusCode.NotFound, `Cannot find group with id ${groupId}`)
+    if (!group || !group.memberships)
+      return opFailure(HttpStatusCode.NotFound, `Cannot find group with id ${groupId}`)
 
-    const userMembership = group.memberships.find(m => m.user.id === user.id)
+    const userMembership = group.memberships.find((m) => m.user.id === user.id)
     if (!userMembership) {
       return opFailure(HttpStatusCode.Forbidden, `User ${user.id} is not in group ${group.id}`)
     }
@@ -62,11 +74,13 @@ export class GroupService {
           return opFailure(HttpStatusCode.Forbidden, `Only the owner can transfer ownership`)
         }
 
-        const newOwner = await UserRepository.findOne({where: {id: request.ownerId}})
-        if (!newOwner) return opFailure(HttpStatusCode.NotFound, `Cannot find user with id ${request.ownerId}`)
+        const newOwner = await UserRepository.findOne({ where: { id: request.ownerId } })
+        if (!newOwner)
+          return opFailure(HttpStatusCode.NotFound, `Cannot find user with id ${request.ownerId}`)
 
-        const newOwnerMembership = group.memberships.find(m => m.user.id === request.ownerId)
-        if (!newOwnerMembership) return opFailure(HttpStatusCode.Forbidden, `New owner must be a member of the group`)
+        const newOwnerMembership = group.memberships.find((m) => m.user.id === request.ownerId)
+        if (!newOwnerMembership)
+          return opFailure(HttpStatusCode.Forbidden, `New owner must be a member of the group`)
 
         userMembership.role = Role.ADMIN
         newOwnerMembership.role = Role.OWNER
@@ -92,19 +106,21 @@ export class GroupService {
   }
 
   public static async joinGroup(userId: string, request: JoinGroupDto): Promise<OperationResult> {
-    const user = await UserRepository.findOne({where: {id: userId}})
+    const user = await UserRepository.findOne({ where: { id: userId } })
     if (!user) return opFailure(HttpStatusCode.NotFound, `Cannot find user with id ${userId}`)
 
-    const group = await GroupRepository.findOne({where: {id: request.groupId}})
-    if (!group) return opFailure(HttpStatusCode.NotFound, `Cannot find group with id ${request.groupId}`)
+    const group = await GroupRepository.findOne({ where: { id: request.groupId } })
+    if (!group)
+      return opFailure(HttpStatusCode.NotFound, `Cannot find group with id ${request.groupId}`)
 
     const existingMembership = await MembershipRepository.findOne({
       where: {
-        user: {id: userId},
-        group: {id: request.groupId}
-      }
+        user: { id: userId },
+        group: { id: request.groupId },
+      },
     })
-    if (existingMembership) return opFailure(HttpStatusCode.Conflict, `User is already a member of the group`)
+    if (existingMembership)
+      return opFailure(HttpStatusCode.Conflict, `User is already a member of the group`)
 
     const joinRequest = new JoinRequest()
     joinRequest.user = user
@@ -117,18 +133,22 @@ export class GroupService {
   }
 
   public static async leaveGroup(userId: string, groupId: string): Promise<OperationResult> {
-    const user = await UserRepository.findOne({where: {id: userId},})
+    const user = await UserRepository.findOne({ where: { id: userId } })
     if (!user) return opFailure(HttpStatusCode.NotFound, `Cannot find user with id ${userId}`)
 
     const group = await GroupRepository.findOne({
-      where: {id: groupId},
+      where: { id: groupId },
       relations: ['memberships', 'memberships.user'],
     })
-    if (!group || !group.memberships) return opFailure(HttpStatusCode.NotFound, `Cannot find group with id ${groupId}`)
+    if (!group || !group.memberships)
+      return opFailure(HttpStatusCode.NotFound, `Cannot find group with id ${groupId}`)
 
-    const userMembership = group.memberships.find(m => m.user.id === user.id)
+    const userMembership = group.memberships.find((m) => m.user.id === user.id)
     if (!userMembership) {
-      return opFailure(HttpStatusCode.BadRequest, `User ${user.username} is not in group ${group.name}`)
+      return opFailure(
+        HttpStatusCode.BadRequest,
+        `User ${user.username} is not in group ${group.name}`,
+      )
     }
 
     const queryRunner = GroupRepository.manager.connection.createQueryRunner()
@@ -136,7 +156,7 @@ export class GroupService {
 
     try {
       await queryRunner.manager.remove(userMembership)
-      group.memberships = group.memberships?.filter(m => m.user.id !== user.id)
+      group.memberships = group.memberships?.filter((m) => m.user.id !== user.id)
 
       if (!group.memberships.length) {
         await queryRunner.manager.delete(Group, group.id)
@@ -145,7 +165,7 @@ export class GroupService {
       }
 
       if (userMembership.role === Role.OWNER) {
-        let newOwnerMembership = group.memberships?.find(m => m.role === Role.ADMIN)
+        let newOwnerMembership = group.memberships?.find((m) => m.role === Role.ADMIN)
         if (!newOwnerMembership) newOwnerMembership = group.memberships[0]
 
         newOwnerMembership.role = Role.OWNER
@@ -164,22 +184,27 @@ export class GroupService {
 
   public static async finalizeJoinRequest(
     userId: string,
-    request: JoinRequestDto
+    request: JoinRequestDto,
   ): Promise<OperationResult> {
-    const user = await UserRepository.findOne({where: {id: userId}})
+    const user = await UserRepository.findOne({ where: { id: userId } })
     if (!user) return opFailure(HttpStatusCode.NotFound, `Cannot find user with id ${userId}`)
 
     const joinRequest = await JoinRequestRepository.findOne({
-      where: {id: request.joinRequestId},
-      relations: ['user', 'group']
+      where: { id: request.joinRequestId },
+      relations: ['user', 'group'],
     })
-    if (!joinRequest) return opFailure(HttpStatusCode.NotFound, `Cannot find join request with id ${request.joinRequestId}`)
+    if (!joinRequest)
+      return opFailure(
+        HttpStatusCode.NotFound,
+        `Cannot find join request with id ${request.joinRequestId}`,
+      )
 
     const group = await GroupRepository.findOne({
-      where: {id: joinRequest.group.id},
-      relations: ['memberships', 'memberships.user']
+      where: { id: joinRequest.group.id },
+      relations: ['memberships', 'memberships.user'],
     })
-    if (!group || !group.memberships) return opFailure(HttpStatusCode.NotFound, `Cannot find group with id ${joinRequest.group.id}`)
+    if (!group || !group.memberships)
+      return opFailure(HttpStatusCode.NotFound, `Cannot find group with id ${joinRequest.group.id}`)
 
     if (joinRequest.status != JoinRequestStatus.PENDING) {
       return opFailure(HttpStatusCode.BadRequest, 'Join request already resolved')
@@ -190,7 +215,7 @@ export class GroupService {
     }
 
     const existingMembership = await MembershipRepository.findOne({
-      where: {user: {id: joinRequest.user.id}, group: {id: joinRequest.group.id}}
+      where: { user: { id: joinRequest.user.id }, group: { id: joinRequest.group.id } },
     })
     if (existingMembership) {
       joinRequest.status = JoinRequestStatus.DENIED
@@ -198,7 +223,7 @@ export class GroupService {
       return opFailure(HttpStatusCode.Conflict, `User is already a member of the group`)
     }
 
-    const userMembership = group.memberships.find(m => m.user.id === user.id)
+    const userMembership = group.memberships.find((m) => m.user.id === user.id)
     if (!userMembership || userMembership.role <= 0) {
       return opFailure(HttpStatusCode.Forbidden, 'Only admins or above can finalize join requests')
     }

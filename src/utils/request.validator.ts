@@ -1,7 +1,7 @@
-import {ClassConstructor, plainToInstance} from 'class-transformer'
-import {validate, ValidationError} from 'class-validator'
-import {NextFunction, Request, RequestHandler, Response} from 'express'
-import {HttpStatusCode} from 'axios'
+import { ClassConstructor, plainToInstance } from 'class-transformer'
+import { validate, ValidationError } from 'class-validator'
+import { NextFunction, Request, RequestHandler, Response } from 'express'
+import { HttpStatusCode } from 'axios'
 
 type AppErrorJSONObject = { code: number; message: string; error?: unknown }
 
@@ -41,27 +41,27 @@ class AppValidationError extends Error {
 
 const requestAttributeValidator =
   (attribute: 'body' | 'params' | 'query' | 'mergedData') =>
-    (dto: ClassConstructor<object>): RequestHandler =>
-      async (req: Request, response: Response, next: NextFunction): Promise<void> => {
-        const instance = plainToInstance(dto, req[attribute], {
-          excludeExtraneousValues: true,
-          enableImplicitConversion: true,
-        })
+  (dto: ClassConstructor<object>): RequestHandler =>
+  async (req: Request, response: Response, next: NextFunction): Promise<void> => {
+    const instance = plainToInstance(dto, req[attribute], {
+      excludeExtraneousValues: true,
+      enableImplicitConversion: true,
+    })
 
-        const errors = await validate(instance, {
-          skipMissingProperties: true,
-          whitelist: true,
-          forbidNonWhitelisted: true,
-        })
+    const errors = await validate(instance, {
+      skipMissingProperties: true,
+      whitelist: true,
+      forbidNonWhitelisted: true,
+    })
 
-        if (errors.length) {
-          const err = new AppValidationError(errors).toJSONObject()
-          response.status(err.code).send(err)
-        } else {
-          req[attribute] = {...instance}
-          next()
-        }
-      }
+    if (errors.length) {
+      const err = new AppValidationError(errors).toJSONObject()
+      response.status(err.code).send(err)
+    } else {
+      req[attribute] = { ...instance }
+      next()
+    }
+  }
 
 export const validateBody = requestAttributeValidator('body')
 export const validateQuery = requestAttributeValidator('query')

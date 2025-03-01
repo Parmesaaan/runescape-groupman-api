@@ -1,113 +1,120 @@
-import {PermissionLevel} from "../models";
+import { PermissionLevel } from '../models'
 
 export const API_ROUTES = {
   ROOT: {
     route: '/',
-    permissionLevel: PermissionLevel.NONE
+    permissionLevel: PermissionLevel.NONE,
   },
-  SIGNUP: { // TODO: Implement
+  SIGNUP: {
+    // TODO: Implement
     route: '/signup',
-    permissionLevel: PermissionLevel.NONE
+    permissionLevel: PermissionLevel.NONE,
   },
   LOGIN: {
     route: '/login',
-    permissionLevel: PermissionLevel.NONE
+    permissionLevel: PermissionLevel.NONE,
   },
   REFRESH_TOKEN: {
     route: '/refresh-token',
-    permissionLevel: PermissionLevel.NONE
+    permissionLevel: PermissionLevel.NONE,
   },
   CHANGE_PASSWORD: {
     route: '/change-pass',
-    permissionLevel: PermissionLevel.USER
+    permissionLevel: PermissionLevel.USER,
   },
   USERS: {
-    GET: { // TODO: Implement
+    GET: {
+      // TODO: Implement
       route: '/user',
-      permissionLevel: PermissionLevel.USER
+      permissionLevel: PermissionLevel.USER,
     },
     UPDATE: {
       route: '/user',
-      permissionLevel: PermissionLevel.USER
+      permissionLevel: PermissionLevel.USER,
     },
-    GET_NOTES: { // TODO: Implement
+    GET_NOTES: {
+      // TODO: Implement
       route: '/user/notes',
-      permissionLevel: PermissionLevel.USER
+      permissionLevel: PermissionLevel.USER,
     },
     CREATE_NOTE: {
       route: '/users/notes',
-      permissionLevel: PermissionLevel.USER
+      permissionLevel: PermissionLevel.USER,
     },
     UPDATE_NOTE: {
       route: '/users/notes/:userNoteId',
-      permissionLevel: PermissionLevel.USER
+      permissionLevel: PermissionLevel.USER,
     },
     DELETE_NOTE: {
       route: '/users/notes/:userNoteId',
-      permissionLevel: PermissionLevel.USER
+      permissionLevel: PermissionLevel.USER,
     },
-    GET_TASKS: { // TODO: Implement
+    GET_TASKS: {
+      // TODO: Implement
       route: '/users/tasks',
-      permissionLevel: PermissionLevel.USER
+      permissionLevel: PermissionLevel.USER,
     },
     CREATE_TASK: {
       route: '/users/tasks',
-      permissionLevel: PermissionLevel.USER
+      permissionLevel: PermissionLevel.USER,
     },
     UPDATE_TASK: {
       route: '/users/tasks/:taskId',
-      permissionLevel: PermissionLevel.USER
+      permissionLevel: PermissionLevel.USER,
     },
     DELETE_TASK: {
       route: '/users/tasks/:taskId',
-      permissionLevel: PermissionLevel.USER
+      permissionLevel: PermissionLevel.USER,
     },
   },
 
   GROUPS: {
     CREATE: {
       route: '/groups',
-      permissionLevel: PermissionLevel.USER
+      permissionLevel: PermissionLevel.USER,
     },
-    GET: { // TODO: Implement
+    GET: {
+      // TODO: Implement
       route: '/groups/:groupId',
-      permissionLevel: PermissionLevel.ADMIN
+      permissionLevel: PermissionLevel.ADMIN,
     },
     UPDATE: {
       route: '/groups/:groupId',
-      permissionLevel: PermissionLevel.USER
+      permissionLevel: PermissionLevel.USER,
     },
-    DELETE: { // TODO: Implement
+    DELETE: {
+      // TODO: Implement
       route: '/groups/:groupId',
-      permissionLevel: PermissionLevel.USER
+      permissionLevel: PermissionLevel.USER,
     },
     LEAVE: {
       route: '/groups/:groupId/leave',
-      permissionLevel: PermissionLevel.USER
+      permissionLevel: PermissionLevel.USER,
     },
-    GET_NOTES: { // TODO: Implement
+    GET_NOTES: {
+      // TODO: Implement
       route: '/groups/:groupId/notes',
-      permissionLevel: PermissionLevel.USER
+      permissionLevel: PermissionLevel.USER,
     },
     CREATE_NOTE: {
       route: '/groups/:groupId/notes',
-      permissionLevel: PermissionLevel.USER
+      permissionLevel: PermissionLevel.USER,
     },
     UPDATE_NOTE: {
       route: '/groups/:groupId/notes/:noteId',
-      permissionLevel: PermissionLevel.USER
+      permissionLevel: PermissionLevel.USER,
     },
     DELETE_NOTE: {
       route: '/groups/:groupId/notes/:noteId',
-      permissionLevel: PermissionLevel.USER
+      permissionLevel: PermissionLevel.USER,
     },
     JOIN: {
       route: '/groups/join-requests',
-      permissionLevel: PermissionLevel.USER
+      permissionLevel: PermissionLevel.USER,
     },
     JOIN_REQUEST: {
       route: '/groups/join-requests',
-      permissionLevel: PermissionLevel.USER
+      permissionLevel: PermissionLevel.USER,
     },
   },
 }

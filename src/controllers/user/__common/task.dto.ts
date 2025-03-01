@@ -1,6 +1,6 @@
-import {IsDefined, IsEnum, IsOptional, IsString} from "class-validator";
-import {Expose, Transform} from "class-transformer";
-import {TaskType} from "../../../models";
+import { IsDefined, IsEnum, IsOptional, IsString } from 'class-validator'
+import { Expose, Transform } from 'class-transformer'
+import { TaskType } from '../../../models'
 
 export class TaskIdDto {
   @Expose()
@@ -22,7 +22,7 @@ export class TaskDto {
 
   @Expose()
   @IsEnum(TaskType)
-  @Transform(({value}) => TaskType[value as keyof typeof TaskType] ?? value)
+  @Transform(({ value }) => TaskType[value as keyof typeof TaskType] ?? value)
   @IsDefined()
   taskType!: TaskType
 }

@@ -1,6 +1,6 @@
-import {Router} from 'express'
-import {API_ROUTES} from '../config'
-import {healthController} from '../controllers'
+import { Router } from 'express'
+import { API_ROUTES } from '../config'
+import { healthController } from '../controllers'
 
 export const systemRouter = (): Router => {
   const router = Router()

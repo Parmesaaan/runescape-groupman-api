@@ -1,16 +1,16 @@
-import {Request, RequestHandler, Response} from "express";
-import {UserService} from "../../../services";
-import {isOpFailure, TokenPair} from "../../../utils";
-import {HttpStatusCode} from "axios";
-import {LoginDto} from "./login.dto";
-import {AuthResponseDto} from "../__common";
+import { Request, RequestHandler, Response } from 'express'
+import { UserService } from '../../../services'
+import { isOpFailure, TokenPair } from '../../../utils'
+import { HttpStatusCode } from 'axios'
+import { LoginDto } from './login.dto'
+import { AuthResponseDto } from '../__common'
 
 export const loginController: RequestHandler = async (req: Request, res: Response) => {
   const request = req.body as unknown as LoginDto
   const result = await UserService.login(request)
 
   if (isOpFailure(result)) {
-    return res.status(result.error!.status).send({message: result.error!.message})
+    return res.status(result.error!.status).send({ message: result.error!.message })
   }
 
   const tokenPair = result.success!.data as TokenPair

@@ -1,17 +1,25 @@
-import {OperationResult} from "../types";
-import {GroupNoteRepository, GroupRepository, MembershipRepository, UserRepository} from "../config";
-import {opFailure, opSuccess} from "../utils";
-import {HttpStatusCode} from "axios";
-import {GroupNote} from "../models";
-import {UpdateGroupNoteDto} from "../controllers/group/updateGroupNote";
-import {CreateGroupNoteDto} from "../controllers/group/createGroupNote";
+import { OperationResult } from '../types'
+import {
+  GroupNoteRepository,
+  GroupRepository,
+  MembershipRepository,
+  UserRepository,
+} from '../config'
+import { opFailure, opSuccess } from '../utils'
+import { HttpStatusCode } from 'axios'
+import { GroupNote } from '../models'
+import { CreateGroupNoteDto, UpdateGroupNoteDto } from '../controllers'
 
 export class GroupNoteService {
-  public static async createNote(userId: string, groupId: string, request: CreateGroupNoteDto): Promise<OperationResult> {
-    const user = await UserRepository.findOne({where: {id: userId}})
+  public static async createNote(
+    userId: string,
+    groupId: string,
+    request: CreateGroupNoteDto,
+  ): Promise<OperationResult> {
+    const user = await UserRepository.findOne({ where: { id: userId } })
     if (!user) return opFailure(HttpStatusCode.NotFound, `Cannot find user with id ${userId}`)
 
-    const group = await GroupRepository.findOne({where: {id: groupId}})
+    const group = await GroupRepository.findOne({ where: { id: groupId } })
     if (!group) return opFailure(HttpStatusCode.NotFound, `Cannot find group with id ${groupId}`)
 
     const note = new GroupNote()
@@ -28,13 +36,17 @@ export class GroupNoteService {
     userId: string,
     groupId: string,
     groupNoteId: string,
-    request: UpdateGroupNoteDto
+    request: UpdateGroupNoteDto,
   ): Promise<OperationResult> {
-    const note = await GroupNoteRepository.findOne({where: {id: groupNoteId}, relations: ['author']})
-    if (!note) return opFailure(HttpStatusCode.NotFound, `Cannot find group note with id ${groupNoteId}`)
+    const note = await GroupNoteRepository.findOne({
+      where: { id: groupNoteId },
+      relations: ['author'],
+    })
+    if (!note)
+      return opFailure(HttpStatusCode.NotFound, `Cannot find group note with id ${groupNoteId}`)
 
     const membership = await MembershipRepository.findOne({
-      where: {user: {id: userId}, group: {id: groupId}}
+      where: { user: { id: userId }, group: { id: groupId } },
     })
     if (!membership) return opFailure(HttpStatusCode.NotFound, `You are not a member of this group`)
 
@@ -49,12 +61,20 @@ export class GroupNoteService {
     return opSuccess(savedNote)
   }
 
-  public static async deleteNote(userId: string, groupId: string, groupNoteId: string): Promise<OperationResult> {
-    const note = await GroupNoteRepository.findOne({where: {id: groupNoteId}, relations: ['author']})
-    if (!note) return opFailure(HttpStatusCode.NotFound, `Cannot find group note with id ${groupNoteId}`)
+  public static async deleteNote(
+    userId: string,
+    groupId: string,
+    groupNoteId: string,
+  ): Promise<OperationResult> {
+    const note = await GroupNoteRepository.findOne({
+      where: { id: groupNoteId },
+      relations: ['author'],
+    })
+    if (!note)
+      return opFailure(HttpStatusCode.NotFound, `Cannot find group note with id ${groupNoteId}`)
 
     const membership = await MembershipRepository.findOne({
-      where: {user: {id: userId}, group: {id: groupId}}
+      where: { user: { id: userId }, group: { id: groupId } },
     })
     if (!membership) return opFailure(HttpStatusCode.NotFound, `You are not a member of this group`)
 

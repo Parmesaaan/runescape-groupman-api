@@ -1,6 +1,6 @@
-import {Router} from 'express'
-import {API_ROUTES} from '../config'
-import {validateBody, validateParams} from '../utils'
+import { Router } from 'express'
+import { API_ROUTES } from '../config'
+import { validateBody, validateParams } from '../utils'
 import {
   createUserController,
   CreateUserDto,
@@ -12,7 +12,7 @@ import {
   UpdateUserDto,
   UserIdDto,
 } from '../controllers'
-import {authenticate} from '../middleware'
+import { authenticate } from '../middleware'
 
 export const userRouter = (): Router => {
   const router = Router()

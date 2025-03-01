@@ -1,13 +1,13 @@
-import {OperationResult} from "../types";
-import {TaskDto} from "../controllers/user/__common/task.dto";
-import {TaskRepository, UserRepository} from "../config";
-import {opFailure, opSuccess} from "../utils";
-import {HttpStatusCode} from "axios";
-import {Task} from "../models";
+import { OperationResult } from '../types'
+import { TaskDto } from '../controllers'
+import { TaskRepository, UserRepository } from '../config'
+import { opFailure, opSuccess } from '../utils'
+import { HttpStatusCode } from 'axios'
+import { Task } from '../models'
 
 export class TaskService {
   public static async createTask(userId: string, request: TaskDto): Promise<OperationResult> {
-    const user = await UserRepository.findOne({where: {id: userId}})
+    const user = await UserRepository.findOne({ where: { id: userId } })
     if (!user) return opFailure(HttpStatusCode.NotFound, `Cannot find user with id ${userId}`)
 
     const task = new Task()
@@ -20,14 +20,19 @@ export class TaskService {
     return opSuccess(savedTask)
   }
 
-  public static async updateTask(userId: string, taskId: string, request: TaskDto): Promise<OperationResult> {
-    const user = await UserRepository.findOne({where: {id: userId}})
+  public static async updateTask(
+    userId: string,
+    taskId: string,
+    request: TaskDto,
+  ): Promise<OperationResult> {
+    const user = await UserRepository.findOne({ where: { id: userId } })
     if (!user) return opFailure(HttpStatusCode.NotFound, `Cannot find user with id ${userId}`)
 
-    const task = await TaskRepository.findOne({where: {id: taskId}, relations: ['user']})
+    const task = await TaskRepository.findOne({ where: { id: taskId }, relations: ['user'] })
     if (!task) return opFailure(HttpStatusCode.NotFound, `Cannot find task with id ${taskId}`)
 
-    if (task.user.id != user.id) return opFailure(HttpStatusCode.Forbidden, `You can only change your own tasks`)
+    if (task.user.id != user.id)
+      return opFailure(HttpStatusCode.Forbidden, `You can only change your own tasks`)
 
     task.title = request.title ?? task.title
     task.description = request.description ?? task.description
@@ -39,11 +44,15 @@ export class TaskService {
 
   public static async deleteTask(userId: string, taskId: string): Promise<OperationResult> {
     const task = await TaskRepository.findOne({
-      where: {id: taskId, user: {id: userId}},
+      where: { id: taskId, user: { id: userId } },
       relations: ['user'],
     })
 
-    if (!task) return opFailure(HttpStatusCode.NotFound, `Cannot find task with id ${taskId} for user ${userId}`)
+    if (!task)
+      return opFailure(
+        HttpStatusCode.NotFound,
+        `Cannot find task with id ${taskId} for user ${userId}`,
+      )
 
     await TaskRepository.delete(taskId)
     return opSuccess(true)

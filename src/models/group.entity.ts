@@ -9,18 +9,18 @@ import {
   Unique,
   UpdateDateColumn,
 } from 'typeorm'
-import {JoinRequest} from "./joinRequest.entity"
-import {GroupNote} from "./groupNote.entity";
-import {Membership} from "./membership.entity";
+import { JoinRequest } from './joinRequest.entity'
+import { GroupNote } from './groupNote.entity'
+import { Membership } from './membership.entity'
 
 @Entity('group')
 @Unique(['name'])
 export class Group extends BaseEntity {
-  @PrimaryGeneratedColumn('uuid', {primaryKeyConstraintName: 'PK_group_id'})
+  @PrimaryGeneratedColumn('uuid', { primaryKeyConstraintName: 'PK_group_id' })
   id!: string
 
   @Index()
-  @Column({nullable: false})
+  @Column({ nullable: false })
   name!: string
 
   @OneToMany(() => GroupNote, (groupNote) => groupNote.group)
@@ -32,9 +32,9 @@ export class Group extends BaseEntity {
   @OneToMany(() => JoinRequest, (joinRequest) => joinRequest.group)
   joinRequests?: Array<JoinRequest>
 
-  @CreateDateColumn({name: 'created_at'})
+  @CreateDateColumn({ name: 'created_at' })
   createdAt!: Date
 
-  @UpdateDateColumn({name: 'updated_at'})
+  @UpdateDateColumn({ name: 'updated_at' })
   updatedAt!: Date
 }

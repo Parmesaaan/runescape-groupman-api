@@ -1,6 +1,6 @@
-import {Router} from 'express'
-import {API_ROUTES} from '../config'
-import {validateBody, validateParams} from '../utils'
+import { Router } from 'express'
+import { API_ROUTES } from '../config'
+import { validateBody, validateParams } from '../utils'
 import {
   createGroupController,
   CreateGroupDto,
@@ -11,7 +11,7 @@ import {
   SearchGroupsDto,
   UserIdDto,
 } from '../controllers'
-import {authenticate} from '../middleware'
+import { authenticate } from '../middleware'
 
 export const groupRouter = (): Router => {
   const router = Router()

@@ -1,6 +1,6 @@
 import 'dotenv/config'
 
-import {createLogger, format, transports} from 'winston'
+import { createLogger, format, transports } from 'winston'
 
 const LOGGING_LEVEL = process.env.LOGGING_LEVEL || 'warning'
 
@@ -16,5 +16,5 @@ const consoleFormat = format.combine(errorStackTracerFormat(), format.colorize()
 
 export const logger = createLogger({
   level: LOGGING_LEVEL,
-  transports: new transports.Console({format: consoleFormat}),
+  transports: new transports.Console({ format: consoleFormat }),
 })
