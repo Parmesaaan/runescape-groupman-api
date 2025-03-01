@@ -8,8 +8,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm'
-import { Group } from './group.entity'
-import { User } from './user.entity'
+import {User} from './user.entity'
 
 export enum TaskType {
   DAILY = 'DAILY',
@@ -19,32 +18,32 @@ export enum TaskType {
 
 @Entity('task')
 export class Task {
-  @PrimaryGeneratedColumn('uuid', { primaryKeyConstraintName: 'PK_task_id' })
+  @PrimaryGeneratedColumn('uuid', {primaryKeyConstraintName: 'PK_task_id'})
   id!: string
 
-  @Column({ type: 'enum', enum: TaskType, name: 'task_type' })
+  @Column({type: 'enum', enum: TaskType, name: 'task_type'})
   taskType!: TaskType
 
   @Column()
   title!: string
 
-  @Column({ nullable: true })
+  @Column({nullable: true})
   description?: string
 
   @Index()
-  @ManyToOne(() => User, (user) => user.tasks, { nullable: false, onDelete: 'CASCADE' })
+  @ManyToOne(() => User, (user) => user.tasks, {nullable: false, onDelete: 'CASCADE'})
   @JoinColumn({
     name: 'user_id',
     referencedColumnName: 'id',
   })
   user!: User
 
-  @Column({ name: 'last_completed', nullable: true })
+  @Column({name: 'last_completed', nullable: true})
   lastCompleted?: Date
 
-  @CreateDateColumn({ name: 'created_at' })
+  @CreateDateColumn({name: 'created_at'})
   createdAt!: Date
 
-  @UpdateDateColumn({ name: 'updated_at' })
+  @UpdateDateColumn({name: 'updated_at'})
   updatedAt!: Date
 }

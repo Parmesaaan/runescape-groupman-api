@@ -9,7 +9,7 @@ export const deleteUserNoteController: RequestHandler = async (req: Request, res
   const result = await UserNoteService.deleteNote(req.user!.id, userNoteIdDto.userNoteId)
 
   if (isOpFailure(result)) {
-    return res.status(result.error!.status).send({ message: result.error!.message })
+    return res.status(result.error!.status).send({message: result.error!.message})
   }
 
   return res.status(HttpStatusCode.NoContent).send()

@@ -1,4 +1,4 @@
-import { Expose } from 'class-transformer'
+import {Expose} from 'class-transformer'
 import {IsDefined, IsString} from 'class-validator'
 
 export class UserIdDto {

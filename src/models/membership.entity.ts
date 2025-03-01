@@ -2,7 +2,8 @@ import {
   BaseEntity,
   Column,
   CreateDateColumn,
-  Entity, Index,
+  Entity,
+  Index,
   JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
@@ -20,11 +21,11 @@ export enum Role {
 @Entity()
 @Unique(['user', 'group'])
 export class Membership extends BaseEntity {
-  @PrimaryGeneratedColumn('uuid', { primaryKeyConstraintName: 'PK_membership_id' })
+  @PrimaryGeneratedColumn('uuid', {primaryKeyConstraintName: 'PK_membership_id'})
   id!: string
 
   @Index()
-  @ManyToOne(() => User, (user) => user.memberships, { nullable: false, onDelete: 'CASCADE' })
+  @ManyToOne(() => User, (user) => user.memberships, {nullable: false, onDelete: 'CASCADE'})
   @JoinColumn({
     name: 'user_id',
     referencedColumnName: 'id',
@@ -32,16 +33,16 @@ export class Membership extends BaseEntity {
   user!: User
 
   @Index()
-  @ManyToOne(() => Group, (group) => group.memberships, { nullable: false, onDelete: 'CASCADE' })
+  @ManyToOne(() => Group, (group) => group.memberships, {nullable: false, onDelete: 'CASCADE'})
   @JoinColumn({
     name: 'group_id',
     referencedColumnName: 'id',
   })
   group!: Group
 
-  @Column({ type: 'enum', enum: Role, nullable: false, default: Role.USER })
+  @Column({type: 'enum', enum: Role, nullable: false, default: Role.USER})
   role!: Role
 
-  @CreateDateColumn({ name: 'created_at' })
+  @CreateDateColumn({name: 'created_at'})
   createdAt!: Date
 }

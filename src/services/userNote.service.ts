@@ -8,7 +8,7 @@ import {UpdateUserNoteDto} from "../controllers/user/updateUserNote";
 
 export class UserNoteService {
   public static async createNote(userId: string, request: CreateUserNoteDto): Promise<OperationResult> {
-    const user = await UserRepository.findOne({ where: { id: userId } })
+    const user = await UserRepository.findOne({where: {id: userId}})
     if (!user) return opFailure(HttpStatusCode.NotFound, `Cannot find user with id ${userId}`)
 
     const note = new UserNote()
@@ -21,10 +21,10 @@ export class UserNoteService {
   }
 
   public static async updateNote(userId: string, userNoteId: string, request: UpdateUserNoteDto): Promise<OperationResult> {
-    const user = await UserRepository.findOne({ where: { id: userId } })
+    const user = await UserRepository.findOne({where: {id: userId}})
     if (!user) return opFailure(HttpStatusCode.NotFound, `Cannot find user with id ${userId}`)
 
-    const note = await UserNoteRepository.findOne({ where: { id: userNoteId }, relations: ['user'] })
+    const note = await UserNoteRepository.findOne({where: {id: userNoteId}, relations: ['user']})
     if (!note) return opFailure(HttpStatusCode.NotFound, `Cannot find user note with id ${userNoteId}`)
 
     if (note.user.id != user.id) return opFailure(HttpStatusCode.Forbidden, `You can only change your own notes`)
@@ -38,7 +38,7 @@ export class UserNoteService {
 
   public static async deleteNote(userId: string, userNoteId: string): Promise<OperationResult> {
     const note = await UserNoteRepository.findOne({
-      where: { id: userNoteId, user: { id: userId } },
+      where: {id: userNoteId, user: {id: userId}},
       relations: ['user'],
     })
 

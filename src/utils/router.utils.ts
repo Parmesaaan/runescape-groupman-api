@@ -1,5 +1,5 @@
-import { Express } from 'express'
-import { groupRouter, noteRouter, systemRouter, taskRouter, userRouter } from '../routes'
+import {Express} from 'express'
+import {groupRouter, noteRouter, systemRouter, taskRouter, userRouter} from '../routes'
 
 export const configureRoutes = (app: Express): void => {
   app.use(systemRouter())

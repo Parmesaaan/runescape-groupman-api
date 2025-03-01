@@ -9,7 +9,7 @@ export const deleteTaskController: RequestHandler = async (req: Request, res: Re
   const result = await TaskService.deleteTask(req.user!.id, taskIdDto.taskId)
 
   if (isOpFailure(result)) {
-    return res.status(result.error!.status).send({ message: result.error!.message })
+    return res.status(result.error!.status).send({message: result.error!.message})
   }
 
   return res.status(HttpStatusCode.NoContent).send()

@@ -9,7 +9,7 @@ export const createTaskController: RequestHandler = async (req: Request, res: Re
   const result = await TaskService.createTask(req.user!.id, request)
 
   if (isOpFailure(result)) {
-    return res.status(result.error!.status).send({ message: result.error!.message })
+    return res.status(result.error!.status).send({message: result.error!.message})
   }
 
   return res.status(HttpStatusCode.Created).send()

@@ -1,8 +1,6 @@
-import { DataSource } from 'typeorm'
-import { dbConfig } from './environment.config'
-import {Group, GroupNote, JoinRequest, User} from '../models'
-import { Task } from '../models'
-import {UserNote} from "../models";
+import {DataSource} from 'typeorm'
+import {dbConfig} from './environment.config'
+import {Group, GroupNote, JoinRequest, Task, User, UserNote} from '../models'
 import {Membership} from "../models/membership.entity";
 
 export const AppDataSource = new DataSource({

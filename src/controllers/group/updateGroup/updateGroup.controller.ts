@@ -12,7 +12,7 @@ export const updateGroupController: RequestHandler = async (req: Request, res: R
   const result: OperationResult = await GroupService.updateGroup(req.user!.id, groupId, request)
 
   if (isOpFailure(result)) {
-    return res.status(result.error!.status).send({ message: result.error!.message })
+    return res.status(result.error!.status).send({message: result.error!.message})
   }
 
   return res.status(HttpStatusCode.Ok).send()

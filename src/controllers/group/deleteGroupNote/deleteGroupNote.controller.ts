@@ -9,7 +9,7 @@ export const deleteGroupNoteController: RequestHandler = async (req: Request, re
   const result = await GroupNoteService.deleteNote(req.user!.id, idDto.groupId, idDto.groupNoteId)
 
   if (isOpFailure(result)) {
-    return res.status(result.error!.status).send({ message: result.error!.message })
+    return res.status(result.error!.status).send({message: result.error!.message})
   }
 
   return res.status(HttpStatusCode.NoContent).send()

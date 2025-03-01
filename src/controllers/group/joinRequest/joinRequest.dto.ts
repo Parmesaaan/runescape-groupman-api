@@ -10,7 +10,7 @@ export class JoinRequestDto {
 
   @Expose()
   @IsEnum(JoinRequestStatus)
-  @Transform(({ value }) => JoinRequestStatus[value as keyof typeof JoinRequestStatus] ?? value)
+  @Transform(({value}) => JoinRequestStatus[value as keyof typeof JoinRequestStatus] ?? value)
   @IsDefined()
   status!: JoinRequestStatus
 }

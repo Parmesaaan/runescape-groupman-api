@@ -22,7 +22,7 @@ export class TaskDto {
 
   @Expose()
   @IsEnum(TaskType)
-  @Transform(({ value }) => TaskType[value as keyof typeof TaskType] ?? value)
+  @Transform(({value}) => TaskType[value as keyof typeof TaskType] ?? value)
   @IsDefined()
   taskType!: TaskType
 }

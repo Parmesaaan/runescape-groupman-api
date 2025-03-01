@@ -11,7 +11,7 @@ export const updateGroupNoteController: RequestHandler = async (req: Request, re
   const result = await GroupNoteService.updateNote(req.user!.id, idDto.groupId, idDto.groupNoteId, request)
 
   if (isOpFailure(result)) {
-    return res.status(result.error!.status).send({ message: result.error!.message })
+    return res.status(result.error!.status).send({message: result.error!.message})
   }
 
   return res.status(HttpStatusCode.Ok).send()

@@ -2,13 +2,14 @@ import {
   BaseEntity,
   Column,
   CreateDateColumn,
-  Entity, Index,
+  Entity,
+  Index,
   OneToMany,
   PrimaryGeneratedColumn,
   Unique,
   UpdateDateColumn,
 } from 'typeorm'
-import { Task } from './task.entity'
+import {Task} from './task.entity'
 import {JoinRequest} from "./joinRequest.entity"
 import {UserNote} from "./userNote.entity";
 import {Membership} from "./membership.entity";
@@ -23,17 +24,17 @@ export enum PermissionLevel {
 @Entity('user')
 @Unique(['username'])
 export class User extends BaseEntity {
-  @PrimaryGeneratedColumn('uuid', { primaryKeyConstraintName: 'PK_user_id' })
+  @PrimaryGeneratedColumn('uuid', {primaryKeyConstraintName: 'PK_user_id'})
   id!: string
 
   @Index()
-  @Column({ nullable: false })
+  @Column({nullable: false})
   username!: string
 
-  @Column({ name: 'password_hash', nullable: false  })
+  @Column({name: 'password_hash', nullable: false})
   password!: string
 
-  @Column({ type: 'enum', enum: PermissionLevel, name: 'permission_level', nullable: false  })
+  @Column({type: 'enum', enum: PermissionLevel, name: 'permission_level', nullable: false})
   permissionLevel!: PermissionLevel
 
   @OneToMany(() => Task, (task) => task.user)
@@ -51,9 +52,9 @@ export class User extends BaseEntity {
   @OneToMany(() => JoinRequest, (joinRequest) => joinRequest.user)
   joinRequests?: Array<JoinRequest>
 
-  @CreateDateColumn({ name: 'created_at' })
+  @CreateDateColumn({name: 'created_at'})
   createdAt!: Date
 
-  @UpdateDateColumn({ name: 'updated_at' })
+  @UpdateDateColumn({name: 'updated_at'})
   updatedAt!: Date
 }

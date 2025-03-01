@@ -11,7 +11,7 @@ export const createGroupNoteController: RequestHandler = async (req: Request, re
   const result = await GroupNoteService.createNote(req.user!.id, groupId, request)
 
   if (isOpFailure(result)) {
-    return res.status(result.error!.status).send({ message: result.error!.message })
+    return res.status(result.error!.status).send({message: result.error!.message})
   }
 
   return res.status(HttpStatusCode.Created).send()
