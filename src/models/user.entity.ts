@@ -2,17 +2,16 @@ import {
   BaseEntity,
   Column,
   CreateDateColumn,
-  Entity,
-  ManyToMany,
+  Entity, Index,
   OneToMany,
   PrimaryGeneratedColumn,
   Unique,
   UpdateDateColumn,
 } from 'typeorm'
-import { Group } from './group.entity'
 import { Task } from './task.entity'
 import {JoinRequest} from "./joinRequest.entity"
 import {UserNote} from "./userNote.entity";
+import {Membership} from "./membership.entity";
 
 export enum PermissionLevel {
   NONE,
@@ -26,6 +25,7 @@ export class User extends BaseEntity {
   @PrimaryGeneratedColumn('uuid', { primaryKeyConstraintName: 'PK_user_id' })
   id!: string
 
+  @Index()
   @Column({ nullable: false })
   username!: string
 
@@ -35,11 +35,8 @@ export class User extends BaseEntity {
   @Column({ type: 'enum', enum: PermissionLevel, name: 'permission_level', nullable: false  })
   permissionLevel!: PermissionLevel
 
-  @ManyToMany(() => Group, (group) => group.users)
-  groups?: Array<Group>
-
-  @OneToMany(() => Group, (group) => group.owner)
-  ownedGroups?: Array<Group>
+  @OneToMany(() => Membership, (membership) => membership.user)
+  memberships?: Array<Membership>
 
   @OneToMany(() => UserNote, (userNote) => userNote.user)
   notes?: Array<UserNote>

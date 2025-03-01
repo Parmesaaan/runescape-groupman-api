@@ -3,6 +3,7 @@ import { dbConfig } from './environment.config'
 import {Group, GroupNote, JoinRequest, User} from '../models'
 import { Task } from '../models'
 import {UserNote} from "../models";
+import {Membership} from "../models/membership.entity";
 
 export const AppDataSource = new DataSource({
   host: dbConfig.host,
@@ -28,3 +29,4 @@ export const UserNoteRepository = AppDataSource.getRepository(UserNote)
 export const GroupNoteRepository = AppDataSource.getRepository(GroupNote)
 export const TaskRepository = AppDataSource.getRepository(Task)
 export const JoinRequestRepository = AppDataSource.getRepository(JoinRequest)
+export const MembershipRepository = AppDataSource.getRepository(Membership)

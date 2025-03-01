@@ -10,5 +10,5 @@ export class UpdateGroupDto {
   @Expose()
   @IsString()
   @IsOptional()
-  owner?: string
+  ownerId?: string
 }

@@ -44,7 +44,7 @@ export class UserService {
     const user = await UserRepository.findOne({ where: { id: userId } })
     if (!user) return opFailure(HttpStatusCode.NotFound, `Cannot find user with id ${userId}`)
 
-    if (request.username) user.username = request.username
+    user.username = request.username ?? user.username
 
     const updatedUser = await UserRepository.save(user)
     return opSuccess(updatedUser)

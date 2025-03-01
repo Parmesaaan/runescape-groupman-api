@@ -1,5 +1,6 @@
-import {Expose} from "class-transformer";
-import {IsBoolean, IsDefined, IsString} from "class-validator";
+import {Expose, Transform} from "class-transformer";
+import {IsDefined, IsEnum, IsString} from "class-validator";
+import {JoinRequestStatus} from "../../../models";
 
 export class JoinRequestDto {
   @Expose()
@@ -8,7 +9,8 @@ export class JoinRequestDto {
   joinRequestId!: string
 
   @Expose()
-  @IsBoolean()
+  @IsEnum(JoinRequestStatus)
+  @Transform(({ value }) => JoinRequestStatus[value as keyof typeof JoinRequestStatus] ?? value)
   @IsDefined()
-  accept!: boolean
+  status!: JoinRequestStatus
 }

@@ -1,8 +1,9 @@
 import {
-    BaseEntity, Column,
+    BaseEntity,
+    Column,
     CreateDateColumn,
-    Entity,
-    Index, JoinColumn,
+    Entity, Index,
+    JoinColumn,
     ManyToOne,
     PrimaryGeneratedColumn,
     UpdateDateColumn
@@ -16,26 +17,24 @@ export enum JoinRequestStatus {
     DENIED = 'DENIED',
 }
 
-@Entity('group_join_request')
+@Entity('join_request')
 export class JoinRequest extends BaseEntity {
     @PrimaryGeneratedColumn('uuid', { primaryKeyConstraintName: 'PK_join_request_id' })
     id!: string
 
-    @Index('IDX_join_request_user_id')
+    @Index()
     @ManyToOne(() => User, (user) => user.joinRequests, { nullable: false, onDelete: 'CASCADE' })
     @JoinColumn({
         name: 'user_id',
-        referencedColumnName: 'id',
-        foreignKeyConstraintName: 'FK_join_request_user',
+        referencedColumnName: 'id'
     })
     user!: User
 
-    @Index('IDX_join_request_group_id')
+    @Index()
     @ManyToOne(() => Group, (group) => group.joinRequests, { nullable: false, onDelete: 'CASCADE' })
     @JoinColumn({
         name: 'group_id',
-        referencedColumnName: 'id',
-        foreignKeyConstraintName: 'FK_join_request_group',
+        referencedColumnName: 'id'
     })
     group!: Group
 
