@@ -1,7 +1,6 @@
 import { Router } from 'express'
 import { API_ROUTES } from '../config'
 import { validateBody, validateParams } from '../utils'
-import { signupController } from '../controllers/user/signup'
 import {
   changePasswordController,
   ChangePasswordDto,
@@ -14,6 +13,7 @@ import {
   loginController,
   refreshTokenController,
   RefreshTokenDto,
+  signupController,
   TaskDto,
   TaskIdDto,
   updateTaskController,

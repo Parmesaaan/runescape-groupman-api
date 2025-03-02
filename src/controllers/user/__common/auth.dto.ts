@@ -1,9 +1,9 @@
 export class AuthResponseDto {
   token!: string
-  refresh!: string
+  refreshToken!: string
 
   constructor(token: string, refresh: string) {
     this.token = token
-    this.refresh = refresh
+    this.refreshToken = refresh
   }
 }

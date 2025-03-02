@@ -2,7 +2,7 @@ import bodyParser from 'body-parser'
 import cookieParser from 'cookie-parser'
 import cors from 'cors'
 import express from 'express'
-import { setContentTypePolicy } from './middleware'
+import { errorHandler, logRequest, logResponse, setContentTypePolicy } from './middleware'
 
 import { configureRoutes } from './routes'
 
@@ -21,9 +21,10 @@ const initApp = () => {
   app.use(cookieParser())
   app.use(bodyParser.json())
   app.use(bodyParser.urlencoded({ extended: true }))
-  // TODO: Request response logging?
+  app.use(logRequest)
   configureRoutes(app)
-  // TODO: Exception handling?
+  app.use(logResponse)
+  app.use(errorHandler)
 
   return app
 }
