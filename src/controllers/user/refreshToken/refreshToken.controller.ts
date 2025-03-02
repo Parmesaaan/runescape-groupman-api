@@ -7,7 +7,7 @@ import { UserService } from '../../../services'
 
 export const refreshTokenController: RequestHandler = async (req: Request, res: Response) => {
   const request = req.body as unknown as RefreshTokenDto
-  const result = await UserService.refreshToken(req.user!.id, request)
+  const result = await UserService.refreshToken(request)
 
   if (isOpFailure(result)) {
     return res.status(result.error!.status).send({ message: result.error!.message })

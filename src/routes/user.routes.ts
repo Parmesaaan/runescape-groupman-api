@@ -39,7 +39,6 @@ export const userRouter = (): Router => {
   const refreshToken = API_ROUTES.USERS.ACCESS.REFRESH_TOKEN
   router.post(
     refreshToken.route,
-    authenticate(refreshToken.permissionLevel),
     validateBody(RefreshTokenDto),
     refreshTokenController,
   )

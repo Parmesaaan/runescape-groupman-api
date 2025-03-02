@@ -44,11 +44,11 @@ export class UserService {
   }
 
   public static async refreshToken(
-    userId: string,
     request: RefreshTokenDto,
   ): Promise<OperationResult> {
     const verifyTokenResult = verifyRefreshToken(request.refreshToken)
     if (isOpFailure(verifyTokenResult)) return verifyTokenResult
+    const userId = (verifyTokenResult.success?.data as User).id
 
     const user = await UserRepository.findOne({ where: { id: userId } })
     if (!user) return opFailure(HttpStatusCode.NotFound, `Cannot find user with id ${userId}`)
