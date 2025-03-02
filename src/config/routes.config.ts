@@ -121,11 +121,11 @@ export const API_ROUTES = {
         permissionLevel: PermissionLevel.USER,
       },
       UPDATE_NOTE: {
-        route: '/groups/:groupId/notes/:noteId',
+        route: '/groups/:groupId/notes/:groupNoteId',
         permissionLevel: PermissionLevel.USER,
       },
       DELETE_NOTE: {
-        route: '/groups/:groupId/notes/:noteId',
+        route: '/groups/:groupId/notes/:groupNoteId',
         permissionLevel: PermissionLevel.USER,
       },
     },
