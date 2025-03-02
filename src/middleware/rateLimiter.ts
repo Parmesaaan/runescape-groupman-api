@@ -7,7 +7,7 @@ export const signupLimiter = rateLimit({
 })
 
 export const loginLimiter = rateLimit({
-  windowMs: 5 * 60 * 1000,
+  windowMs: 2 * 60 * 1000,
   limit: 5,
   message: 'Too many login attempts, please try again later.',
 })
