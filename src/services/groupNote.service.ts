@@ -1,10 +1,5 @@
 import { OperationResult } from '../types'
-import {
-  GroupNoteRepository,
-  GroupRepository,
-  MembershipRepository,
-  UserRepository,
-} from '../config'
+import { GroupNoteRepository, GroupRepository, MembershipRepository, UserRepository } from '../config'
 import { opFailure, opSuccess } from '../utils'
 import { HttpStatusCode } from 'axios'
 import { GroupNote } from '../models'

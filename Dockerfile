@@ -1,4 +1,4 @@
-FROM node:18-alpine as builder
+FROM node:20-alpine AS builder
 WORKDIR /app
 COPY . .
 
@@ -12,5 +12,4 @@ COPY package*.json ./
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/build ./
 
-EXPOSE 5000
 CMD [ "npm", "start" ]

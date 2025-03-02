@@ -2,7 +2,7 @@ import { DataSource } from 'typeorm'
 import { dbConfig } from './environment.config'
 import { Group, GroupNote, JoinRequest, Membership, Task, User, UserNote } from '../models'
 
-export const AppDataSource = new DataSource({
+export const Database = new DataSource({
   host: dbConfig.host,
   port: dbConfig.port,
   username: dbConfig.user,
@@ -20,10 +20,10 @@ export const AppDataSource = new DataSource({
   },
 })
 
-export const UserRepository = AppDataSource.getRepository(User)
-export const GroupRepository = AppDataSource.getRepository(Group)
-export const UserNoteRepository = AppDataSource.getRepository(UserNote)
-export const GroupNoteRepository = AppDataSource.getRepository(GroupNote)
-export const TaskRepository = AppDataSource.getRepository(Task)
-export const JoinRequestRepository = AppDataSource.getRepository(JoinRequest)
-export const MembershipRepository = AppDataSource.getRepository(Membership)
+export const UserRepository = Database.getRepository(User)
+export const GroupRepository = Database.getRepository(Group)
+export const UserNoteRepository = Database.getRepository(UserNote)
+export const GroupNoteRepository = Database.getRepository(GroupNote)
+export const TaskRepository = Database.getRepository(Task)
+export const JoinRequestRepository = Database.getRepository(JoinRequest)
+export const MembershipRepository = Database.getRepository(Membership)

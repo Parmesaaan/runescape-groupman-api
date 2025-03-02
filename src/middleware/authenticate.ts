@@ -26,8 +26,8 @@ export const authenticate = (requiredPermissionLevel: PermissionLevel) => {
       requiredPermissionLevel != PermissionLevel.NONE
     ) {
       return res
-        .status(HttpStatusCode.Forbidden)
-        .json({ message: 'You do not have permission to access this resource.' })
+      .status(HttpStatusCode.Forbidden)
+      .json({ message: 'You do not have permission to access this resource.' })
     }
 
     req.user = user

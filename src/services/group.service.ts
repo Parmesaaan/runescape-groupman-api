@@ -1,11 +1,6 @@
 import { CreateGroupDto, GroupIdDto, JoinRequestDto, UpdateGroupDto } from '../controllers'
 import { OperationResult } from '../types'
-import {
-  GroupRepository,
-  JoinRequestRepository,
-  MembershipRepository,
-  UserRepository,
-} from '../config'
+import { GroupRepository, JoinRequestRepository, MembershipRepository, UserRepository } from '../config'
 import { opFailure, opSuccess } from '../utils'
 import { HttpStatusCode } from 'axios'
 import { Group, GroupNote, JoinRequest, JoinRequestStatus, Membership, Role } from '../models'

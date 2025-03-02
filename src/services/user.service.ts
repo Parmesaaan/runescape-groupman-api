@@ -1,14 +1,7 @@
 import { OperationResult } from '../types'
 import { UserRepository } from '../config'
 import { ChangePasswordDto, CredentialsDto, RefreshTokenDto, UpdateUserDto } from '../controllers'
-import {
-  generateTokenPair,
-  isOpFailure,
-  opFailure,
-  opSuccess,
-  TokenPair,
-  verifyRefreshToken,
-} from '../utils'
+import { generateTokenPair, isOpFailure, opFailure, opSuccess, TokenPair, verifyRefreshToken } from '../utils'
 import { HttpStatusCode } from 'axios'
 import bcrypt from 'bcrypt'
 import { PermissionLevel, User } from '../models'
