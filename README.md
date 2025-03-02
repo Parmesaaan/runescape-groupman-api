@@ -1,5 +1,5 @@
 # TODO
-- Finish endpoints
-- Group member extension
-  - Join date
-  - Group rank
+- Auto request logging
+- Exception handling
+- Comments
+- Logs
