@@ -23,7 +23,7 @@ import {
   UpdateUserNoteDto,
   UserNoteIdDto,
 } from '../controllers'
-import { authenticate } from '../middleware'
+import { authenticate, loginLimiter, signupLimiter, refreshTokenLimiter } from '../middleware'
 
 export const userRouter = (): Router => {
   const router = Router()
@@ -31,14 +31,25 @@ export const userRouter = (): Router => {
   /** Access Operations **/
 
   const signup = API_ROUTES.USERS.ACCESS.SIGNUP
-  router.post(signup.route, validateBody(CredentialsDto), signupController)
+  router.post(
+    signup.route,
+    signupLimiter,
+    validateBody(CredentialsDto),
+    signupController
+  )
 
   const login = API_ROUTES.USERS.ACCESS.LOGIN
-  router.post(login.route, validateBody(CredentialsDto), loginController)
+  router.post(
+    login.route,
+    loginLimiter,
+    validateBody(CredentialsDto),
+    loginController
+  )
 
   const refreshToken = API_ROUTES.USERS.ACCESS.REFRESH_TOKEN
   router.post(
     refreshToken.route,
+    refreshTokenLimiter,
     validateBody(RefreshTokenDto),
     refreshTokenController,
   )

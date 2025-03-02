@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from 'express'
 import { isOpFailure, verifyAccessToken } from '../utils'
 import { PermissionLevel, User } from '../models'
+import { HttpStatusCode } from 'axios'
 
 declare module 'express-serve-static-core' {
   interface Request {
@@ -11,13 +12,13 @@ declare module 'express-serve-static-core' {
 export const authenticate = (requiredPermissionLevel: PermissionLevel) => {
   return (req: Request, res: Response, next: NextFunction) => {
     const token = req.headers['authorization']?.split(' ')[1]
-    if (!token) return res.status(401).json({ message: 'Authentication token required.' })
+    if (!token) return res.status(HttpStatusCode.Unauthorized).json({ message: 'Authentication token required.' })
 
     const verifyOperation = verifyAccessToken(token)
     const user: User = verifyOperation.success?.data as User
 
     if (isOpFailure(verifyOperation) || !user.id || !user.permissionLevel) {
-      return res.status(403).json({ message: 'Invalid or expired token' })
+      return res.status(HttpStatusCode.Forbidden).json({ message: 'Invalid or expired token' })
     }
 
     if (
@@ -25,7 +26,7 @@ export const authenticate = (requiredPermissionLevel: PermissionLevel) => {
       requiredPermissionLevel != PermissionLevel.NONE
     ) {
       return res
-        .status(403)
+        .status(HttpStatusCode.Forbidden)
         .json({ message: 'You do not have permission to access this resource.' })
     }
 

@@ -1,4 +1,5 @@
 export * from './authenticate'
 export * from './contentTypePolicy'
 export * from './exceptionHandler'
+export * from './rateLimiter'
 export * from './requestLogger'

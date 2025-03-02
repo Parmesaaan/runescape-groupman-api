@@ -1,5 +1,4 @@
 # TODO
-- Auto request logging
-- Exception handling
 - Comments
 - Logs
+- Set up Helmet
