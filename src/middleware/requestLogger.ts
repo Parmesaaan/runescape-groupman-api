@@ -22,7 +22,7 @@ function maskSensitiveData(data: any): any {
 
   return Object.keys(data).reduce(
     (masked, key) => {
-      masked[key] = SENSITIVE_KEYS.includes(key.toLowerCase()) ? '***' : data[key]
+      masked[key] = SENSITIVE_KEYS.includes(key.toLowerCase()) ? '****' : data[key]
       return masked
     },
     {} as Record<string, any>,
@@ -35,35 +35,37 @@ export function logRequest(req: Request, res: Response, next: NextFunction): voi
   const maskedParams = maskSensitiveData(req.params)
   const maskedBody = maskSensitiveData(req.body)
 
-  logger.info(`
-    Incoming: ${req.method} ${req.originalUrl},
-    headers: ${maskedHeaders ? JSON.stringify(maskedHeaders) : 'none'},
-    query: ${maskedHeaders ? JSON.stringify(maskedQuery) : 'none'},
-    params: ${maskedParams ? JSON.stringify(maskedParams) : 'none'},
-    body: ${maskedHeaders ? JSON.stringify(maskedBody) : 'none'}
-  `)
+  const logParts = [
+    `Incoming: ${req.method} ${req.originalUrl}`,
+    `headers: ${Object.keys(maskedHeaders).length ? JSON.stringify(maskedHeaders) : 'none'}`,
+    `query: ${Object.keys(maskedQuery).length ? JSON.stringify(maskedQuery) : 'none'}`,
+    `params: ${Object.keys(maskedParams).length ? JSON.stringify(maskedParams) : 'none'}`,
+    `body: ${Object.keys(maskedBody).length ? JSON.stringify(maskedBody) : 'none'}`,
+  ]
+
+  logger.info(logParts.join(', '))
 
   res.startTime = Date.now()
   next()
 }
 
 export function logResponse(req: Request, res: Response, next: NextFunction): void {
-  const startTime = (res as any)._startTime || Date.now()
+  const startTime = Date.now()
 
   res.on('finish', () => {
     const duration = Date.now() - startTime
     const status = res.statusCode
     const error = status >= 400 ? res.locals?.error || 'Unknown Error' : null
 
-    logger.info(`
-      Outgoing: ${req.method} ${req.originalUrl} ${status},
-      time: ${duration}ms${
-        error
-          ? `,
-      error: ${error}`
-          : ''
-      }
-    `)
+    const logParts = [
+      `Outgoing: ${req.method} ${req.originalUrl}`,
+      `status: ${status}`,
+      `time: ${duration}ms`,
+    ]
+
+    if (error) logParts.push(`error: ${JSON.stringify(error)}`)
+
+    logger.info(logParts.join(', '))
   })
 
   next()

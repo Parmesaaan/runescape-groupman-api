@@ -22,8 +22,8 @@ const initApp = () => {
   app.use(bodyParser.json())
   app.use(bodyParser.urlencoded({ extended: true }))
   app.use(logRequest)
-  configureRoutes(app)
   app.use(logResponse)
+  configureRoutes(app)
   app.use(errorHandler)
 
   return app
