@@ -1,6 +1,6 @@
 import { OperationResult } from '../types'
 import { UserRepository } from '../config'
-import { ChangePasswordDto, LoginDto, RefreshTokenDto, UpdateUserDto } from '../controllers'
+import { ChangePasswordDto, CredentialsDto, RefreshTokenDto, UpdateUserDto } from '../controllers'
 import {
   generateTokenPair,
   isOpFailure,
@@ -11,17 +11,30 @@ import {
 } from '../utils'
 import { HttpStatusCode } from 'axios'
 import bcrypt from 'bcrypt'
+import { User } from '../models'
 
 export class UserService {
-  public static async login(credentials: LoginDto): Promise<OperationResult> {
-    const user = await UserRepository.findOne({ where: { username: credentials.username } })
+  public static async signup(request: CredentialsDto): Promise<OperationResult> {
+    const userExists = await UserRepository.exists({ where: { username: request.username } })
+    if (userExists) return opFailure(HttpStatusCode.Forbidden, 'User with that username already exists')
+
+    const user = new User()
+    user.username = request.username
+    user.password = await bcrypt.hash(request.password, 10)
+
+    const savedUser = await UserRepository.save(user)
+    return opSuccess(savedUser)
+  }
+
+  public static async login(request: CredentialsDto): Promise<OperationResult> {
+    const user = await UserRepository.findOne({ where: { username: request.username } })
     if (!user)
       return opFailure(
         HttpStatusCode.NotFound,
-        `Cannot find user with username ${credentials.username}`,
+        `Cannot find user with username ${request.username}`,
       )
 
-    const passwordMatch = await bcrypt.compare(credentials.password, user.password)
+    const passwordMatch = await bcrypt.compare(request.password, user.password)
     if (!passwordMatch) return opFailure(HttpStatusCode.Unauthorized, `Incorrect password`)
 
     const tokenPair: TokenPair = generateTokenPair(user)

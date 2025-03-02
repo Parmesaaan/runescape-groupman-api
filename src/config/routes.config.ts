@@ -6,7 +6,6 @@ export const API_ROUTES = {
     permissionLevel: PermissionLevel.NONE,
   },
   SIGNUP: {
-    // TODO: Implement
     route: '/signup',
     permissionLevel: PermissionLevel.NONE,
   },
@@ -76,7 +75,7 @@ export const API_ROUTES = {
     GET: {
       // TODO: Implement
       route: '/groups/:groupId',
-      permissionLevel: PermissionLevel.ADMIN,
+      permissionLevel: PermissionLevel.USER,
     },
     UPDATE: {
       route: '/groups/:groupId',
