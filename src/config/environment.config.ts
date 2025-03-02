@@ -14,8 +14,8 @@ export const dbConfig = {
 }
 
 export const jwtConfig = {
-  jwtSecret: process.env.JWT_SECRET || 'cgimbackendsecret',
+  jwtSecret: process.env.JWT_SECRET || 'groupmansecret',
   jwtExpiry: process.env.JWT_EXPIRATION_TIME || '1h',
-  jwtRefreshSecret: process.env.JWT_REFRESH_SECRET || 'cgimbackendrefreshsecret',
+  jwtRefreshSecret: process.env.JWT_REFRESH_SECRET || 'groupmanrefreshsecret',
   jwtRefreshExpiry: process.env.JWT_REFRESH_EXPIRATION_TIME || '7d',
 }

@@ -1,9 +1,9 @@
 services:
   postgres:
-    container_name: cgim-postgres
+    container_name: groupman-postgres
     image: postgres
     networks:
-      - cgim
+      - groupman
     ports:
       - ${DB_PORT}:5432
     environment:
@@ -17,5 +17,5 @@ services:
     restart: unless-stopped
 
 networks:
-  cgim:
+  groupman:
     driver: bridge

@@ -1,5 +1,5 @@
 {
-  "name": "cgim-backend",
+  "name": "runescape-groupman-api",
   "version": "1.0.0",
   "description": "",
   "main": "dist/index.js",
