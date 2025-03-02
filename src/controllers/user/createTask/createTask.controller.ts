@@ -1,8 +1,9 @@
 import { Request, RequestHandler, Response } from 'express'
 import { isOpFailure } from '../../../utils'
 import { HttpStatusCode } from 'axios'
-import { TaskDto } from '../__common'
+import { TaskDto, TaskResponseDto } from '../__common'
 import { TaskService } from '../../../services'
+import { Task } from '../../../models'
 
 export const createTaskController: RequestHandler = async (req: Request, res: Response) => {
   const request = req.body as unknown as TaskDto
@@ -12,5 +13,6 @@ export const createTaskController: RequestHandler = async (req: Request, res: Re
     return res.status(result.error!.status).send({ message: result.error!.message })
   }
 
-  return res.status(HttpStatusCode.Created).send()
+  const response = new TaskResponseDto(result.success!.data as Task)
+  return res.status(HttpStatusCode.Created).json(response)
 }

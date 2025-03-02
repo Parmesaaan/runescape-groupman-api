@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
-export class InitialMigration1740925136069 implements MigrationInterface {
-    name = 'InitialMigration1740925136069'
+export class InitialMigration1740928499885 implements MigrationInterface {
+    name = 'InitialMigration1740928499885'
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.query(`CREATE TYPE "public"."task_task_type_enum" AS ENUM('DAILY', 'WEEKLY', 'MONTHLY')`);
@@ -14,7 +14,7 @@ export class InitialMigration1740925136069 implements MigrationInterface {
         await queryRunner.query(`CREATE INDEX "IDX_d7b446f7f7f75e661fce14a25f" ON "membership" ("group_id") `);
         await queryRunner.query(`CREATE TABLE "group_note" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "title" character varying NOT NULL, "contents" character varying NOT NULL, "created_at" TIMESTAMP NOT NULL DEFAULT now(), "updated_at" TIMESTAMP NOT NULL DEFAULT now(), "author_id" uuid, "group_id" uuid NOT NULL, CONSTRAINT "PK_group_note_id" PRIMARY KEY ("id"))`);
         await queryRunner.query(`CREATE TYPE "public"."user_permission_level_enum" AS ENUM('0', '1', '2')`);
-        await queryRunner.query(`CREATE TABLE "user" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "username" character varying NOT NULL, "password_hash" character varying NOT NULL, "permission_level" "public"."user_permission_level_enum" NOT NULL, "created_at" TIMESTAMP NOT NULL DEFAULT now(), "updated_at" TIMESTAMP NOT NULL DEFAULT now(), CONSTRAINT "UQ_78a916df40e02a9deb1c4b75edb" UNIQUE ("username"), CONSTRAINT "PK_user_id" PRIMARY KEY ("id"))`);
+        await queryRunner.query(`CREATE TABLE "user" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "username" character varying NOT NULL, "password_hash" character varying NOT NULL, "permission_level" "public"."user_permission_level_enum" NOT NULL DEFAULT '1', "created_at" TIMESTAMP NOT NULL DEFAULT now(), "updated_at" TIMESTAMP NOT NULL DEFAULT now(), CONSTRAINT "UQ_78a916df40e02a9deb1c4b75edb" UNIQUE ("username"), CONSTRAINT "PK_user_id" PRIMARY KEY ("id"))`);
         await queryRunner.query(`CREATE INDEX "IDX_78a916df40e02a9deb1c4b75ed" ON "user" ("username") `);
         await queryRunner.query(`CREATE TYPE "public"."join_request_status_enum" AS ENUM('PENDING', 'ACCEPTED', 'DENIED')`);
         await queryRunner.query(`CREATE TABLE "join_request" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "status" "public"."join_request_status_enum" NOT NULL, "created_at" TIMESTAMP NOT NULL DEFAULT now(), "updated_at" TIMESTAMP NOT NULL DEFAULT now(), "user_id" uuid NOT NULL, "group_id" uuid NOT NULL, CONSTRAINT "PK_join_request_id" PRIMARY KEY ("id"))`);

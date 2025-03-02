@@ -25,7 +25,7 @@ export class UserNote {
     name: 'user_id',
     referencedColumnName: 'id',
   })
-  user!: User
+  user?: User
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt!: Date

@@ -30,7 +30,7 @@ export class Membership extends BaseEntity {
     name: 'user_id',
     referencedColumnName: 'id',
   })
-  user!: User
+  user?: User
 
   @Index()
   @ManyToOne(() => Group, (group) => group.memberships, { nullable: false, onDelete: 'CASCADE' })
@@ -38,7 +38,7 @@ export class Membership extends BaseEntity {
     name: 'group_id',
     referencedColumnName: 'id',
   })
-  group!: Group
+  group?: Group
 
   @Column({ type: 'enum', enum: Role, nullable: false, default: Role.USER })
   role!: Role

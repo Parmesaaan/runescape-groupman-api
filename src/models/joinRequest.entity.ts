@@ -29,7 +29,7 @@ export class JoinRequest extends BaseEntity {
     name: 'user_id',
     referencedColumnName: 'id',
   })
-  user!: User
+  user?: User
 
   @Index()
   @ManyToOne(() => Group, (group) => group.joinRequests, { nullable: false, onDelete: 'CASCADE' })
@@ -37,7 +37,7 @@ export class JoinRequest extends BaseEntity {
     name: 'group_id',
     referencedColumnName: 'id',
   })
-  group!: Group
+  group?: Group
 
   @Column({ type: 'enum', enum: JoinRequestStatus, nullable: false })
   status!: JoinRequestStatus

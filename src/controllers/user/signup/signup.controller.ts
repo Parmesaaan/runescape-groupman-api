@@ -2,7 +2,8 @@ import { Request, RequestHandler, Response } from 'express'
 import { UserService } from '../../../services'
 import { isOpFailure } from '../../../utils'
 import { HttpStatusCode } from 'axios'
-import { CredentialsDto } from '../__common'
+import { CredentialsDto, UserResponseDto } from '../__common'
+import { User } from '../../../models'
 
 export const signupController: RequestHandler = async (req: Request, res: Response) => {
   const request = req.body as unknown as CredentialsDto
@@ -12,5 +13,6 @@ export const signupController: RequestHandler = async (req: Request, res: Respon
     return res.status(result.error!.status).send({ message: result.error!.message })
   }
 
-  return res.status(HttpStatusCode.Created).send()
+  const response = new UserResponseDto(result.success!.data as User)
+  return res.status(HttpStatusCode.Created).json(response)
 }

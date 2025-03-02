@@ -1,5 +1,6 @@
 import { Expose } from 'class-transformer'
 import { IsDefined, IsString } from 'class-validator'
+import { User } from '../../../models'
 
 export class UserIdDto {
   @Expose()
@@ -13,4 +14,18 @@ export class UserReferenceDto extends UserIdDto {
   @IsString()
   @IsDefined()
   username!: string
+}
+
+export class UserResponseDto {
+  id!: string
+  username!: string
+  createdAt!: Date
+  updatedAt!: Date
+
+  constructor(user: User) {
+    this.id = user.id
+    this.username = user.username
+    this.createdAt = user.createdAt
+    this.updatedAt = user.updatedAt
+  }
 }

@@ -39,6 +39,7 @@ export const generateTokenPair = (
 
 export const verifyAccessToken = (token: string): OperationResult => {
   const secret: string = jwtConfig.jwtSecret
+  logger.info(token)
 
   try {
     const decoded = jwt.verify(token, secret)
@@ -51,6 +52,7 @@ export const verifyAccessToken = (token: string): OperationResult => {
 
 export const verifyRefreshToken = (token: string): OperationResult => {
   const secret: string = jwtConfig.jwtRefreshSecret
+  logger.info(token)
 
   try {
     const decoded = jwt.verify(token, secret)

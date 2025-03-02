@@ -3,6 +3,8 @@ import { CreateGroupDto } from './createGroup.dto'
 import { isOpFailure } from '../../../utils'
 import { HttpStatusCode } from 'axios'
 import { GroupService } from '../../../services'
+import { GroupResponseDto } from '../__common'
+import { Group } from '../../../models'
 
 export const createGroupController: RequestHandler = async (req: Request, res: Response) => {
   const request = req.body as unknown as CreateGroupDto
@@ -12,5 +14,6 @@ export const createGroupController: RequestHandler = async (req: Request, res: R
     return res.status(result.error!.status).send({ message: result.error!.message })
   }
 
-  return res.status(HttpStatusCode.Created).send()
+  const response = new GroupResponseDto(result.success!.data as Group)
+  return res.status(HttpStatusCode.Created).json(response)
 }

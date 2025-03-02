@@ -36,7 +36,7 @@ export class Task {
     name: 'user_id',
     referencedColumnName: 'id',
   })
-  user!: User
+  user?: User
 
   @Column({ name: 'last_completed', nullable: true })
   lastCompleted?: Date

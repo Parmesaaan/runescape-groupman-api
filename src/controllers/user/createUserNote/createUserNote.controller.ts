@@ -3,6 +3,8 @@ import { isOpFailure } from '../../../utils'
 import { HttpStatusCode } from 'axios'
 import { UserNoteService } from '../../../services'
 import { CreateUserNoteDto } from './createUserNote.dto'
+import { UserNoteResponseDto } from '../__common'
+import { UserNote } from '../../../models'
 
 export const createUserNoteController: RequestHandler = async (req: Request, res: Response) => {
   const request = req.body as unknown as CreateUserNoteDto
@@ -12,5 +14,6 @@ export const createUserNoteController: RequestHandler = async (req: Request, res
     return res.status(result.error!.status).send({ message: result.error!.message })
   }
 
-  return res.status(HttpStatusCode.Created).send()
+  const response = new UserNoteResponseDto(result.success!.data as UserNote)
+  return res.status(HttpStatusCode.Created).json(response)
 }

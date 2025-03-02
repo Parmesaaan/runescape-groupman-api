@@ -1,9 +1,10 @@
 import { Request, RequestHandler, Response } from 'express'
 import { UpdateGroupNoteDto } from './updateGroupNote.dto'
 import { GroupNoteService } from '../../../services'
-import { GroupNoteIdDto } from '../__common'
+import { GroupNoteIdDto, GroupNoteResponseDto } from '../__common'
 import { isOpFailure } from '../../../utils'
 import { HttpStatusCode } from 'axios'
+import { GroupNote } from '../../../models'
 
 export const updateGroupNoteController: RequestHandler = async (req: Request, res: Response) => {
   const idDto = req.params as unknown as GroupNoteIdDto
@@ -19,5 +20,6 @@ export const updateGroupNoteController: RequestHandler = async (req: Request, re
     return res.status(result.error!.status).send({ message: result.error!.message })
   }
 
-  return res.status(HttpStatusCode.Ok).send()
+  const response = new GroupNoteResponseDto(result.success!.data as GroupNote)
+  return res.status(HttpStatusCode.Ok).json(response)
 }

@@ -44,7 +44,7 @@ export const userRouter = (): Router => {
     refreshTokenController,
   )
 
-  const changePassword = API_ROUTES.USERS.ACCESS.REFRESH_TOKEN
+  const changePassword = API_ROUTES.USERS.ACCESS.CHANGE_PASSWORD
   router.post(
     changePassword.route,
     authenticate(changePassword.permissionLevel),

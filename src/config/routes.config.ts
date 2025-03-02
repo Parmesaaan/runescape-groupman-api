@@ -9,11 +9,11 @@ export const API_ROUTES = {
     ROOT: {
       GET: {
         // TODO: Implement
-        route: '/user',
+        route: '/users',
         permissionLevel: PermissionLevel.USER,
       },
       UPDATE: {
-        route: '/user',
+        route: '/users',
         permissionLevel: PermissionLevel.USER,
       },
     },

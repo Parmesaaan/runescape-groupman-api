@@ -37,7 +37,7 @@ export class UserNoteService {
     if (!note)
       return opFailure(HttpStatusCode.NotFound, `Cannot find user note with id ${userNoteId}`)
 
-    if (note.user.id != user.id)
+    if (note.user?.id != user.id)
       return opFailure(HttpStatusCode.Forbidden, `You can only change your own notes`)
 
     note.title = request.title ?? note.title

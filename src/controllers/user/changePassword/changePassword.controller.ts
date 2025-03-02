@@ -3,6 +3,8 @@ import { ChangePasswordDto } from './changePassword.dto'
 import { isOpFailure } from '../../../utils'
 import { UserService } from '../../../services'
 import { HttpStatusCode } from 'axios'
+import { UserResponseDto } from '../__common'
+import { User } from '../../../models'
 
 export const changePasswordController: RequestHandler = async (req: Request, res: Response) => {
   const request = req.body as unknown as ChangePasswordDto
@@ -12,5 +14,6 @@ export const changePasswordController: RequestHandler = async (req: Request, res
     return res.status(result.error!.status).send({ message: result.error!.message })
   }
 
-  return res.status(HttpStatusCode.Ok).send()
+  const response = new UserResponseDto(result.success!.data as User)
+  return res.status(HttpStatusCode.Ok).json(response)
 }

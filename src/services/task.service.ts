@@ -31,7 +31,7 @@ export class TaskService {
     const task = await TaskRepository.findOne({ where: { id: taskId }, relations: ['user'] })
     if (!task) return opFailure(HttpStatusCode.NotFound, `Cannot find task with id ${taskId}`)
 
-    if (task.user.id != user.id)
+    if (task.user?.id != user.id)
       return opFailure(HttpStatusCode.Forbidden, `You can only change your own tasks`)
 
     task.title = request.title ?? task.title

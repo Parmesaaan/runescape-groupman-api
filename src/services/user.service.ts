@@ -11,7 +11,7 @@ import {
 } from '../utils'
 import { HttpStatusCode } from 'axios'
 import bcrypt from 'bcrypt'
-import { User } from '../models'
+import { PermissionLevel, User } from '../models'
 
 export class UserService {
   public static async signup(request: CredentialsDto): Promise<OperationResult> {
@@ -22,6 +22,7 @@ export class UserService {
     const user = new User()
     user.username = request.username
     user.password = await bcrypt.hash(request.password, 10)
+    user.permissionLevel = PermissionLevel.USER
 
     const savedUser = await UserRepository.save(user)
     return opSuccess(savedUser)

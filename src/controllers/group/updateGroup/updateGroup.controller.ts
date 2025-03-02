@@ -1,10 +1,11 @@
 import { Request, RequestHandler, Response } from 'express'
-import { GroupIdDto } from '../__common'
+import { GroupIdDto, GroupResponseDto } from '../__common'
 import { OperationResult } from '../../../types'
 import { GroupService } from '../../../services'
 import { isOpFailure } from '../../../utils'
 import { HttpStatusCode } from 'axios'
 import { UpdateGroupDto } from './updateGroup.dto'
+import { Group } from '../../../models'
 
 export const updateGroupController: RequestHandler = async (req: Request, res: Response) => {
   const groupId = (req.params as unknown as GroupIdDto).groupId
@@ -15,5 +16,6 @@ export const updateGroupController: RequestHandler = async (req: Request, res: R
     return res.status(result.error!.status).send({ message: result.error!.message })
   }
 
-  return res.status(HttpStatusCode.Ok).send()
+  const response = new GroupResponseDto(result.success!.data as Group)
+  return res.status(HttpStatusCode.Ok).json(response)
 }

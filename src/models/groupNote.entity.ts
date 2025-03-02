@@ -26,14 +26,14 @@ export class GroupNote {
     name: 'author_id',
     referencedColumnName: 'id',
   })
-  author!: User | null
+  author?: User
 
   @ManyToOne(() => Group, (group) => group.notes, { nullable: false, onDelete: 'CASCADE' })
   @JoinColumn({
     name: 'group_id',
     referencedColumnName: 'id',
   })
-  group!: Group
+  group?: Group
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt!: Date

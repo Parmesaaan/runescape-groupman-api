@@ -34,7 +34,13 @@ export class User extends BaseEntity {
   @Column({ name: 'password_hash', nullable: false })
   password!: string
 
-  @Column({ type: 'enum', enum: PermissionLevel, name: 'permission_level', nullable: false })
+  @Column({
+    type: 'enum',
+    enum: PermissionLevel,
+    name: 'permission_level',
+    nullable: false,
+    default: PermissionLevel.USER,
+  })
   permissionLevel!: PermissionLevel
 
   @OneToMany(() => Task, (task) => task.user)

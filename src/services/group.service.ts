@@ -57,7 +57,7 @@ export class GroupService {
     if (!group || !group.memberships)
       return opFailure(HttpStatusCode.NotFound, `Cannot find group with id ${groupId}`)
 
-    const userMembership = group.memberships.find((m) => m.user.id === user.id)
+    const userMembership = group.memberships.find((m) => m.user?.id === user.id)
     if (!userMembership) {
       return opFailure(HttpStatusCode.Forbidden, `User ${user.id} is not in group ${group.id}`)
     }
@@ -78,7 +78,7 @@ export class GroupService {
         if (!newOwner)
           return opFailure(HttpStatusCode.NotFound, `Cannot find user with id ${request.ownerId}`)
 
-        const newOwnerMembership = group.memberships.find((m) => m.user.id === request.ownerId)
+        const newOwnerMembership = group.memberships.find((m) => m.user?.id === request.ownerId)
         if (!newOwnerMembership)
           return opFailure(HttpStatusCode.Forbidden, `New owner must be a member of the group`)
 
@@ -143,7 +143,7 @@ export class GroupService {
     if (!group || !group.memberships)
       return opFailure(HttpStatusCode.NotFound, `Cannot find group with id ${groupId}`)
 
-    const userMembership = group.memberships.find((m) => m.user.id === user.id)
+    const userMembership = group.memberships.find((m) => m.user?.id === user.id)
     if (!userMembership) {
       return opFailure(
         HttpStatusCode.BadRequest,
@@ -156,7 +156,7 @@ export class GroupService {
 
     try {
       await queryRunner.manager.remove(userMembership)
-      group.memberships = group.memberships?.filter((m) => m.user.id !== user.id)
+      group.memberships = group.memberships?.filter((m) => m.user?.id !== user.id)
 
       if (!group.memberships.length) {
         await queryRunner.manager.delete(Group, group.id)
@@ -200,11 +200,14 @@ export class GroupService {
       )
 
     const group = await GroupRepository.findOne({
-      where: { id: joinRequest.group.id },
+      where: { id: joinRequest.group?.id },
       relations: ['memberships', 'memberships.user'],
     })
     if (!group || !group.memberships)
-      return opFailure(HttpStatusCode.NotFound, `Cannot find group with id ${joinRequest.group.id}`)
+      return opFailure(
+        HttpStatusCode.NotFound,
+        `Cannot find group with id ${joinRequest.group?.id}`,
+      )
 
     if (joinRequest.status != JoinRequestStatus.PENDING) {
       return opFailure(HttpStatusCode.BadRequest, 'Join request already resolved')
@@ -215,7 +218,7 @@ export class GroupService {
     }
 
     const existingMembership = await MembershipRepository.findOne({
-      where: { user: { id: joinRequest.user.id }, group: { id: joinRequest.group.id } },
+      where: { user: { id: joinRequest.user?.id }, group: { id: joinRequest.group?.id } },
     })
     if (existingMembership) {
       joinRequest.status = JoinRequestStatus.DENIED
@@ -223,7 +226,7 @@ export class GroupService {
       return opFailure(HttpStatusCode.Conflict, `User is already a member of the group`)
     }
 
-    const userMembership = group.memberships.find((m) => m.user.id === user.id)
+    const userMembership = group.memberships.find((m) => m.user?.id === user.id)
     if (!userMembership || userMembership.role <= 0) {
       return opFailure(HttpStatusCode.Forbidden, 'Only admins or above can finalize join requests')
     }
