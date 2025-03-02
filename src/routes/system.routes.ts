@@ -5,7 +5,7 @@ import { healthController } from '../controllers'
 export const systemRouter = (): Router => {
   const router = Router()
 
-  router.get(API_ROUTES.ROOT, healthController)
+  router.get(API_ROUTES.ROOT.route, healthController)
 
   return router
 }

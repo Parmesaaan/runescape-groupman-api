@@ -1,4 +1,4 @@
-import { CreateGroupDto, JoinGroupDto, JoinRequestDto, UpdateGroupDto } from '../controllers'
+import { CreateGroupDto, GroupIdDto, JoinRequestDto, UpdateGroupDto } from '../controllers'
 import { OperationResult } from '../types'
 import {
   GroupRepository,
@@ -105,7 +105,7 @@ export class GroupService {
     return opSuccess(group)
   }
 
-  public static async joinGroup(userId: string, request: JoinGroupDto): Promise<OperationResult> {
+  public static async joinGroup(userId: string, request: GroupIdDto): Promise<OperationResult> {
     const user = await UserRepository.findOne({ where: { id: userId } })
     if (!user) return opFailure(HttpStatusCode.NotFound, `Cannot find user with id ${userId}`)
 

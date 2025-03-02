@@ -4,15 +4,19 @@ import { validateBody, validateParams } from '../utils'
 import { signupController } from '../controllers/user/signup'
 import {
   changePasswordController,
-  ChangePasswordDto, createTaskController,
+  ChangePasswordDto,
+  createTaskController,
   createUserNoteController,
   CreateUserNoteDto,
-  CredentialsDto, deleteTaskController,
+  CredentialsDto,
+  deleteTaskController,
   deleteUserNoteController,
   loginController,
   refreshTokenController,
   RefreshTokenDto,
-  TaskDto, TaskIdDto, updateTaskController,
+  TaskDto,
+  TaskIdDto,
+  updateTaskController,
   updateUserController,
   UpdateUserDto,
   updateUserNoteController,
@@ -27,25 +31,17 @@ export const userRouter = (): Router => {
   /** Access Operations **/
 
   const signup = API_ROUTES.SIGNUP
-  router.post(
-    signup.route,
-    validateBody(CredentialsDto),
-    signupController
-  )
+  router.post(signup.route, validateBody(CredentialsDto), signupController)
 
   const login = API_ROUTES.LOGIN
-  router.post(
-    login.route,
-    validateBody(CredentialsDto),
-    loginController
-  )
+  router.post(login.route, validateBody(CredentialsDto), loginController)
 
   const refreshToken = API_ROUTES.REFRESH_TOKEN
   router.post(
     refreshToken.route,
     authenticate(refreshToken.permissionLevel),
     validateBody(RefreshTokenDto),
-    refreshTokenController
+    refreshTokenController,
   )
 
   const changePassword = API_ROUTES.CHANGE_PASSWORD
@@ -53,7 +49,7 @@ export const userRouter = (): Router => {
     changePassword.route,
     authenticate(changePassword.permissionLevel),
     validateBody(ChangePasswordDto),
-    changePasswordController
+    changePasswordController,
   )
 
   /** User Operations **/
@@ -63,7 +59,7 @@ export const userRouter = (): Router => {
     updateUser.route,
     authenticate(updateUser.permissionLevel),
     validateBody(UpdateUserDto),
-    updateUserController
+    updateUserController,
   )
 
   /** Note Operations **/
@@ -73,7 +69,7 @@ export const userRouter = (): Router => {
     createNote.route,
     authenticate(createNote.permissionLevel),
     validateBody(CreateUserNoteDto),
-    createUserNoteController
+    createUserNoteController,
   )
 
   const updateNote = API_ROUTES.USERS.UPDATE_NOTE
@@ -82,7 +78,7 @@ export const userRouter = (): Router => {
     authenticate(updateNote.permissionLevel),
     validateParams(UserNoteIdDto),
     validateBody(UpdateUserNoteDto),
-    updateUserNoteController
+    updateUserNoteController,
   )
 
   const deleteNote = API_ROUTES.USERS.DELETE_NOTE
@@ -90,7 +86,7 @@ export const userRouter = (): Router => {
     deleteNote.route,
     authenticate(updateNote.permissionLevel),
     validateParams(UserNoteIdDto),
-    deleteUserNoteController
+    deleteUserNoteController,
   )
 
   /** Task Operations **/
@@ -100,7 +96,7 @@ export const userRouter = (): Router => {
     createTask.route,
     authenticate(createTask.permissionLevel),
     validateBody(TaskDto),
-    createTaskController
+    createTaskController,
   )
 
   const updateTask = API_ROUTES.USERS.UPDATE_TASK
@@ -109,7 +105,7 @@ export const userRouter = (): Router => {
     authenticate(updateTask.permissionLevel),
     validateParams(TaskIdDto),
     validateBody(TaskDto),
-    updateTaskController
+    updateTaskController,
   )
 
   const deleteTask = API_ROUTES.USERS.DELETE_TASK
@@ -117,7 +113,7 @@ export const userRouter = (): Router => {
     deleteTask.route,
     authenticate(updateTask.permissionLevel),
     validateParams(TaskIdDto),
-    deleteTaskController
+    deleteTaskController,
   )
 
   return router

@@ -5,7 +5,7 @@ import { HttpStatusCode } from 'axios'
 import { GroupIdDto } from '../__common'
 
 export const leaveGroupController: RequestHandler = async (req: Request, res: Response) => {
-  const groupId = (req.params as unknown as GroupIdDto).groupId
+  const groupId = (req.body as unknown as GroupIdDto).groupId
   const result = await GroupService.leaveGroup(req.user!.id, groupId)
 
   if (isOpFailure(result)) {

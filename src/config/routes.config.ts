@@ -68,6 +68,18 @@ export const API_ROUTES = {
   },
 
   GROUPS: {
+    JOIN: {
+      route: '/groups/memberships',
+      permissionLevel: PermissionLevel.USER,
+    },
+    JOIN_REQUEST: {
+      route: '/groups/memberships',
+      permissionLevel: PermissionLevel.USER,
+    },
+    LEAVE: {
+      route: '/groups/memberships',
+      permissionLevel: PermissionLevel.USER,
+    },
     CREATE: {
       route: '/groups',
       permissionLevel: PermissionLevel.USER,
@@ -86,10 +98,6 @@ export const API_ROUTES = {
       route: '/groups/:groupId',
       permissionLevel: PermissionLevel.USER,
     },
-    LEAVE: {
-      route: '/groups/:groupId/leave',
-      permissionLevel: PermissionLevel.USER,
-    },
     GET_NOTES: {
       // TODO: Implement
       route: '/groups/:groupId/notes',
@@ -105,14 +113,6 @@ export const API_ROUTES = {
     },
     DELETE_NOTE: {
       route: '/groups/:groupId/notes/:noteId',
-      permissionLevel: PermissionLevel.USER,
-    },
-    JOIN: {
-      route: '/groups/join-requests',
-      permissionLevel: PermissionLevel.USER,
-    },
-    JOIN_REQUEST: {
-      route: '/groups/join-requests',
       permissionLevel: PermissionLevel.USER,
     },
   },

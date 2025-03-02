@@ -16,7 +16,8 @@ import { User } from '../models'
 export class UserService {
   public static async signup(request: CredentialsDto): Promise<OperationResult> {
     const userExists = await UserRepository.exists({ where: { username: request.username } })
-    if (userExists) return opFailure(HttpStatusCode.Forbidden, 'User with that username already exists')
+    if (userExists)
+      return opFailure(HttpStatusCode.Forbidden, 'User with that username already exists')
 
     const user = new User()
     user.username = request.username
