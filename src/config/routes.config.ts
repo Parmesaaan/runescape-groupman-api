@@ -15,7 +15,7 @@ export const API_ROUTES = {
   },
   REFRESH_TOKEN: {
     route: '/refresh-token',
-    permissionLevel: PermissionLevel.NONE,
+    permissionLevel: PermissionLevel.USER,
   },
   CHANGE_PASSWORD: {
     route: '/change-pass',
