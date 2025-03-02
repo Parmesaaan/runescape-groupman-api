@@ -25,7 +25,7 @@ export const groupRouter = (): Router => {
 
   /** Access Operations **/
 
-  const joinGroup = API_ROUTES.GROUPS.JOIN
+  const joinGroup = API_ROUTES.GROUPS.ACCESS.JOIN
   router.post(
     joinGroup.route,
     authenticate(joinGroup.permissionLevel),
@@ -33,7 +33,7 @@ export const groupRouter = (): Router => {
     joinGroupController,
   )
 
-  const joinRequest = API_ROUTES.GROUPS.JOIN_REQUEST
+  const joinRequest = API_ROUTES.GROUPS.ACCESS.JOIN_REQUEST
   router.put(
     joinRequest.route,
     authenticate(joinRequest.permissionLevel),
@@ -41,7 +41,7 @@ export const groupRouter = (): Router => {
     joinRequestController,
   )
 
-  const leave = API_ROUTES.GROUPS.LEAVE
+  const leave = API_ROUTES.GROUPS.ACCESS.LEAVE
   router.delete(
     leave.route,
     authenticate(leave.permissionLevel),
@@ -51,7 +51,7 @@ export const groupRouter = (): Router => {
 
   /** Group Operations **/
 
-  const createGroup = API_ROUTES.GROUPS.CREATE
+  const createGroup = API_ROUTES.GROUPS.ROOT.CREATE
   router.post(
     createGroup.route,
     authenticate(createGroup.permissionLevel),
@@ -59,7 +59,7 @@ export const groupRouter = (): Router => {
     createGroupController,
   )
 
-  const updateGroup = API_ROUTES.GROUPS.UPDATE
+  const updateGroup = API_ROUTES.GROUPS.ROOT.UPDATE
   router.put(
     updateGroup.route,
     authenticate(updateGroup.permissionLevel),
@@ -70,7 +70,7 @@ export const groupRouter = (): Router => {
 
   /** Note Operations **/
 
-  const createNote = API_ROUTES.GROUPS.CREATE_NOTE
+  const createNote = API_ROUTES.GROUPS.NOTES.CREATE_NOTE
   router.post(
     createNote.route,
     authenticate(createNote.permissionLevel),
@@ -78,7 +78,7 @@ export const groupRouter = (): Router => {
     createGroupNoteController,
   )
 
-  const updateNote = API_ROUTES.GROUPS.UPDATE_NOTE
+  const updateNote = API_ROUTES.GROUPS.NOTES.UPDATE_NOTE
   router.put(
     updateNote.route,
     authenticate(updateNote.permissionLevel),
@@ -87,7 +87,7 @@ export const groupRouter = (): Router => {
     updateGroupNoteController,
   )
 
-  const deleteNote = API_ROUTES.GROUPS.DELETE_NOTE
+  const deleteNote = API_ROUTES.GROUPS.NOTES.DELETE_NOTE
   router.delete(
     deleteNote.route,
     authenticate(deleteNote.permissionLevel),

@@ -30,13 +30,13 @@ export const userRouter = (): Router => {
 
   /** Access Operations **/
 
-  const signup = API_ROUTES.SIGNUP
+  const signup = API_ROUTES.USERS.ACCESS.SIGNUP
   router.post(signup.route, validateBody(CredentialsDto), signupController)
 
-  const login = API_ROUTES.LOGIN
+  const login = API_ROUTES.USERS.ACCESS.LOGIN
   router.post(login.route, validateBody(CredentialsDto), loginController)
 
-  const refreshToken = API_ROUTES.REFRESH_TOKEN
+  const refreshToken = API_ROUTES.USERS.ACCESS.REFRESH_TOKEN
   router.post(
     refreshToken.route,
     authenticate(refreshToken.permissionLevel),
@@ -44,7 +44,7 @@ export const userRouter = (): Router => {
     refreshTokenController,
   )
 
-  const changePassword = API_ROUTES.CHANGE_PASSWORD
+  const changePassword = API_ROUTES.USERS.ACCESS.REFRESH_TOKEN
   router.post(
     changePassword.route,
     authenticate(changePassword.permissionLevel),
@@ -54,7 +54,7 @@ export const userRouter = (): Router => {
 
   /** User Operations **/
 
-  const updateUser = API_ROUTES.USERS.UPDATE
+  const updateUser = API_ROUTES.USERS.ROOT.UPDATE
   router.put(
     updateUser.route,
     authenticate(updateUser.permissionLevel),
@@ -64,7 +64,7 @@ export const userRouter = (): Router => {
 
   /** Note Operations **/
 
-  const createNote = API_ROUTES.USERS.CREATE_NOTE
+  const createNote = API_ROUTES.USERS.NOTES.CREATE_NOTE
   router.post(
     createNote.route,
     authenticate(createNote.permissionLevel),
@@ -72,7 +72,7 @@ export const userRouter = (): Router => {
     createUserNoteController,
   )
 
-  const updateNote = API_ROUTES.USERS.UPDATE_NOTE
+  const updateNote = API_ROUTES.USERS.NOTES.UPDATE_NOTE
   router.put(
     updateNote.route,
     authenticate(updateNote.permissionLevel),
@@ -81,7 +81,7 @@ export const userRouter = (): Router => {
     updateUserNoteController,
   )
 
-  const deleteNote = API_ROUTES.USERS.DELETE_NOTE
+  const deleteNote = API_ROUTES.USERS.NOTES.DELETE_NOTE
   router.delete(
     deleteNote.route,
     authenticate(updateNote.permissionLevel),
@@ -91,7 +91,7 @@ export const userRouter = (): Router => {
 
   /** Task Operations **/
 
-  const createTask = API_ROUTES.USERS.CREATE_TASK
+  const createTask = API_ROUTES.USERS.TASKS.CREATE_TASK
   router.post(
     createTask.route,
     authenticate(createTask.permissionLevel),
@@ -99,7 +99,7 @@ export const userRouter = (): Router => {
     createTaskController,
   )
 
-  const updateTask = API_ROUTES.USERS.UPDATE_TASK
+  const updateTask = API_ROUTES.USERS.TASKS.UPDATE_TASK
   router.put(
     updateTask.route,
     authenticate(updateTask.permissionLevel),
@@ -108,7 +108,7 @@ export const userRouter = (): Router => {
     updateTaskController,
   )
 
-  const deleteTask = API_ROUTES.USERS.DELETE_TASK
+  const deleteTask = API_ROUTES.USERS.TASKS.DELETE_TASK
   router.delete(
     deleteTask.route,
     authenticate(updateTask.permissionLevel),
