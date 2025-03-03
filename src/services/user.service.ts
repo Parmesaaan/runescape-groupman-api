@@ -1,10 +1,11 @@
 import { OperationResult } from '../types'
-import { UserRepository } from '../config'
+import { MembershipRepository, UserRepository } from '../config'
 import { ChangePasswordDto, CredentialsDto, RefreshTokenDto, UpdateUserDto } from '../controllers'
-import { generateTokenPair, isOpFailure, opFailure, opSuccess, TokenPair, verifyRefreshToken } from '../utils'
+import { generateTokenPair, isOpFailure, logger, opFailure, opSuccess, TokenPair, verifyRefreshToken } from '../utils'
 import { HttpStatusCode } from 'axios'
 import bcrypt from 'bcrypt'
 import { PermissionLevel, User } from '../models'
+import { UserProfileDto } from '../controllers/user/getUserProfile'
 
 export class UserService {
   public static async signup(request: CredentialsDto): Promise<OperationResult> {
@@ -65,7 +66,7 @@ export class UserService {
     return opSuccess(updatedUser)
   }
 
-  static async updateUser(userId: string, request: UpdateUserDto): Promise<OperationResult> {
+  public static async updateUser(userId: string, request: UpdateUserDto): Promise<OperationResult> {
     const user = await UserRepository.findOne({ where: { id: userId } })
     if (!user) return opFailure(HttpStatusCode.NotFound, `Cannot find user with id ${userId}`)
 
@@ -73,5 +74,31 @@ export class UserService {
 
     const updatedUser = await UserRepository.save(user)
     return opSuccess(updatedUser)
+  }
+
+  public static async getUserProfile(userId: string) {
+    const user = await UserRepository.findOne({
+      where: { id: userId },
+      relations: [
+        'tasks',
+        'notes'
+      ]})
+    if (!user) return opFailure(HttpStatusCode.NotFound, `Cannot find user with id ${userId}`)
+
+    const memberships = await MembershipRepository.find({
+      where: { user: { id: userId} },
+      relations: [
+        'group',
+        'group.notes',
+        'group.notes.author',
+        'group.memberships',
+        'group.memberships.user'
+      ]
+    })
+
+    logger.info(memberships[0])
+
+    const userProfile = new UserProfileDto(user, memberships.map(m => m.group!))
+    return opSuccess(userProfile)
   }
 }

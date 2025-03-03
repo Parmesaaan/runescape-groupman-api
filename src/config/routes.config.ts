@@ -7,8 +7,7 @@ export const API_ROUTES = {
   },
   USERS: {
     ROOT: {
-      GET: {
-        // TODO: Implement
+      GET_PROFILE: {
         route: '/users',
         permissionLevel: PermissionLevel.USER,
       },

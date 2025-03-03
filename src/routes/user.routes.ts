@@ -24,6 +24,7 @@ import {
   UserNoteIdDto,
 } from '../controllers'
 import { authenticate, loginLimiter, refreshTokenLimiter, signupLimiter } from '../middleware'
+import { getUserProfileController } from '../controllers/user/getUserProfile'
 
 export const userRouter = (): Router => {
   const router = Router()
@@ -63,6 +64,13 @@ export const userRouter = (): Router => {
   )
 
   /** User Operations **/
+
+  const getUserProfile = API_ROUTES.USERS.ROOT.GET_PROFILE
+  router.get(
+    getUserProfile.route,
+    authenticate(getUserProfile.permissionLevel),
+    getUserProfileController
+  )
 
   const updateUser = API_ROUTES.USERS.ROOT.UPDATE
   router.put(
