@@ -81,19 +81,20 @@ export class UserService {
       where: { id: userId },
       relations: [
         'tasks',
-        'notes'
-      ]})
+        'notes',
+      ],
+    })
     if (!user) return opFailure(HttpStatusCode.NotFound, `Cannot find user with id ${userId}`)
 
     const memberships = await MembershipRepository.find({
-      where: { user: { id: userId} },
+      where: { user: { id: userId } },
       relations: [
         'group',
         'group.notes',
         'group.notes.author',
         'group.memberships',
-        'group.memberships.user'
-      ]
+        'group.memberships.user',
+      ],
     })
 
     logger.info(memberships[0])

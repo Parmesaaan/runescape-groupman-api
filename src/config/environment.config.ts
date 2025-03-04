@@ -1,4 +1,5 @@
 import 'dotenv/config'
+import { StringValue } from 'ms'
 
 export const NODE_ENV = process.env.NODE_ENV
 export const TIMEZONE = process.env.TIMEZONE || 'Asia/Dubai'
@@ -15,7 +16,7 @@ export const dbConfig = {
 
 export const jwtConfig = {
   jwtSecret: process.env.JWT_SECRET || 'groupmansecret',
-  jwtExpiry: process.env.JWT_EXPIRATION_TIME || '1h',
+  jwtExpiry: (process.env.JWT_EXPIRATION_TIME || '1h') as StringValue,
   jwtRefreshSecret: process.env.JWT_REFRESH_SECRET || 'groupmanrefreshsecret',
-  jwtRefreshExpiry: process.env.JWT_REFRESH_EXPIRATION_TIME || '7d',
+  jwtRefreshExpiry: (process.env.JWT_REFRESH_EXPIRATION_TIME || '7d') as StringValue,
 }

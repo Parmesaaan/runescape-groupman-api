@@ -11,8 +11,8 @@ export type TokenPair = {
 }
 
 export const generateAccessToken = (user: User): string => {
-  const secret: string = jwtConfig.jwtSecret
-  const expiry: string = jwtConfig.jwtExpiry
+  const secret = jwtConfig.jwtSecret
+  const expiry = jwtConfig.jwtExpiry
 
   // @ts-ignore
   const options: SignOptions = { expiresIn: expiry }
@@ -20,10 +20,9 @@ export const generateAccessToken = (user: User): string => {
 }
 
 export const generateRefreshToken = (user: User): string => {
-  const secret: string = jwtConfig.jwtRefreshSecret
-  const expiry: string = jwtConfig.jwtRefreshExpiry
+  const secret = jwtConfig.jwtRefreshSecret
+  const expiry = jwtConfig.jwtRefreshExpiry
 
-  // @ts-ignore
   const options: SignOptions = { expiresIn: expiry }
   return jwt.sign({ id: user.id, permissionLevel: user.permissionLevel }, secret, options)
 }
@@ -38,7 +37,7 @@ export const generateTokenPair = (
 }
 
 export const verifyAccessToken = (token: string): OperationResult => {
-  const secret: string = jwtConfig.jwtSecret
+  const secret = jwtConfig.jwtSecret
 
   try {
     const decoded = jwt.verify(token, secret)
@@ -50,7 +49,7 @@ export const verifyAccessToken = (token: string): OperationResult => {
 }
 
 export const verifyRefreshToken = (token: string): OperationResult => {
-  const secret: string = jwtConfig.jwtRefreshSecret
+  const secret = jwtConfig.jwtRefreshSecret
 
   try {
     const decoded = jwt.verify(token, secret)

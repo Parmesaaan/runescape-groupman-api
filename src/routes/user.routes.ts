@@ -69,7 +69,7 @@ export const userRouter = (): Router => {
   router.get(
     getUserProfile.route,
     authenticate(getUserProfile.permissionLevel),
-    getUserProfileController
+    getUserProfileController,
   )
 
   const updateUser = API_ROUTES.USERS.ROOT.UPDATE

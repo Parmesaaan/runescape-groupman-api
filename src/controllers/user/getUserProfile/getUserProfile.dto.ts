@@ -20,7 +20,7 @@ export class UserProfileUser {
 
   constructor(user: User) {
     this.id = user.id
-    this.username = user.id
+    this.username = user.username
     this.notes = user.notes?.map(n => new UserProfileUserNote(n)) || []
     this.tasks = user.tasks?.map(t => new UserProfileTask(t)) || []
     this.createdAt = user.createdAt

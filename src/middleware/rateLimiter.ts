@@ -8,12 +8,12 @@ export const signupLimiter = rateLimit({
 
 export const loginLimiter = rateLimit({
   windowMs: 2 * 60 * 1000,
-  limit: 5,
+  limit: 3,
   message: 'Too many login attempts, please try again later.',
 })
 
 export const refreshTokenLimiter = rateLimit({
-  windowMs: 5 * 60 * 1000,
-  limit: 1,
+  windowMs: 2 * 60 * 1000,
+  limit: 5,
   message: 'Too many refresh token attempts, please try again later.',
 })
