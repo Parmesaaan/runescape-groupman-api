@@ -1,9 +1,10 @@
 import { Request, RequestHandler, Response } from 'express'
-import { TaskDto, TaskIdDto, TaskResponseDto, UpdateTaskDto } from '../__common'
+import { TaskIdDto, TaskResponseDto } from '../__common'
 import { TaskService } from '../../../services'
 import { isOpFailure } from '../../../utils'
 import { HttpStatusCode } from 'axios'
 import { Task } from '../../../models'
+import { UpdateTaskDto } from './updateTask.dto'
 
 export const updateTaskController: RequestHandler = async (req: Request, res: Response) => {
   const taskIdDto = req.params as unknown as TaskIdDto
