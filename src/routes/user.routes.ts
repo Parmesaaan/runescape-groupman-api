@@ -16,7 +16,7 @@ import {
   signupController,
   TaskDto,
   TaskIdDto,
-  updateTaskController,
+  updateTaskController, UpdateTaskDto,
   updateUserController,
   UpdateUserDto,
   updateUserNoteController,
@@ -122,7 +122,7 @@ export const userRouter = (): Router => {
     updateTask.route,
     authenticate(updateTask.permissionLevel),
     validateParams(TaskIdDto),
-    validateBody(TaskDto),
+    validateBody(UpdateTaskDto),
     updateTaskController,
   )
 

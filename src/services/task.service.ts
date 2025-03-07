@@ -1,5 +1,5 @@
 import { OperationResult } from '../types'
-import { TaskDto } from '../controllers'
+import { TaskDto, UpdateTaskDto } from '../controllers'
 import { TaskRepository, UserRepository } from '../config'
 import { opFailure, opSuccess } from '../utils'
 import { HttpStatusCode } from 'axios'
@@ -23,7 +23,7 @@ export class TaskService {
   public static async updateTask(
     userId: string,
     taskId: string,
-    request: TaskDto,
+    request: UpdateTaskDto,
   ): Promise<OperationResult> {
     const user = await UserRepository.findOne({ where: { id: userId } })
     if (!user) return opFailure(HttpStatusCode.NotFound, `Cannot find user with id ${userId}`)
@@ -36,7 +36,7 @@ export class TaskService {
 
     task.title = request.title ?? task.title
     task.description = request.description ?? task.description
-    task.taskType = request.taskType ?? task.taskType
+    task.lastCompleted = request.completed ? new Date() : task.lastCompleted
 
     const savedTask = await TaskRepository.save(task)
     return opSuccess(savedTask)

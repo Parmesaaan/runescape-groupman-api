@@ -1,5 +1,5 @@
 import { Request, RequestHandler, Response } from 'express'
-import { TaskDto, TaskIdDto, TaskResponseDto } from '../__common'
+import { TaskDto, TaskIdDto, TaskResponseDto, UpdateTaskDto } from '../__common'
 import { TaskService } from '../../../services'
 import { isOpFailure } from '../../../utils'
 import { HttpStatusCode } from 'axios'
@@ -7,7 +7,7 @@ import { Task } from '../../../models'
 
 export const updateTaskController: RequestHandler = async (req: Request, res: Response) => {
   const taskIdDto = req.params as unknown as TaskIdDto
-  const request = req.body as unknown as TaskDto
+  const request = req.body as unknown as UpdateTaskDto
   const result = await TaskService.updateTask(req.user!.id, taskIdDto.taskId, request)
 
   if (isOpFailure(result)) {
