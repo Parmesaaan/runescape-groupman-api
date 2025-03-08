@@ -1,10 +1,11 @@
 import { Expose } from 'class-transformer'
-import { IsBoolean, IsOptional, IsString } from 'class-validator'
+import { IsBoolean, IsOptional, IsString, MaxLength } from 'class-validator'
 
 export class UpdateTaskDto {
   @Expose()
   @IsString()
   @IsOptional()
+  @MaxLength(24)
   title?: string
 
   @Expose()

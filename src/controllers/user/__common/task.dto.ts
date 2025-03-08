@@ -1,4 +1,4 @@
-import { IsDefined, IsEnum, IsOptional, IsString } from 'class-validator'
+import { IsDefined, IsEnum, IsOptional, IsString, MaxLength } from 'class-validator'
 import { Expose, Transform } from 'class-transformer'
 import { Task, TaskType } from '../../../models'
 
@@ -13,6 +13,7 @@ export class TaskDto {
   @Expose()
   @IsString()
   @IsDefined()
+  @MaxLength(24)
   title!: string
 
   @Expose()
