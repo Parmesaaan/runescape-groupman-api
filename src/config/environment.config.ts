@@ -2,7 +2,6 @@ import 'dotenv/config'
 import { StringValue } from 'ms'
 
 export const NODE_ENV = process.env.NODE_ENV
-export const TIMEZONE = process.env.TIMEZONE || 'Asia/Dubai'
 export const SERVER_PORT = process.env.SERVER_PORT || 5000
 
 export const dbConfig = {
