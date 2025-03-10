@@ -1,5 +1,6 @@
-import { Expose } from 'class-transformer'
-import { IsBoolean, IsOptional, IsString, MaxLength } from 'class-validator'
+import { Expose, Transform } from 'class-transformer'
+import { IsBoolean, IsEnum, IsOptional, IsString, MaxLength } from 'class-validator'
+import { JoinRequestStatus, TaskType } from '../../../models'
 
 export class UpdateTaskDto {
   @Expose()
@@ -12,6 +13,12 @@ export class UpdateTaskDto {
   @IsString()
   @IsOptional()
   description?: string
+
+  @Expose()
+  @IsEnum(TaskType)
+  @Transform(({ value }) => TaskType[value as keyof typeof TaskType] ?? value)
+  @IsOptional()
+  taskType?: TaskType
 
   @Expose()
   @IsBoolean()

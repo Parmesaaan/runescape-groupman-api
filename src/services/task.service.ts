@@ -36,6 +36,7 @@ export class TaskService {
 
     task.title = request.title ?? task.title
     task.description = request.description ?? task.description
+    task.taskType = request.taskType ?? task.taskType
     task.lastCompleted = request.completed ? new Date() : task.lastCompleted
 
     const savedTask = await TaskRepository.save(task)
