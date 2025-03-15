@@ -33,8 +33,8 @@ export class UserService {
     const passwordMatch = await bcrypt.compare(request.password, user.password)
     if (!passwordMatch) return opFailure(HttpStatusCode.Unauthorized, `Incorrect password`)
 
-    const tokenPair: TokenPair = generateTokenPair(user)
-    return opSuccess(tokenPair)
+    const tokenPair = generateTokenPair(user)
+    return opSuccess({user, tokenPair})
   }
 
   public static async refreshToken(
